@@ -1,0 +1,219 @@
+Admin\MedicalBundle\Entity\Company:
+    type: entity
+    table: company
+    gedmo:
+      translation:        
+        entity: Admin\MedicalBundle\Entity\Companytranslation
+    repositoryClass: Admin\MedicalBundle\Entity\CompanyRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        name:
+            type: string
+            length: '100'
+        company_code:
+            type: string
+            length: '100'
+        vat_code:
+            type: string
+            length: '100'
+        licence_number:
+            type: string
+            length: '100'
+        address:
+            type: string
+            length: '100'
+        city:
+            type: string
+            length: '100'
+        zip:
+            type: integer
+        disable_quotes:
+            type: boolean
+            nullable: true
+        primary_phone:
+            type: integer
+        cell_phone:
+            type: integer
+        fax:
+            type: string
+            length: '100'
+        email:
+            type: string
+            length: '100'
+        username:
+            type: string
+            nullable: true
+        password:
+            type: string
+            nullable: true
+        company_note:
+            type: text        
+        badges:
+            type: string
+            length: '100'
+            nullable: true
+        payment_option:
+            type: string
+            length: '100'
+            nullable: true
+        fixed_fee:
+            type: integer
+            nullable: true
+        fixed_fee_percentage:
+            type: float
+            nullable: true
+        created_at:
+            type: datetime
+            nullable: true
+        updated_at:
+            type: datetime		
+            nullable: true        
+        keyword:
+            type: text            
+            nullable: true
+            gedmo:
+                - translatable
+        description:
+            type: text
+            length: null
+            nullable: true
+            gedmo:
+                - translatable
+        badge_text_M:
+            type: text
+            length: null
+            nullable: true
+            gedmo:
+                - translatable
+        badge_text_C:
+            type: text
+            length: null
+            nullable: true
+            gedmo:
+                - translatable
+        badge_text_I:
+            type: text
+            length: null
+            nullable: true
+            gedmo:
+                - translatable
+        badge_text_H:
+            type: text
+            length: null
+            nullable: true
+            gedmo:
+                - translatable
+        premium_company:
+            type: boolean
+            nullable: true	
+        final_price_info:
+            type: boolean
+            nullable: true
+        small_company:
+            type: boolean
+            nullable: true
+    manyToOne:      
+      countries:
+        targetEntity: Country
+        inversedBy: companies
+        joinColumn:
+          name: country_id
+          referencedColumnName: id
+          onDelete: CASCADE
+    manyToMany:           
+      languagess:
+        targetEntity: Languages
+        inversedBy: companies
+        joinTable:
+          name:  company_languages
+          joinColumns:
+            company_id:
+              referencedColumnName: id
+          inverseJoinColumns:
+            language_id:
+              referencedColumnName: id
+      paymentoptions:
+        targetEntity: PaymentOption
+        inversedBy: companies
+        joinTable:
+          name:  company_paymentoption
+          joinColumns:
+            company_id:
+              referencedColumnName: id
+          inverseJoinColumns:
+            paymentoption_id:
+              referencedColumnName: id
+      insurances:
+        targetEntity: Insurance
+        inversedBy: companies
+        joinTable:
+          name:  company_insurance
+          joinColumns:
+            company_id:
+              referencedColumnName: id
+          inverseJoinColumns:
+            insurance_id:
+              referencedColumnName: id
+      doctors:
+        targetEntity: Doctor
+        inversedBy: companies
+        joinTable:
+          name:  company_doctor
+          joinColumns:
+            company_id:
+              referencedColumnName: id
+          inverseJoinColumns:
+            doctor_id:
+              referencedColumnName: id
+      news:
+        targetEntity: News
+        mappedBy: company
+    oneToMany:
+        translations:
+            targetEntity: Companytranslation
+            mappedBy: object
+            cascade: ["all"]
+        specialoffers:
+            targetEntity: SpecialOffers
+            mappedBy: company        
+        ratings:
+            targetEntity: Ratings
+            mappedBy: company       
+        service:
+            targetEntity: Service
+            mappedBy: company
+        experience:
+            targetEntity: Experience
+            mappedBy: company       
+        prices:
+            targetEntity: Prices
+            mappedBy: company
+        usercompanyrequest:
+            targetEntity: UserCompanyRequest
+            mappedBy: company
+        companyimages:
+            targetEntity: CompanyImages
+            mappedBy: company
+        companyvideos:
+            targetEntity: CompanyVideo
+            mappedBy: company
+        category:
+            targetEntity: CompanyCategory
+            mappedBy: company
+        #root:
+            #targetEntity: CompanyCategory
+            #mappedBy: company
+        usercompanyquotes:
+            targetEntity: UserCompanyQuotes
+            mappedBy: company
+        usercompanycommunication:
+            targetEntity: UserCompanyCommunication
+            mappedBy: company
+            cascade: ["persist"]
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAtValue ]
+        preUpdate: [ setUpdatedAtValue ]

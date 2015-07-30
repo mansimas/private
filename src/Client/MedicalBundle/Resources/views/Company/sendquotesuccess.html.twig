@@ -1,0 +1,44 @@
+{% extends 'ClientMedicalBundle::layout.html.twig' %}
+
+{% block title %}{{'Medical Tourism Information'|trans}}{% endblock %}
+
+{% block body %}
+{% include 'ClientMedicalBundle:Company:quicksearch.html.twig' %}
+
+<div class="container">
+	<div class="row sendquotesuccess">
+        <div class="popup leavecomment col-md-6">
+			
+			{% if app.session.flashbag.get('success') %}
+			
+			{% for flashMessage in app.session.flashbag.get('success') %}
+				<!--<span><p class="alert alert-success"></p></span>-->
+				 <h2>{{ flashMessage }}</h2>
+			{% endfor %}
+			
+			{% for flashMessage in app.session.flashbag.get('failure') %}
+				<!--<span><p class="alert alert-failure"></p></span>-->
+				 <h2>{{ flashMessage }}</h2>
+			{% endfor %}
+			
+			<p>{{'Praesent vestibulum molestie lacus aenean nonummy hendrerit mauris. Phasellus porta. Fusce suscipit varius mi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla dui. Fusce feugiat malesuada odio. Morbi nunc odio, gravida at cursus nec, luctus a, lorem. Maecenas tristique orci ac sem. Duis ultricies pharetra magna. Donec accumsan malesuada orci. Donec sit amet eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Mauris fermentum dictum magna.'|trans}}</p>
+			
+			{% else %}
+            <h2>{{'Your quote was sent to selected clinics'|trans}} !&nbsp;&nbsp; {{'Whats is next'|trans}} ?</h2>
+			
+            <p>{{'Praesent vestibulum molestie lacus aenean nonummy hendrerit mauris. Phasellus porta. Fusce suscipit varius mi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla dui. Fusce feugiat malesuada odio. Morbi nunc odio, gravida at cursus nec, luctus a, lorem. Maecenas tristique orci ac sem. Duis ultricies pharetra magna. Donec accumsan malesuada orci. Donec sit amet eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Mauris fermentum dictum magna.'|trans}}</p>
+			
+			{% endif %}
+            <a class="btn btn-default bluebtn" href="{{ path('client_medical_homepage') }}">{{'Keep browsing'|trans}} >></a>
+			<div class="clearfix"></div>
+
+            </div>
+		<div class="col-md-5 right_part">
+		<div class="need_help_wrap">
+			<div class="need_help">{{'Need help?'|trans}}</div>
+			<div class="live_chat">{{'Live Chat'|trans}}</div>
+		</div>
+		</div>
+    </div>
+</div>
+{% endblock %}

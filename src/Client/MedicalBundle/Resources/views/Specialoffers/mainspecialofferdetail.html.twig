@@ -1,0 +1,278 @@
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>	
+<script src="{{ asset('client/js/amazingslider.js') }}"></script>
+<script src="{{ asset('client/js/initslider-1.js') }}"></script>
+<script type="text/javascript">
+
+$(function() {
+	
+	$('#carousel span').append('<img src="{{ asset("client/images/carousel_glare.png") }}" class="glare" />');
+	$('#thumbs a').append('<img src="{{ asset("client/images/carousel_glare_small.png") }}" class="glare" />');
+
+	$('#carousel').carouFredSel({
+		responsive: true,
+		circular: false,
+		auto: false,
+		items: {
+			visible: 1,
+			width: 200,
+			height: '56%'
+		},
+		scroll: {
+			fx: 'directscroll'
+		}
+	});
+
+	$('#thumbs').carouFredSel({
+		responsive: true,
+		circular: false,
+		infinite: false,
+		auto: false,
+		prev: '#prev',
+		next: '#next',
+		items: {
+			visible: {
+				min: 2,
+				max: 6
+			},
+			width: 150,
+			height: '66%'
+		}
+	});
+
+	$('#thumbs a').click(function() {
+		$('#carousel').trigger('slideTo', '#' + this.href.split('#').pop() );
+		$('#thumbs a').removeClass('selected');
+		$(this).addClass('selected');
+		return false;
+	});
+
+});
+$(document).ready(function () 
+{
+var cboxNoOptions = {  
+				width: '95%',				
+				maxWidth: '960px',				
+			}
+
+	$('.norecord').colorbox(cboxNoOptions);
+	$(window).resize(function(){
+	  $.colorbox.resize({
+		width: window.innerWidth > parseInt(cboxNoOptions.maxWidth) ? cboxNoOptions.maxWidth : cboxNoOptions.width,		
+	  });
+	});
+	
+var cboxOptions = {  
+	width: '95%',
+	height: '95%',
+	maxWidth: '960px',
+	maxHeight: '960px',
+}
+
+$('.ajax').colorbox(cboxOptions);
+
+var cboxMapOptions = {  
+			width: '95%',
+			height: '95%',
+			maxWidth: '943px',
+			maxHeight: '443px',
+		}
+var cboxMapOptions = {  
+			width: '95%',
+			height: '95%',
+			maxWidth: '943px',
+			maxHeight: '443px',
+		}
+		
+$('.showmap').colorbox(cboxMapOptions);
+$(window).resize(function(){
+  $.colorbox.resize({
+	width: window.innerWidth > parseInt(cboxMapOptions.maxWidth) ? cboxMapOptions.maxWidth : cboxMapOptions.width,
+	height: window.innerHeight > parseInt(cboxMapOptions.maxHeight) ? cboxMapOptions.maxHeight : cboxMapOptions.height
+  });
+});
+});
+</script>
+<div id="mainspecialoffer">
+<a class="btn btn-default whitebtn back_link" href="{{ path('client_medical_special_offers')}}">&lt;&lt; {{'Back to special offers'|trans}}</a>
+{% if asSpecialOffersData|length > 0%}
+{% set asData = asSpecialOffersData[0][0] %}
+	{% if asData['title'] != '' or asData['introduction'] != '' or asData['description'] != '' %}
+<div class="row thumbsslider_contant specialofferdetail">
+	  
+	  {% if asData.specialofferimages|length > 0 %}
+	  <div style="margin:0px auto;max-width:430px;" class="two_colls thumbsslider">    
+		  <div class="red_circle">
+		  	{% set data = em.getRepository("AdminMedicalBundle:Company").calculateSpecialOfferDiscount(asData['regular_price'], asData['sales_price']) %}
+			-{{ data|round }}%							
+		  </div>
+		<!-- Insert to your webpage where you want to display the slider -->
+		<div id="amazingslider-1" style="display:block;position:relative;margin:0px auto 122px;">
+			<ul class="amazingslider-slides" style="display:none;">
+				{% for asImagesData in asData.specialofferimages %}							
+						{% if asset_exists('uploads/specialoffer/'~asData['id']~'/'~asImagesData['photo']) %}
+						<li>						
+						<a href="{{ asset('uploads/specialoffer/'~asData['id']~'/'~asImagesData['photo']) }}" class="html5lightbox">
+						<img src="{{ asset('uploads/specialoffer/'~asData['id']~'/'~asImagesData['photo']) }}" width="156px" />							
+						</a>
+						</li>							
+						{% else %}						
+						<li><img src="{{ asset('client/images/no_image_big.png') }}" alt="No Image" /></li>
+					{% endif %}									
+					{% endfor %}
+			</ul>
+			{% if asData.specialofferimages|length > 1 %}
+					<ul class="amazingslider-thumbnails" style="display:none;">						
+						{% for asImagesData in asData.specialofferimages %}
+						{% if asset_exists('uploads/specialoffer/'~asData['id']~'/'~asImagesData['photo']) %}
+							<li><img src="{{ asset('uploads/specialoffer/'~asData['id']~'/'~asImagesData['photo']) }}" /></li>
+						{% else %}
+							<li><img src="{{ asset('client/images/no_image.png') }}" /></li>							
+						{% endif %}
+						{% endfor %}
+					</ul>
+			{% endif %}
+				
+		</div>
+	 </div>
+	{% else %}
+	<div class="two_colls thumbsslider">
+		<div class="row" style="margin:0px auto;max-width:513px;"><img src="{{ asset('client/images/no_image_big.png') }}" alt="No Image" />													
+			<!-- Insert to your webpage where you want to display the slider -->
+			<!-- End of body section HTML codes -->    
+		</div>
+	</div>	
+				
+	{% endif %}	 
+	<div class="two_colls second_colls">		
+		<div class="specials_content">
+      	<h3>{{ asData['title'] }}</h3>
+		<div class="address">
+		
+		<a class="nav_location_icon showmap" href="{{ path('client_medical_showmap', {'address': asData['company']['address'],'company_name': asData['company']['name'] })}}"></a>
+		{{ asData['company']['address'] }}</div>
+		<p>{{ asData['introduction'] }}</p>
+		</div>
+        <div class="row">
+            <div class="col-xs-7">
+                <div class="price"><span>{{ 'Special price'|trans}} </span><b>&euro;{{ asData['sales_price'] }},00</b></div>
+                <div class="regular_price">({{'Regular Price'|trans}} &euro;<b>{{ asData['regular_price'] }},00</b>)</div>
+				<div class="clearfix"></div>
+            </div>
+            <div class="col-xs-5">
+                <a class="btn btn-default bluebtn" href="{{ path('client_medical_buy_special_offers',{'id':asData['id']}) }}">{{'Take This Offer'|trans}}</a>				
+                <span class="endin">{{'Offer ends'|trans}}<b>				
+				{% set asEndDate =  asData['end_date']|date('Y-m-d')|split('-') %}
+				{% set asTime = asData['end_time']|date('H:i:s')|split(':') %}
+				{% set route = path(ssRoute,{'id':snCompanyId}) %}
+				<script type="text/javascript">					
+					$(function () 
+					{	
+						austDay = new Date({{ asEndDate[0]}}, {{asEndDate[1]}} - 1, {{ asEndDate[2] }},{{asTime[0]}},{{asTime[1]}},{{ asTime[2] }});
+						$("#defaultCountdown_right").countdown({until: austDay, padZeroes: true, compact: true,timezone: +3,onExpiry: function() {
+								updateSpecialoffer("{{route}}",'main','mainspecialoffer');
+							}});
+						$('#year').text(austDay.getFullYear());
+					});
+				</script>						
+				<span id="defaultCountdown_right"> </span>
+				</b></span>
+            </div>
+        </div>
+      </div>
+	  
+      <div class="clearfix"></div>
+	  <div class="row">
+		<div class="col-xs-8 specialoffer_disc">
+			<p> {{ asData['description']|raw }}</p>
+			<div class="row specialoffer_disc_price">
+                <div class="col-xs-7">
+                    <div class="price"><span>{{'Special price'|trans}} </span><b>&euro;{{ asData['sales_price'] }},00</b></div>
+                    <div class="regular_price">({{'Regular Price'|trans}} &euro;<b>{{ asData['regular_price'] }},00</b>)</div>
+					<div class="clearfix"></div>
+                </div>
+                <div class="col-xs-5">
+                    <a class="btn btn-default bluebtn" href="{{ path('client_medical_buy_special_offers',{'id':asData['id']}) }}">{{'Take This Offer'|trans}}</a>
+                    <span class="endin">{{'Offer ends'|trans}} <b>
+					{% set asEndDate =  asData['end_date']|date('Y-m-d')|split('-') %}
+					{% set asTime = asData['end_time']|date('H:i:s')|split(':') %}						
+					<script type="text/javascript">					
+						$(function () 
+						{			
+							austDay = new Date({{ asEndDate[0]}}, {{asEndDate[1]}} - 1, {{ asEndDate[2] }},{{asTime[0]}},{{asTime[1]}},{{ asTime[2] }});
+							$("#defaultCountdown_bottom").countdown({until: austDay, padZeroes: true, compact: true,timezone: +3,onExpiry: function() {
+								updateSpecialoffer("{{route}}",'main','mainspecialoffer');
+							}});
+							$('#year').text(austDay.getFullYear());
+						});
+					</script>						
+					<span id="defaultCountdown_bottom"> </span>
+					</b></span>
+                </div>
+			    <div class="clearfix"></div>
+            </div>        	
+            <!--<em>ATENTION! Quisque nulla. Vestibulum libero nisl, porta vel, scelerisque eget, malesuada. Quisque nulla. Vestibulum libero nisl, porta vel, scelerisque eget, malesuada. Quisque nulla. Vestibulum libero nisl, porta vel, scelerisque eget, malesuada. Quisque nulla. Vestibulum libero nisl, porta vel,</em>-->
+      	</div>		
+		{% if asData['company']['ratings'] is defined and asData['company']['ratings']|length > 0 %}
+      	<div class="col-xs-4">
+            <div class="right_rivew_box">
+                <h2><a href="{{ path('client_medical_company_detail', {'id':asData['company']['id']})}}">{{ asData['company']['name'] }}</a></h2>
+				{% if asData['company']['companyimages']|length > 0 %}					
+					{% if asset_exists('uploads/company/'~asData['company']['id']~'/'~asData['company']['companyimages'][0]['photo']) %}
+						<a href="{{ path('client_medical_company_detail', {'id':asData['company']['id']})}}">
+						<img src="{{ asset('uploads/company/'~asData['company']['id']~'/'~asData['company']['companyimages'][0]['photo']) }}" />
+						</a>
+					{% else %}
+						<a href="{{ path('client_medical_company_detail', {'id':asData['company']['id']})}}">
+						<img src="{{ asset('client/images/no_image.png') }}" alt="No Image"/>
+						</a>
+					{% endif %}
+				{% else %}
+					<a href="{{ path('client_medical_company_detail', {'id':asData['company']['id']})}}"><img src="{{ asset('client/images/no_image.png') }}" alt="No Image"/></a>
+				{% endif %}				
+				{% if asSpecialOffersData[0].total_rating_count == 1 or asSpecialOffersData[0].total_rating_count == 0 or asSpecialOffersData[0].total_rating_count == '' %}
+					{% set ssReviewText = 'review'|trans %}
+				{% else %}
+					{% set ssReviewText = 'reviews'|trans %}
+				{% endif %}
+                <div class="rating_review">
+					<h3>
+						<b>{{'Rating'|trans}}</b>
+						{% if asSpecialOffersData[0].total_rating_count == 0 or asSpecialOffersData[0].total_rating_count == '' %}
+						<a class="norecord" href="{{ path('client_medical_rating', {'id': asData['company']['id']} )}}"> 
+						{{ 'by'|trans }} {% set ssText = "n/a"|trans %}	({{ ssText~" "~ssReviewText}})
+						</a>
+						<div class="rate_circle">{{ "n/a"|trans }}</div>
+						{% else %}
+						<a class="ajax" href="{{ path('client_medical_rating', {'id': asData['company']['id']} )}}"> 
+						{{ 'by'|trans }} {{ asSpecialOffersData[0].total_rating_count~" "~ssReviewText}}
+						</a>
+						<div class="rate_circle">{{ '%.2f' | format(asSpecialOffersData[0].total_avg) }}</div>
+						{% endif %}
+					</h3>
+				</div>
+                {% for asRate in asData['company']['ratings']|slice(0, 2) %}
+				<div class="row review_article">
+                    <div class="review_article_heading">
+						<div class="ratting_stars clearfix">
+							{% set data = '%.2f' | format(asSpecialOffersData[0].total_avg) %}
+							{% include 'ClientMedicalBundle:Default:ratingstar.html.twig'%}
+						</div>
+						{{ asRate.name~","~asRate.lastname }}
+						<span>{{ asRate.rating_date|date('d-m-Y') }}</span>
+						<div class="clr"></div>
+					</div>
+					<p>{{ asRate.comments }}</p>
+                </div>				
+				{% endfor %}				
+				<a class="ajax all_reviews" href="{{ path('client_medical_rating', {'id': asData['company']['id']} )}}">{{ "All reviews"|trans }}</a>
+            </div>
+        </div>
+		
+      </div>      
+  </div>
+	{% endif %}  
+  {% endif %}
+	{% include 'ClientMedicalBundle:Specialoffers:footerspecialoffer.html.twig' %}
+	
+	{% endif %}
+</div>

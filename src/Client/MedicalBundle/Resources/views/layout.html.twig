@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+        {% block metakeyword %}{% endblock %}
+        <title>{% block title %}{{'Test Application'|trans}}{% endblock %}</title>
+        {% include 'ClientMedicalBundle::stylesheets.html.twig' %}
+        <script src="{{ asset('assets/js/client_head.min.js') }}"></script>
+
+    </head>
+    <body>
+        <div class="container">
+            {% include 'ClientMedicalBundle::javascripts.html.twig' %}
+            {% include 'ClientMedicalBundle::header.html.twig' %}
+            {{ render(controller('ClientMedicalBundle:Default:categories',{'ssRoute':app.request.get('_route')})) }}
+            {% block body %}{% endblock %}
+            {% include 'ClientMedicalBundle::footer.html.twig' %}
+        </div>
+    </body>
+</html>

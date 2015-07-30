@@ -1,0 +1,171 @@
+<div class="sidebar" id="sidebar">
+	<script type="text/javascript">
+		try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+	</script>
+
+	<div class="sidebar-shortcuts" id="sidebar-shortcuts">
+		<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+			<button class="btn btn-small btn-success">
+				<!--<i class="icon-signal"></i>-->
+			</button>
+
+			<button class="btn btn-small btn-info">
+				<!--<i class="icon-pencil"></i>-->
+			</button>
+
+			<button class="btn btn-small btn-warning">
+				<!--<i class="icon-group"></i>-->
+			</button>
+
+			<button class="btn btn-small btn-danger">
+				<!--<i class="icon-cogs"></i>-->
+			</button>
+		</div>
+
+		<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+			<span class="btn btn-success"></span>
+
+			<span class="btn btn-info"></span>
+
+			<span class="btn btn-warning"></span>
+
+			<span class="btn btn-danger"></span>
+		</div>
+	</div><!-- #sidebar-shortcuts -->
+	<ul class="nav nav-list">
+		<li>
+			<a href="{{ path('medical_category') }}">
+				<i class="icon-dashboard"></i>
+				<span class="menu-text"> Category </span>
+			</a>
+		</li>
+		<li>
+			<a href="{{ path('medical_doctor') }}">
+				<i class="icon-dashboard"></i>
+				<span class="menu-text"> Doctor </span>
+			</a>
+		</li>
+		<li>
+			<a href="{{ path('medical_company') }}">
+				<i class="icon-dashboard"></i>
+				<span class="menu-text"> Company </span>			
+			</a>
+		</li>
+		<li>
+			<a href="{{ path('medical_insurance') }}">
+				<i class="icon-dashboard"></i>
+				<span class="menu-text"> Insurance </span>
+			</a>
+		</li>
+		<li>
+			<a href="{{ path('medical_reservation') }}">
+				<i class="icon-dashboard"></i>
+				<span class="menu-text"> Reservation </span>
+					{% if asCountPaidReservationQuote|length > 0 and asCountPaidReservationQuote[0].paid_reservation_count != 0%}
+						<span class="red_cir">{{ asCountPaidReservationQuote[0].paid_reservation_count }}</span>
+					{% endif %}
+			</a>
+		</li>
+		<li>
+			<a href="{{ path('medical_specialoffers') }}">
+				<i class="icon-dashboard"></i>
+				<span class="menu-text"> Special Offers </span>				
+				{% if asCountNewSaleOffer|length > 0 and asCountNewSaleOffer[0].new_sale_count != 0%}
+						<span class="red_cir">{{ asCountNewSaleOffer[0].new_sale_count }}</span>
+				{% endif %}
+			</a>
+		</li>
+		<li>
+			<a href="{{ path('medical_quotes') }}">
+				<i class="icon-dashboard"></i>
+				<span class="menu-text"> Inquiries </span>
+				{% if asCountNewQuote|length > 0 and asCountNewQuote[0].new_quote_count != 0%}
+						<span class="red_cir">{{ asCountNewQuote[0].new_quote_count }}</span>
+				{% endif %}
+			</a>
+		</li>
+		<li>
+			<a href="{{ path('medical_advertisement') }}">
+				<i class="icon-dashboard"></i>
+				<span class="menu-text"> Banner management </span>
+			</a>
+		</li>		
+		<li>
+			<a href="{{ path('medical_news') }}">
+				<i class="icon-dashboard"></i>
+				<span class="menu-text"> News </span>
+			</a>
+		</li>
+		<li>
+			<a href="{{ path('medical_video') }}">
+				<i class="icon-dashboard"></i>
+				<span class="menu-text"> Video </span>
+			</a>
+		</li>
+		<li>
+			<a href="{{ path('medical_testimonial') }}">
+				<i class="icon-dashboard"></i>
+				<span class="menu-text"> Testimonial video </span>
+			</a>
+		</li>
+		<li class="active open">
+			<a class="dropdown-toggle" href="#">
+				<i class="icon-edit"></i>
+				<span class="menu-text"> Settings </span>
+
+				<b class="arrow icon-angle-down"></b>
+			</a>
+
+			<ul class="submenu" style="display: block;">
+				<li class="active">
+					<a href="{{ path('medical_settings_emails') }}">
+						<i class="icon-double-angle-right"></i>
+						Email
+					</a>
+				</li>
+
+				<li>
+					<a href="{{ path('medical_settings_articles') }}">
+						<i class="icon-double-angle-right"></i>
+						Static articles
+					</a>
+				</li>
+				
+				<li class="active">
+					<a href="{{ path('medical_settings_languages') }}">
+						<i class="icon-double-angle-right"></i>
+						Languages
+					</a>
+				</li>				
+				{% if app.user and app.user.userType == 'admin' %}
+				<li class="active">
+					<a href="{{ path('medical_settings_usermanager') }}">
+						<i class="icon-double-angle-right"></i>
+						User Management
+					</a>
+				</li>
+				{% endif %}
+				<li class="active">
+					<a href="{{ path('medical_settings_paymentoption') }}">
+						<i class="icon-double-angle-right"></i>
+						Payment option
+					</a>
+				</li>
+				<li class="active">
+					<a href="{{ path('medical_settings_city') }}">
+						<i class="icon-double-angle-right"></i>
+						City
+					</a>
+				</li>
+			</ul>
+		</li>
+	</ul><!-- /.nav-list -->
+
+	<div class="sidebar-collapse" id="sidebar-collapse">
+		<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+	</div>
+
+	<script type="text/javascript">
+		try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+	</script>
+</div>

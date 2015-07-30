@@ -1,0 +1,68 @@
+medical_company:
+    pattern:  /
+    defaults: { _controller: "AdminMedicalBundle:Company:index" }
+
+medical_company_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "AdminMedicalBundle:Company:show" }
+
+medical_company_addedit:
+    pattern:  /addedit/{id}/{ssBooleanFlag}
+    defaults: { _controller: "AdminMedicalBundle:Company:addedit", id: null, ssBooleanFlag: null}
+
+medical_company_delete:
+    pattern:  /delete
+    defaults: { _controller: "AdminMedicalBundle:Company:delete" }    
+    
+medical_company_special_offer:
+    pattern:  /specialoffer
+    defaults: { _controller: "AdminMedicalBundle:Company:specialoffer" }
+
+medical_company_special_offer_delete:
+   pattern:  /test/delete
+   defaults: { _controller: "AdminMedicalBundle:Company:deletespecialoffer" }
+   
+medical_company_rating:
+    pattern:  /rating
+    defaults: { _controller: "AdminMedicalBundle:Company:rating" }
+
+medical_ratings_delete:
+    pattern:  /rating/delete
+    defaults: { _controller: "AdminMedicalBundle:Company:deleterating" }
+
+medical_company_verify_user:
+    pattern:  /rating/verifyuser
+    defaults: { _controller: "AdminMedicalBundle:Company:verifyuser" }
+
+medical_company_service:
+    pattern:  /service
+    defaults: { _controller: "AdminMedicalBundle:Company:service" }
+
+medical_company_experience:
+    pattern:  /experience
+    defaults: { _controller: "AdminMedicalBundle:Company:experience" }
+
+medical_company_prices:
+    pattern:  /prices
+    defaults: { _controller: "AdminMedicalBundle:Company:prices" }
+   
+medical_company_doctor:
+    pattern:  /doctor
+    defaults: { _controller: "AdminMedicalBundle:Company:doctor" }
+
+medical_company_request:
+    pattern:  /companyrequest
+    defaults: { _controller: "AdminMedicalBundle:Company:companyrequest" }
+    
+medical_company_imageupload:
+    pattern:  /imageupload
+    defaults: { _controller: "AdminMedicalBundle:Company:imageupload" }
+medical_company_removeimage:
+    pattern:  /removeimage
+    defaults: { _controller: "AdminMedicalBundle:Company:removeimage" }
+medical_company_specialoffer_imageupload:
+    pattern:  /specialoffer/imageupload
+    defaults: { _controller: "AdminMedicalBundle:Company:specialofferimageupload" }
+medical_company_specialoffer_removeimage:
+    pattern:  /specialoffer/removeimage
+    defaults: { _controller: "AdminMedicalBundle:Company:specialofferremoveimage" }

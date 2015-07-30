@@ -1,0 +1,106 @@
+Admin\MedicalBundle\Entity\UserCompanyQuotes:
+    type: entity
+    table: user_company_quotes
+    repositoryClass: Admin\MedicalBundle\Entity\UserCompanyQuotesRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        reservation_id:
+            type: string
+            length: '255'
+            nullable: true
+        resi_address_one:
+            type: text            
+            nullable: true
+        resi_address_two:
+            type: text            
+            nullable: true
+        resi_city:
+            type: string
+            length: '255'
+            nullable: true
+        resi_state:
+            type: string
+            length: '255'
+            nullable: true
+        resi_zip:
+            type: string
+            length: '255'
+            nullable: true       
+        offers:
+            type: string            
+            nullable: true
+        specific_wishes:
+            type: text            
+            nullable: true
+        checked_by_admin:
+            type: string
+            length: '3'           
+            nullable: true
+        checked_by_company:
+            type: string
+            length: '3'           
+            nullable: true
+        reservation_date:
+            type: date
+            nullable: true
+        service_price:
+            type: integer
+            nullable: true
+        paypal_transaction_id:
+            type: text                      
+            nullable: true
+        paypal_payment_status:
+            type: string               
+            nullable: true
+        quote_status:
+            type: string               
+            nullable: true
+        unconfirmed_twenty_four_or_final_reservation_date:
+            type: datetime
+            nullable: true
+        sent_unconfirmed_or_rating_mail:
+            type: string
+            length: '3'
+            nullable: true
+        twenty_four_come_final:
+            type: string
+            length: '3'
+            nullable: true
+        reservation_time:
+            type: time
+            nullable: true		
+        created_at:
+            type: datetime
+            nullable: true
+        updated_at:
+            type: datetime		
+            nullable: true				
+    manyToOne:
+        countries:
+          targetEntity: Country
+          inversedBy: usercompanyquotes
+          joinColumn:
+            name: country_id
+            referencedColumnName: id
+            onDelete: CASCADE
+        company:
+          targetEntity: Company
+          inversedBy: usercompanyquotes
+          joinColumn:
+            name: company_id
+            referencedColumnName: id
+            onDelete: CASCADE
+        userquotedetails:
+          targetEntity: UserQuoteDetail
+          inversedBy: usercompanyquotes
+          joinColumn:
+            name: user_quote_detail_id
+            referencedColumnName: id
+            onDelete: CASCADE
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAtValue ]
+        preUpdate: [ setUpdatedAtValue ]

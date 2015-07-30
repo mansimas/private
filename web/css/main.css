@@ -1,0 +1,242 @@
+*{ padding: 0; margin: 0;}
+body{ font-family: verdana;}
+.company_profile, .special_offer, .rating, .fee{ width: 100%;}
+.company_profile .company_left{width:50%;}
+.company_profile .company_right{width:50%;}
+.company_profile .company_left label{ width: 200px; display: inline-block; margin-bottom: 15px;}
+.company_profile .company_right label{ width: 200px; display: inline-block; margin-bottom: 15px;}
+.clr{ clear:both; overflow: hidden; margin: 0; padding: 0;}
+.title{ font-size: 18px; margin-bottom: 15px;}
+.special_offer .offer_left{width:50%;}
+.special_offer .offer_right{width:50%;}
+.special_offer label {display: inline-block;width: 200px;}
+.left{ float: left;}
+.right{ float: right;}
+.rating{}
+.rating .rating_left{ width: 50%;}
+.rating .rating_right{ width: 50%}
+#admin_medicalbundle_company_badges label, #admin_medicalbundle_company_language label, #admin_medicalbundle_company_payment_option label{ width: auto; margin-left: 15px;}
+.rating .rating_left label{width: 200px; display: inline-block; margin-bottom: 15px;}
+.fee{}
+.fee .fee_left{ width: 50%;}
+.fee .fee_right{ width: 50%}
+.fee .fee_left label{ display: inline-block;width: 200px;}
+
+.main_btn{}
+.main_btn .add_btn{ float:right;}
+.main_btn .delete_btn{ float:left;}
+
+.main_btn  input[type="submit"] 
+{
+height:27px;
+background:#B74635;
+line-height: 18px;
+}
+#admin_medicalbundle_company_badges > input {
+  float: left;
+}
+#admin_medicalbundle_company_language > input {
+  float: left;
+}
+#admin_medicalbundle_company_language > label {
+  float: left;
+  margin-right: 6px;
+}
+
+#admin_medicalbundle_company_payment_option input{ float:left;}
+#admin_medicalbundle_company_payment_option label{ float:left;}
+#admin_medicalbundle_company_payment_option > label {margin: 0 8px;}
+
+
+#admin_medicalbundle_ratings_services input,
+#admin_medicalbundle_ratings_environment input,
+#admin_medicalbundle_ratings_staff input {
+  margin: auto 4px;
+  display:inline-block;
+}
+
+
+
+#admin_medicalbundle_ratings_services label,
+#admin_medicalbundle_ratings_environment label,
+#admin_medicalbundle_ratings_staff label  {
+  display:inline-block;
+}
+.medical_company_rating_left {float:left;}
+.medical_company_rating_right {float:left;padding-top: 56px;}
+
+.dashed {
+color: rgb(0, 0, 0);display: inline-block;font-size: 15px;line-height: 30px;text-align: center;width: 20px;vertical-align: middle;}
+
+
+.video {border: 1px solid rgba(0, 0, 0, 0.08); margin-top: 20px;padding: 1em; position: relative;}
+
+.dz-started .youtube {
+  border: 1px solid rgb(229, 229, 229);
+  border-radius: 50px;
+  clear: both;
+  display: block;
+  font-size: 12px;
+  margin: auto auto 0 18px;
+  width: 105px;
+  padding: 6px;
+  text-align:center;
+  margin-bottom: 15px;
+  cursor:pointer;
+}
+.you_tube_video {
+  position: relative;
+  width: 100px;
+  margin-left: 30px;
+  float: left;
+}
+
+.delete_youtube {
+  position: absolute;
+  right: 0;
+  top:-2px;
+}
+.form-horizontal{ position:relative;}
+
+#medical_save_button {
+  bottom: -200px;
+  position: absolute;
+  width: 78%;
+}
+.action-buttons {
+  float: right;  
+}
+
+.category .action-buttons {
+  float: right;
+  margin-top: -18px;
+}
+.row-fluid.category li {
+  border: 1px solid #CCCCCC;
+  display: block;
+  margin: 10px 0;
+  padding: 5px 0;
+}
+.row-fluid.category li:hover {
+  background: none repeat scroll 0 0 #CCCCCC;
+}
+
+.table thead tr {
+  background: linear-gradient(to bottom, #F8F8F8, #ECECEC) repeat-x scroll 0 0 #F3F3F3;
+  color: #707070;
+  font-weight: normal;
+}
+.main_header{ 
+	background: linear-gradient(to bottom, #F8F8F8, #ECECEC) repeat-x scroll 0 0 #F3F3F3; 
+	padding:10px 0 10px 0; 
+	border: 1px solid #DDDDDD;
+}
+.header_name.pull-left {
+  border-right: 1px solid #CCCCCC;
+  margin-left: 30px;
+  width: 950px;
+}
+.lbl_cat_check_box {
+  display: inline-block !important;
+  margin: 0 10px !important;
+  float:left;
+}
+.lbl_heading_check {
+  float: left;
+  margin-left: 10px !important;
+  padding: 0;
+  
+}
+#cat_list ul, ol{ margin:0;
+padding: 0;}
+
+
+.name_cat_final {
+  margin-left: 20px !important;
+  float: left;
+}
+
+.banner_settings, .banner_tabs {
+  float: left;
+  width: 50%;
+}
+
+.bottom_main {
+  border-top: 1px solid rgb(204, 204, 204);
+  margin-top: 40px;
+  padding-top: 40px;
+}
+
+
+.banner_settings input[type='radio'] {display:inline-block;margin: 0 4px;}
+.banner_settings .required {display:inline-block;}
+.controls > div#admin_medicalbundle_advertise_banner_status {margin-top: 4px;}
+.form-horizontal .imginblue {margin:0 0 0 20px;font-weight: bold;color: #fff;text-align: center;border-bottom: 1px solid #d5d5d5;background:#0070bc;display:inline-block;}
+.imginblue img {max-width: 112px;height: 114px;width:100%;}
+.radio_language, .radio_payment_option {display: inline-block;min-width: 30%;}
+.radio_badges input[type="checkbox"] {display: inline-block;}
+.radio_badges input[type="checkbox"] + label {display: inline-block;margin-bottom:auto;}
+.radio_language input[type="checkbox"] {display: inline-block;}
+.radio_language input[type="checkbox"] + label {display: inline-block;margin-bottom:auto;}
+.radio_payment_option input[type="checkbox"] {display: inline-block;}
+.radio_payment_option input[type="checkbox"] + label {display: inline-block;margin-bottom:auto;}
+
+#admin_medicalbundle_company_company_note {
+    min-height: 168px;
+    width: 265px;
+}
+.for_quotes {color:#6B6B6B;margin-left:180px;font-size:12px;}
+.notesaboutcompany {color: #6B6B6B;font-weight: 400;font-size: 13px;}
+ 
+ 
+ .ratting_note {position:relative;}
+ .ratting_note .ratting_note_left  {position:absolute; left: -37px;top: -20px;}
+ .ratting_note .ratting_note_left  b {color:#f00;}
+ .ratting_note .ratting_note_right  {position:absolute;right:-72px;top: -20px;}
+ .ratting_note .ratting_note_right  b{color:#008000;}
+ 
+.horizontal_lines  {border-bottom: 1px solid #ECECEC;padding-bottom: 10px;}
+
+
+#admin_medicalbundle_specialoffers_other_info {height: 131px;width: 740px;}
+#admin_medicalbundle_specialoffers_translations_en_introduction {height: 131px;width: 710px;}
+#admin_medicalbundle_ratings_comments  {height: 106px;width: 280px;}
+.form-horizontal.specialoffer_detail  .control-label{padding-top:0px;}
+
+.categories input[type="checkbox"], .categories label, .urgent_medical input[type="radio"], .urgent_medical label {display: inline-block;margin:auto;}
+.div_health_problem textarea {display: block;width: 345px;height:122px;}
+.div_companies {}
+.sidebar li .red_cir {
+  background-color: red;
+  border-radius: 50%;
+  color: #fff;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: bolder;
+  line-height: 25px;
+  text-align: center;
+  width: 25px;
+}
+#documents-fields-list input {  display: block; }
+.form-actions.addedit_company {
+  bottom: -194px;
+  position: absolute;
+  width: 78.5%;
+}
+.form-actions.addedit_company.active {
+  bottom: -384px;
+}
+.form-actions.addedit_company.active.moreactive {
+  bottom: -574px;
+}
+.add_edit_special {
+  margin-bottom: 80px;
+}
+.companymetadetail .nav-tabs li a {
+    padding: 10px 10px 10px 11.1px;
+    text-align: center;
+}
+.checksmall{ float:left; width:33%; }
+.clr{clear:both;}
+.checksmall > label {display: inline-block;}
+.checksmall input {margin: 0;}

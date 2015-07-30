@@ -1,0 +1,80 @@
+<script type="text/javascript">		
+	var snHeight = 0;
+	var asDisplayIds = [];	
+</script>
+{% if asBannerDetail|length > 0 %}	
+	{% set ssBannerUpdateUrl =  path('client_medical_banner_update_count') %}
+	{% set bannerIds = 0 %}
+	{% for key,asBanner in asBannerDetail %}
+    	{% if key == 0 %}
+			{% set bannerIds = asBanner['id'] %}
+		{% endif %}
+    {% if asBanner['flash_file'] != '' %}	
+	<div class="banner_wrapper" id="banner_{{ asBanner['id']}}">		
+	<object width="350" height="338" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,32,18" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" type="application/x-shockwave-flash">
+	<param name="wmode" value="opaque">
+	<param name="quality" value="high">
+	<param name="src" value="{{ asBanner['flash_file'] }}">
+	<embed width="211" height="338" src="{{ asBanner['flash_file'] }}" quality="high" wmode="opaque" type="application/x-shockwave-flash">
+	</object>
+	</div>
+    {% elseif asBanner['script_detail'] != ''%}	
+	<div class="banner_wrapper" id="banner_{{ asBanner['id']}}">
+		{{ asBanner['script_detail']|raw }}
+	</div>
+	{% else %}		
+	<div class="banner_wrapper" id="banner_{{ asBanner['id']}}">
+		{% set ssSpecial = ((asBanner['new_window'] == 1) ? 'target=_blank' : '' ) %}
+		{% set ssURL = ((asBanner['url'] != '') ? asBanner['url'] : '#' ) %}
+		{% set ssBannerUpdateUrl =  path('client_medical_banner_update_count') %}
+		<a href="{{ ssURL }}" {{ ssSpecial }}>
+		{% if asset_exists('uploads/advertisebanner/'~asBanner['photo']) %}
+		<img src="{{ asset('uploads/advertisebanner/'~asBanner['photo']) }}" alt="" />
+		{% else %}
+		<img src="{{ asset('client/images/no_image.png') }}" alt="No Image" height="80px" width="150px"/>
+		{% endif %}
+		</a>
+	</div>
+	{% endif %}	
+	{% if ssPage == 'company_listing' %}		
+		<script type="text/javascript">	
+			var bannerFinalheight = ((parseInt($(".refine_search").height()) > parseInt($(".companylist_container").height())) ? parseInt($(".refine_search").height()) : parseInt($(".companylist_container").height()));
+			var bookinBoxheight = parseInt($("#booking_iframe").height());			
+			var bannerheight = (bannerFinalheight - bookinBoxheight);			
+			var snHeight = (parseInt(snHeight) + parseInt($("#banner_{{ asBanner['id'] }}").height()) + 10);			
+			if(bannerheight < snHeight)
+			{
+				$("#banner_{{ asBanner['id'] }}").hide();
+			}
+			else
+			{	
+				asDisplayIds.push("{{ asBanner['id'] }}");
+			}
+		</script>
+	{% else %}		
+		<script type="text/javascript">	
+			asDisplayIds.push("{{ asBanner['id'] }}");			
+		</script>
+	{% endif %}
+	{% if key != 0 %}
+		{% set bannerIds = bannerIds~","~asBanner['id'] %}
+	{% else %}
+		{% set bannerIds = bannerIds %}
+	{% endif %}
+	{% endfor %}	
+	<input type="hidden" id="notbanner_ids" value="{{ bannerIds}}" />
+	<!--<input type="hidden" id="display_banner_ids" value="" />-->
+	<script type="text/javascript">
+		$(document).ready(function () 
+		{
+			if($("#center_banner_id").val() != '' && $("#center_banner_id").val() != undefined)
+			{
+				asDisplayIds.push($("#center_banner_id").val());
+			}			
+			var asFinalIds = asDisplayIds.join(",");			
+			//$("#display_banner_ids").val(asFinalIds);
+			if(asFinalIds != '')
+				update_banner_count(asFinalIds,'{{ssBannerUpdateUrl}}');
+		});		
+	</script>
+{% endif %}

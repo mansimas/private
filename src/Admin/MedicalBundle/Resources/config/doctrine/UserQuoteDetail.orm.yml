@@ -1,0 +1,94 @@
+Admin\MedicalBundle\Entity\UserQuoteDetail:
+    type: entity
+    table: user_quote_detail
+    repositoryClass: Admin\MedicalBundle\Entity\UserQuoteDetailRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        unique_id:
+            type: string
+            length: '255'
+            nullable: true
+        firstname:
+            type: string
+            length: null
+            nullable: true
+        middlename:
+            type: string
+            length: '100'
+            nullable: true
+        lastname:
+            type: string
+            length: '100'
+            nullable: true
+        quote_status:
+            type: string            			
+        email:
+            type: string
+            length: '100'
+            nullable: true
+        phone:
+            type: string
+            length: '255'           
+            nullable: true
+        prefferd_language:
+            type: string
+            length: '1'            
+        urgent_medical_service:
+            type: string
+            length: '1'
+        health_problem:
+            type: text
+            nullable: true			
+        client_IP_address:
+            type: string
+            nullable: true
+        read_terms_condition:
+            type: boolean        
+        created_at:
+            type: datetime
+            nullable: true
+        updated_at:
+            type: datetime		
+            nullable: true
+        checked_by_admin:
+            type: string
+            length: 3
+            nullable: true
+    manyToOne:      		  
+      countries:
+        targetEntity: Country
+        inversedBy: user_quote_details
+        joinColumn:
+          name: country_id
+          referencedColumnName: id
+          onDelete: CASCADE             		  
+    manyToMany:
+      categories:
+        targetEntity: Category
+        inversedBy: userquotedetails
+        joinTable:
+          name:  user_quote_detail_category
+          joinColumns:
+            user_quote_detail_id:
+              referencedColumnName: id
+          inverseJoinColumns:
+            category_id:
+              referencedColumnName: id
+    oneToMany:
+        userquotedocuments:
+            targetEntity: UserQuoteDocuments
+            mappedBy: userquotedetails
+        usercompanyquotes:
+            targetEntity: UserCompanyQuotes
+            mappedBy: userquotedetails
+        usercompanycommunication:
+            targetEntity: UserCompanyCommunication
+            mappedBy: userquotedetails
+            cascade: ["persist"]
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAtValue ]
+        preUpdate: [ setUpdatedAtValue ]

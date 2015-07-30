@@ -1,0 +1,44 @@
+{% if pageCount > 1 %}
+    <div class="row pagination_row">
+        <ul class="pagination col-md-8">
+            {% if id is defined and id != '' %}
+                {% set route1 = path(route, {'id':2 }) %}
+            {% else %}
+                {% set route1 = path(route)%}
+            {% endif %}
+            {% if first is defined and current != first %}
+                <li><a href="javascript:void(0);" onClick="quicksearch('{{ route1 }}','{{ first }}','{{ ssUpdateDiv }}', {{ssPerPage}})">&lt;&lt;</a></li>
+            {% endif %}
+            {% if previous is defined %}
+                <li><a href="javascript:void(0);" onClick="quicksearch('{{ route1 }}','{{ previous }}','{{ ssUpdateDiv }}',{{ ssPerPage }})">&lt;</a></li>
+            {% endif %}
+
+            {% for page in pagesInRange %}
+                {% if page != current %}
+                    <li><a href="javascript:void(0);" onClick="quicksearch('{{ route1 }}','{{ page }}','{{ ssUpdateDiv }}', {{ ssPerPage }})">{{ page }}</a></li>
+                {% else %}
+                    <li class="active"><a href="javascript:void(0);">{{ page }}</a></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if next is defined %}
+                <li><a href="javascript:void(0);" onClick="quicksearch('{{ route1 }}','{{ next }}','{{ ssUpdateDiv }}', {{ ssPerPage }})">&gt;</a></li>
+            {% endif %}
+
+            {% if last is defined and current != last %}
+                <li><a href="javascript:void(0);" onClick="quicksearch('{{ route1 }}','{{ last }}','{{ ssUpdateDiv }}', {{ ssPerPage }})">&gt;&gt;</a></li>
+            {% endif %}
+        </ul>
+
+        <div class="col-md-2 pull-right">
+            <select name="page" onChange="quicksearch('{{ route1 }}', '{{ first }}', '{{ ssUpdateDiv }}', this.value)">
+                <option value="">Select</option>
+                <option value="10" {% if ssPerPage == 10 %}selected="selected"{% endif %}>10</option>
+                <option value="20" {% if ssPerPage == 20 %}selected="selected"{% endif %}>20</option>
+                <option value="30" {% if ssPerPage == 30 %}selected="selected"{% endif %}>30</option>
+                <option value="40" {% if ssPerPage == 40 %}selected="selected"{% endif %}>40</option>
+                <option value="50" {% if ssPerPage == 50 %}selected="selected"{% endif %}>50</option>
+            </select>
+        </div>
+    </div>
+{% endif %}

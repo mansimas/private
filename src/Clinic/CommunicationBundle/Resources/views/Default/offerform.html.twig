@@ -1,0 +1,44 @@
+<p>{{'Gydymo įstaiga pateikė tokį pasiūlymą:'}}</p>
+<div class="row vertical_form">
+	<label><span>{{'Siūloma paslauga'}}</span></label>			
+	<input type="text" value="{{ objComm.ServiceDescription }}" name="clinic_communicationbundle_user_company_communication[service_description]" id="clinic_communicationbundle_user_company_communication_service_description">
+</div>
+<div class="row vertical_form">
+	<label><span>{{'Paslaugos aprašymas ir sąlygos'}}</span></label>			
+	<textarea name="clinic_communicationbundle_user_company_communication[brief_service_description]" id="clinic_communicationbundle_user_company_communication_brief_service_description" >{{ objComm.BriefServiceDescription }}</textarea>
+</div>
+<div class="row vertical_form">
+	<label><span>{{'Atsakingas asmuo'}}</span></label>			
+	<input type="text" value="{{ objComm.ResponsiblePersonDoctor }}" name="clinic_communicationbundle_user_company_communication[responsible_person_doctor]" id="clinic_communicationbundle_user_company_communication_responsible_person_doctor">
+</div>
+<div class="row vertical_form">
+	<div class="col-sm-4">
+		<label>{{'Priėmimo data'}}</label>				
+		<input type="date" value="{{ objComm.ReservationDate|date('Y-m-d') }}" class="date-picker" name="clinic_communicationbundle_user_company_communication[reservation_date]" id="clinic_communicationbundle_user_company_communication_reservation_date">				
+	</div>
+	<div class="col-sm-4">
+		<label>{{'Priėmimo laikas'}}</label>				
+		<div class="communication_timepicker input-append bootstrap-timepicker">
+			<input type="time" value="{{ objComm.ReservationTime|date('H:i') }}" class="input-small" name="clinic_communicationbundle_user_company_communication[reservation_time]" id="clinic_communicationbundle_user_company_communication_reservation_time">
+			<span class="add-on">
+				<i class="icon-time"></i>
+			</span>
+		</div>
+	</div>
+</div>
+<div class="row vertical_form">
+	<div class="col-sm-4">
+		<label>{{'Kaina (EUR)'}}</label>				
+		<input type="text" value="{{ objComm.ServicePrice }}" name="clinic_communicationbundle_user_company_communication[service_price]" id="clinic_communicationbundle_user_company_communication_service_price" oninvalid="InvalidMsg(this);">
+	</div>
+	<div class="col-sm-4">
+		<label>{{'Pasiūlymas galioja iki'}}</label>				
+		<input type="date" value="{{ objComm.OfferEndDate|date('Y-m-d') }}" class="date-picker" name="clinic_communicationbundle_user_company_communication[offer_end_date]" id="clinic_communicationbundle_user_company_communication_offer_end_date">				
+	</div>
+</div>
+{% for flashMessage in app.session.flashbag.get('service_price_error') %}
+	<div class="err_msg">{{ flashMessage }}</div>   
+{% endfor %}
+<div class="row vertical_form">
+	<a href="javascript:void(0)" onClick="hideshowreplyformdiv('{{ ssString }}')" class="btn btn-default whitebtn input-sm">{{'Atšaukti'}}</a>					
+</div>

@@ -1,0 +1,530 @@
+{% extends 'AdminMedicalBundle::layout.html.twig' %}
+
+{% block title %}Quotes addedit{% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/jquery-ui.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('css/combine.css') }}" />
+{% endblock %}
+    
+{% block body %}
+{% set snQuotesId = app.request.get('id') %}
+<script type="text/javascript">	
+function checkStatus()
+{
+	var ssQuoteStatus = $("#client_medicalbundle_user_quote_detail_quote_status").val();
+	if( ssQuoteStatus != 'active')
+	{
+		alert("Your quote is "+$("#client_medicalbundle_user_quote_detail_quote_status").val().toUpperCase()+", So you can't sent it!");
+		return false;
+	}
+	
+	if((ssQuoteStatus == 'active' || ssQuoteStatus == 'Completed') && $("#client_medicalbundle_user_quote_detail_companies").val() == null && $("[name='chk_company_id[]']:checked").length == 0)
+	{
+		alert("First you have to select company then you can send quote.");
+		return false;
+	}
+	
+}
+function showform(snFormId, ssStr)
+{
+	$("#edit_message_"+snFormId).toggle();
+	$("#edit_button_"+snFormId).toggle();	
+	$("#add_offer_message_content_"+snFormId).toggle();
+	
+	$("#add_offer_div_"+snFormId).hide();
+	if(ssStr == 'cancel')
+	{
+		$("#add_offer_show_link_"+snFormId).show();
+		$("#edit_message_link_"+snFormId).show();
+	}
+	else
+	{
+		$("#add_offer_show_link_"+snFormId).hide();
+		$("#edit_message_link_"+snFormId).hide();
+	}
+}
+function getQuotedetail(route, ssUpdateDiv, snCompanyId)
+{
+	$("#loader").show("fast"); 
+	$.ajax({
+				type: 'get',
+				url : route,				
+				success: function(result)
+						{
+							
+							$("#"+ssUpdateDiv).html(result);
+							/*$("#save_to_list_div_id_"+snId).hide();
+							$("#saved_div_id_"+snId).show();*/
+							$("#loader").hide("fast");
+							$("[id^='li_user_quote_']").removeClass();							
+							$("#li_user_quote_"+snCompanyId).addClass("active");							
+							$("#unread_message_count_"+snCompanyId).remove();
+						}
+			});
+}
+</script>
+<div class="main-content admin_quote_page">
+	<div class="breadcrumbs" id="breadcrumbs">
+		<script type="text/javascript">
+			try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+		</script>
+
+		<ul class="breadcrumb">
+			<li>
+				<i class="icon-home home-icon"></i>
+				<a href="#">Home</a>
+
+				<span class="divider">
+					<i class="icon-angle-right arrow-icon"></i>
+				</span>
+			</li>
+
+			<li>
+				<a href="{{ path('medical_quotes')}}">Quotes</a>
+
+				<span class="divider">
+					<i class="icon-angle-right arrow-icon"></i>
+				</span>
+			</li>
+			{% if snQuotesId != ''%}
+				<li class="active">edit</li>
+			{% else %}
+				<li class="active">add</li>
+			{% endif%}
+		</ul><!-- .breadcrumb -->
+
+		<div class="nav-search" id="nav-search">
+			<form class="form-search">
+				<span class="input-icon">
+					<input type="text" placeholder="Search ..." class="input-small nav-search-input" id="nav-search-input" autocomplete="off" />
+					<i class="icon-search nav-search-icon"></i>
+				</span>
+			</form>
+		</div><!-- #nav-search -->
+	</div>
+
+	<div class="page-content">
+		<div class="page-header position-relative">
+			<h1>
+				Quotes
+				<small>
+					<i class="icon-double-angle-right"></i>
+					{% if snQuotesId != ''%}
+						edit
+					{% else %}
+						add
+					{% endif%}
+				</small>
+			</h1>
+		</div><!-- /.page-header -->
+		{% include "AdminMedicalBundle::messages.html.twig" %}
+		<div class="widget-header">
+			<div class="widget-toolbar no-border" style="float:left">
+				<ul id="myTab" class="nav nav-tabs">
+					<li class="active">
+						<a href="#quote_detail" data-toggle="tab">Quote details</a>
+					</li>
+					<li>
+						<a href="#client_clinic_communication" data-toggle="tab">Client-Clinic</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+		<div class="row-fluid">
+			<div class="span12">
+				<div class="tab-content">
+				<!-- PAGE CONTENT BEGINS -->
+				<div class="tab-pane in active" id="quote_detail">
+				<h4>Quotes</h4>
+				<form class="form-horizontal" action="{{ path('medical_quotes_addedit', {'id': snQuotesId }) }}" method="post" enctype="multipart/form-data">
+				<div class="pull-left span6 ">					
+					<div class="control-group">
+						<label class="control-label" for="form-field-1">{{ "UniqueId" }}</label>
+						<div class="controls">					
+							<b>{{ objQuotes.UniqueId }}</b>												
+						</div>
+						{{ form_widget(form.unique_id, {'attr': {'value': objQuotes.UniqueId }}) }}
+					</div>		
+					
+					{% if objQuotes.QuoteStatus == "Completed"%}
+						<div class="control-group">
+						<label class="control-label" for="form-field-1">{{ form_label(form.quote_status) }}</label>
+						<div class="controls">							
+							<b style="color:green;">{{ objQuotes.QuoteStatus }}</b>
+							<input type="hidden" id="client_medicalbundle_user_quote_detail_quote_status" name="client_medicalbundle_user_quote_detail_quote_status" value="{{ objQuotes.QuoteStatus }}"/>
+						</div>
+					</div>
+					{% else %}
+					<div class="control-group">
+						<label class="control-label" for="form-field-1">{{ form_label(form.quote_status) }}</label>
+						<div class="controls">							
+							{{ form_widget(form.quote_status) }}																
+						</div>
+					</div>
+					{% endif %}
+					<div class="control-group">
+						<label class="control-label" for="form-field-1">{{ form_label(form.firstname) }}</label>
+						<div class="controls">							
+							{{ form_widget(form.firstname) }}																
+						</div>
+					</div>							
+					<div class="control-group">
+						<label class="control-label" for="form-field-1">{{ form_label(form.middlename) }}</label>
+						<div class="controls">							
+							{{ form_widget(form.middlename) }}																
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="form-field-1">{{ form_label(form.lastname) }}</label>
+						<div class="controls">							
+							{{ form_widget(form.lastname) }}																
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="form-field-1">{{ form_label(form.email) }}</label>
+						<div class="controls">							
+							{{ form_widget(form.email) }}																
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="form-field-1">{{ form_label(form.phone) }}</label>
+						<div class="controls">							
+							{{ form_widget(form.phone) }}																
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="form-field-1">{{ form_label(form.countries) }}</label>
+						<div class="controls">							
+							{{ form_widget(form.countries) }}								
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="form-field-1">{{ "IP" }}</label>
+						<div class="controls">							
+							{% set ssCountry = em.getRepository("AdminMedicalBundle:Company").getLocationInfoByIp(objQuotes.ClientIPAddress) %}
+							{{ objQuotes.ClientIPAddress }} {{ "("~ssCountry~")" }}
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="form-field-1">{{ form_label(form.categories) }}</label>
+						<div class="controls">							
+							{% for child in form.categories%}
+								<div class="categories">
+									{{ form_widget(child) }}
+									{{ form_label(child) }}
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="form-field-1">{{ form_label(form.urgent_medical_service) }}</label>
+						<div class="controls">	
+							{% for child in form.urgent_medical_service%}
+								<div class="urgent_medical">
+									{{ form_widget(child) }}
+									{{ form_label(child) }}
+								</div>
+							{% endfor %}							
+						</div>
+					</div>
+				</div>
+				<div class="pull-left span6 ">					
+					<div class="control-group">
+						<label class="" for="form-field-1">{{ form_label(form.health_problem) }}</label>
+						<div class="div_health_problem">							
+							{{ form_widget(form.health_problem) }}
+						</div>
+					</div>
+					<div class="upload_here">
+						<h2>Additional information</h2>	
+						{% if asQuoteCompanyDocumentsData|length > 0 %}
+							{% for asQuoteDocuments in asQuoteCompanyDocumentsData%}
+								{% if asset_exists('uploads/documents/'~snQuotesId~'/'~asQuoteDocuments.documents) %}
+									<a href="{{ path('medical_download_document',{'id': snQuotesId, 'filename': asQuoteDocuments.documents })}}" tabindex="1">{{ asQuoteDocuments.documents}}</a>																	
+								{% endif %}								
+								{{ asQuoteDocuments.description}}
+								<a href="{{ path('medical_quotes_document_delete', {'id': snQuotesId, 'doc_id': asQuoteDocuments.id }) }}" onClick='return confirm("Are you sure want to delete this record?");'>Delete</a>
+							{% endfor %}
+						{% endif %}
+						<div class="item">
+							<div class="content">
+								{# store the prototype on the data-prototype attribute #}
+								<div class="file" id="documents-fields-list" data-prototype="{{ form_widget(formImage.documents.vars.prototype)|e }} {{ "Description"|trans }} {{ form_widget(formImage.description.vars.prototype) | e }}"></div>					
+							</div>
+						</div>						
+					</div>
+					<div class="control-group">
+						<label class="" for="form-field-1">{{ form_label(form.companies) }}</label>
+						<div class="div_companies">						
+							{{ form_widget(form.companies) }}
+						</div>
+					</div>
+				</div>
+				
+				<div class="clear"></div>
+					<div class="row-fluid">
+						<div class="span12">
+							Companies for quote
+							<!--<form action="{{ path('medical_quotes_company_delete', {'id': snQuotesId }) }}" method="post">-->
+								{% if asQuoteCompanyData | length > 0%}
+								<!--<div class="main_btn">					
+									<input name="delete" type="submit" title="Delete" value="Delete" class="btn btn-danger" onClick="return confirmation('delete');">					
+									<div class="clr"></div>
+								</div>-->
+								{% endif %}
+								{% include "AdminMedicalBundle::messages.html.twig" %}
+								<table class="table table-striped table-bordered table-hover" id="sample-table-1">
+									<thead>
+										<tr>
+											<th class="center">
+												<label>
+													<input type="checkbox" class="ace">
+													<span class="lbl"></span>
+												</label>
+											</th>
+											<th>Company name</th>
+											<th>Company code</th>
+											<th>City</th>
+											<th>Quote status</th>
+											<th>Status changed</th>
+											<th>Admin</th>
+										</tr>
+									</thead>
+
+									<tbody>
+										{% if asQuoteCompanyData | length > 0%}
+										{% for asData in asQuoteCompanyData %}
+										<tr>
+											<td class="center">
+												<label>
+													<input type="checkbox" class="ace" value="{{ asData.company.id }}" name="chk_company_id[]">
+													<span class="lbl"></span>
+												</label>
+											</td>
+											<td>
+												<a target="_blank" href="{{path('medical_company_addedit',{'id': asData.company.id})}}">{{ asData.company.name }}</a>
+												{% if asData.company.small_company == 1 %}													
+													<img src="{{ asset('images/green-phone-md.png') }}"  height="25px" width="25px"/>
+												{% endif %}
+											</td>
+											<td>{{ asData.company.company_code }}</td>
+											<td>{{ asData.company.city }}</td>
+											<td>
+											{% if asData.quote_status == '' %}
+												 {{ "-" }}
+											{% elseif asData.quote_status == 'twenty_four' %}
+												{{ quotes_status.twenty_four }}
+											{% elseif asData.quote_status == 'in_progress' %}
+												{{ quotes_status.in_progress }}
+											{% elseif asData.paypal_payment_status == 1 or asData.quote_status == 'paid' %}
+												{{ quotes_status.paid }}
+											{% elseif asData.quote_status == 'archive' %}
+												{{ quotes_status.not_replied }}
+											{% endif %}
+											</td>
+											<td>
+											{% if asData.updated_at != '' %}
+												{{ asData.updated_at|date('Y m d H:i') }}
+											{% endif %}
+											</td>
+											<td>{{ app.user.name }}</td>					
+										</tr>
+									{% endfor %}
+									{% else %}
+									<tr>
+										<td colspan=7 align="center">No record found</td>
+									</tr>
+									{% endif %}
+									</tbody>				
+								</table>
+								<div class="clr"></div>	
+								<div class="form-actions">
+									<input class="btn btn-info" type="submit" name="Save" value="Save" tabindex="1" title="Save">
+									&nbsp; &nbsp;
+									<input class="btn btn-info" type="submit" name="verify" value="Verify and send to selected" tabindex="1" title="Save" onClick="return checkStatus();">
+									&nbsp; &nbsp; &nbsp;
+										<a class="btn" href="{{ path('medical_quotes')}}" title="Cancel" tabindex="1">Cancel</a>
+								</div>
+							</form>		
+						</div><!-- /span -->
+					</div>
+				</div>
+				
+				<div class="tab-pane" id="client_clinic_communication">
+				
+					<div class="client_message_page">
+
+						<div class="row client_message_hed_contn row-fluid">
+						  <div class="col-sm-3 left_menu span3">		
+								
+								{% if asCompanyDetail|length > 0 %}
+									<h4>Client messages</h4>
+									<ul>
+										{% for key,asCompany in asCompanyDetail %}
+											{% if key == 0 %}
+												{% set ssClass = "active"%}
+											{% else %}
+												{% set ssClass = '' %}
+											{% endif %}
+											
+											<li id="li_user_quote_{{ asCompany.id }}" class="{{ ssClass }}">
+											<a href="javascript:void(0)" onClick="getQuotedetail('{{ path('medical_quotes_addedit', {'id': app.request.get('id'), 'company_id': asCompany.id})}}', 'quote_communication_details_div', {{ asCompany.id }})">
+											
+											{{ asCompany.name }}
+											
+											{% if asCompany.cnt_unread_meesage > 0 %}
+												<span id="unread_message_count_{{ asCompany.id }}"><b>{{ asCompany.cnt_unread_meesage }}</b></span>
+											{% endif %}
+											
+											{% if asCompany.company_offered == 'Yes' %} 
+												<i>!</i> 
+											{% endif %}
+											
+											</a>
+											</li>					
+										{% endfor %}
+										</ul>
+									{% endif %}
+									<!--<li><a href="#" class="active">James Macel <b>2</b><i>!</i></a></li>-->
+						  </div>
+						  <div class="col-sm-9 right_contant span9">
+							<div id="loader" style="display:none"></div>
+								<div id="quote_communication_details_div">
+									{% include "AdminMedicalBundle:Quotes:communication.html.twig" %}			
+								</div>      
+							</div>
+						</div>
+						</div>
+					
+				</div>
+				
+				</div>
+			</div><!-- /.span -->			
+		</div><!-- /.row-fluid -->
+	</div><!-- /.page-content -->
+
+	<div class="ace-settings-container" id="ace-settings-container">
+		<div class="btn btn-app btn-mini btn-warning ace-settings-btn" id="ace-settings-btn">
+			<i class="icon-cog bigger-150"></i>
+		</div>
+
+		<div class="ace-settings-box" id="ace-settings-box">
+			<div>
+				<div class="pull-left">
+					<select id="skin-colorpicker" class="hide">
+						<option data-skin="default" value="#438EB9">#438EB9</option>
+						<option data-skin="skin-1" value="#222A2D">#222A2D</option>
+						<option data-skin="skin-2" value="#C6487E">#C6487E</option>
+						<option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
+					</select>
+				</div>
+				<span>&nbsp; Choose Skin</span>
+			</div>
+
+			<div>
+				<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar" />
+				<label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
+			</div>
+
+			<div>
+				<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar" />
+				<label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
+			</div>
+
+			<div>
+				<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs" />
+				<label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
+			</div>
+
+			<div>
+				<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" />
+				<label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
+			</div>
+		</div>
+	</div><!-- /#ace-settings-container -->
+	
+</div><!-- /.main-content -->
+<script type="text/javascript">
+
+    var $collectionHolder;
+     
+    // setup an "add a tag" link
+    var $addTagLink = $('<a href="#" class="add_pictures">+Add more files</a>');
+    var $newLinkLi = $('<div></div>').append($addTagLink);
+     
+    jQuery(document).ready(function() {
+        // Get the ul that holds the collection of tags
+        $collectionHolder = $('div.file');
+     
+        // add the "add a tag" anchor and li to the tags ul
+        $collectionHolder.append($newLinkLi);
+     
+        // count the current form inputs we have (e.g. 2), use that as the new
+        // index when inserting a new item (e.g. 2)
+        $collectionHolder.data('index', $collectionHolder.find(':input').length);
+     
+		// add a new tag form (see next code block)
+		addTagForm($collectionHolder, $newLinkLi);
+			
+        $addTagLink.on('click', function(e) {			
+            // prevent the link from creating a "#" on the URL
+            e.preventDefault();			
+            // add a new tag form (see next code block)
+            addTagForm($collectionHolder, $newLinkLi);
+        });
+       
+     function addTagForm($collectionHolder, $newLinkLi) 
+	 {
+		// Get the data-prototype explained earlier
+        var prototype = $collectionHolder.data('prototype');
+		// get the new index
+        var index = $collectionHolder.data('index');
+     
+        // Replace '__name__' in the prototype's HTML to
+        // instead be a number based on how many items we have
+        var newForm = prototype.replace(/__name__/g, index);
+     
+        // increase the index with one for the next item
+        $collectionHolder.data('index', index + 1);
+    
+        // Display the form in the page in an li, before the "Add a tag" link li
+        var $newFormLi = $('<div></div>').append(newForm);
+        $newLinkLi.before($newFormLi);
+    }  
+       
+    });
+
+$(".chosen-select").chosen(); 
+	$('#chosen-multiple-style').on('click', function(e){
+		var target = $(e.target);
+		var which = parseInt($.trim(target.text()));
+		if(which == 2) $('#admin_medicalbundle_company_list_company').addClass('tag-input-style');
+		 else $('#admin_medicalbundle_company_list_company').removeClass('tag-input-style');		 
+	});
+	
+$('.date-picker').datepicker({format: 'yyyy-mm-dd',});
+
+function hideshowreplyformdiv(snId)
+{	
+	$("#add_offer_show_link_"+snId).toggle('slow');
+	$("#add_offer_message_content_"+snId).toggle('slow');
+	$("#add_offer_reply_send_div_"+snId).toggle('slow');
+	$("#add_offer_div_"+snId).toggle('slow');
+}
+
+jQuery(function($) {
+		$('table th input:checkbox').on('click' , function(){
+			var that = this;
+			$(this).closest('table').find('tr > td:first-child input:checkbox')
+			.each(function(){
+				this.checked = that.checked;
+				$(this).closest('tr').toggleClass('selected');
+			});
+				
+		});		
+	})
+</script>
+{% endblock %}

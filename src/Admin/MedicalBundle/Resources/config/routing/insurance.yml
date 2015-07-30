@@ -1,0 +1,11 @@
+medical_insurance:
+    pattern:  /
+    defaults: { _controller: "AdminMedicalBundle:Insurance:index" }
+
+medical_insurance_addedit:
+    pattern:  /addedit/{id}
+    defaults: { _controller: "AdminMedicalBundle:Insurance:addedit", id:null }
+    
+medical_insurance_delete:
+    pattern:  /delete
+    defaults: { _controller: "AdminMedicalBundle:Insurance:delete" }

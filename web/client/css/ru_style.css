@@ -1,0 +1,16 @@
+body{font-family:arial;}
+.my_clinics{
+margin-top: 49px;
+margin-right: 8px;
+}
+.my_clinics a {font-size: 14px;font-weight: normal;}
+.rating_wrar .take_buttan .btn-default {
+	margin-right: 0!important;
+	float: right;
+}
+.rating_wrar .take_buttan .btn-default.cboxElement {
+	float: inherit;
+}
+.insurance_companie .table img {
+	width:180px;
+}

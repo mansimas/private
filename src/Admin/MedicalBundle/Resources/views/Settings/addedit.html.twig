@@ -1,0 +1,91 @@
+{% block stylesheets %}
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/jquery-ui.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('css/combine.css') }}" />
+{% endblock %}
+    
+{% block body %}
+{#{% set snLangId = app.request.get('id') %}#}
+{% set snLangId = app.request.get('id') != '' ? app.request.get('id'): '' %}	
+
+	<!--<div class="page-content">
+		<div class="page-header position-relative">
+			<h1>
+				Languages
+				<small>
+					<i class="icon-double-angle-right"></i>
+					{% if snLangId != ''%}
+						edit
+					{% else %}
+						add
+					{% endif%}
+				</small>
+			</h1>
+		</div>--><!-- /.page-header -->
+
+		<!--<div class="row-fluid">
+			<div class="span12">
+				<!-- PAGE CONTENT BEGINS -->
+				<form class="form-horizontal" action="{{ path('medical_settings_languages_addedit', {'id': snLangId }) }}" method="get" enctype="multipart/form-data">
+				<table>
+				{#{% if form is defined %}#}
+				
+				<tr>
+					<td>{{ form_label(form.name) }}</td>
+					<td>{{ form_widget(form.name) }}</td>
+				</tr>
+				<tr>
+					<td>{{ form_label(form.code) }}</td>
+					<td>{{ form_widget(form.code) }}</td>
+				</tr>
+				<tr>
+					<td>{{ form_label(form.flag) }}</td>
+					<td>{{ form_widget(form.flag) }}</td>
+				</tr>
+				<tr>
+					<td colspan="2"><input style="width:75px;height:34px;" class="btn btn-info" type="submit" name="Save" value="Save" tabindex="1" title="Save">
+					<div class="btn">						
+							<a href="{{ path('medical_settings_languages')}}" title="Cancel" tabindex="1">Cancel</a>
+						</div>
+					</td>
+				</tr>
+				
+					
+						
+					<!--<div class="control-group">
+						<label class="control-label" for="form-field-2">{{ form_label(form.name) }}</label>
+
+						<div class="controls">
+							{{ form_widget(form.name)}}																	
+						</div>
+					</div>-->					
+					<!--<div class="control-group">
+						<label class="control-label" for="form-field-2">{{ form_label(form.code) }}</label>
+
+						<div class="controls">
+							{{ form_widget(form.code)}}																	
+						</div>
+					</div>-->
+					<!--<div class="control-group">
+						<label class="control-label" for="form-field-2">{{ form_label(form.flag) }}</label>
+
+						<div class="controls">
+							{{ form_widget(form.flag)}}																	
+						</div>
+					</div>
+					<div class="form-actions">
+						<input style="width:83px;height:42px;" class="btn btn-info" type="submit" name="Save" value="Save" tabindex="1" title="Save">
+						&nbsp; &nbsp; &nbsp;
+						<div class="btn">						
+							<a href="{{ path('medical_settings_languages')}}" title="Cancel" tabindex="1">Cancel</a>
+						</div>
+					</div>-->
+				
+				</table>
+				</form>
+				{#{% endif %}#}
+			<!--</div><!-- /.span -->
+		<!--</div><!-- /.row-fluid -->
+	<!--</div><!-- /.page-content -->
+
+{% endblock %}

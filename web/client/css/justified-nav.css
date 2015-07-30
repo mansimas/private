@@ -1,0 +1,67 @@
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  text-align: center;
+  background-color: transparent;
+}
+.jumbotron .btn {
+  padding: 14px 24px;
+  font-size: 21px;
+}
+
+/* Customize the nav-justified links to be fill the entire space of the .navbar */
+
+.nav-justified {
+}
+.nav-justified > li > a {
+  padding-top: 12px;
+  padding-bottom: 15px;
+  margin-bottom: 0;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+  border-bottom: 1px solid #d5d5d5;
+  background:#0070bc;
+}
+.nav-justified > .active > a,
+.nav-justified > .active > a:hover,
+.nav-justified > .active > a:focus {
+  background-color: #4d6776;
+  background-image: none;
+  -moz-box-shadow: inset 1px -1px 30px 0 rgba(0,0,0,.35);
+  -webkit-box-shadow: inset 1px -1px 30px 0 rgba(0,0,0,.35);
+  box-shadow: inset 1px -1px 30px 0 rgba(0,0,0,.35);
+}
+.nav-justified > li:first-child > a {
+}
+.nav-justified > li:last-child > a {
+  border-bottom: 0;
+}
+.masthead {
+  margin-bottom: 10px;
+}
+@media (min-width: 768px) {
+  .nav-justified {
+  }
+  .nav-justified > li > a {
+    border-right: 0px solid #d5d5d5;
+    border-left: 1px solid #fff;
+  }
+  .nav-justified > li:first-child > a {
+    border-left: 0;
+  }
+  .nav-justified > li:last-child > a {
+    border-right: 0;
+  }
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  /* Remove the padding we set earlier */
+  .masthead,
+  .marketing,
+  .footer {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}

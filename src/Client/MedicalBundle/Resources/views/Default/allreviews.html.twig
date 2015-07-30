@@ -1,0 +1,13 @@
+{% extends 'ClientMedicalBundle::layout.html.twig' %}
+{% block metakeyword %}
+{% include 'ClientMedicalBundle:Default:websitemetasettings.html.twig'%}
+{% endblock %}
+{% block title %}{{'Medical Tourism Information'|trans}}{% endblock %}
+{% block body %}
+{% include 'ClientMedicalBundle:Company:quicksearch.html.twig' %}
+<div class="row news_listing_page">	
+	<div id="news_div">
+		{% include 'ClientMedicalBundle:Default:allreviewslisting.html.twig' %}
+	</div>
+</div>
+{% endblock %}

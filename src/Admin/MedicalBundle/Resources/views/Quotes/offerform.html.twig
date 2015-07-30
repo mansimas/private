@@ -1,0 +1,24 @@
+<div class="sub_whitebox">
+	<div class="showall_wrap">
+		<a href="javascript:void(0)" onClick="hideshowreplyformdiv({{ asComData[0]['id'] }})">- Hide Offer</a>
+	</div>
+	<p>Official clinic offer for services described below</p>
+	
+	<dl class="dl-horizontal">
+	  <dt>{{ "Treatment" }}</dt>
+	  <dd><b>{{ asComData[0]['service_description'] }}</b></dd>
+	
+	  <dt>{{ "Brief service desription" }}</dt>
+	  <dd>{{ asComData[0]['brief_service_description'] }}</dd>
+	
+	  <dt>{{ "Responsible person" }}</dt>
+	  <dd>{{ asComData[0]['responsible_person_doctor'] }}</dd>
+	
+	  <dt>{{ "Reservation date" }}</dt>
+	  <dd><b>{{ asComData[0]['reservation_date']|date('Y m d')~" "~asComData[0]['reservation_time']|date('H:i') }}</b></dd>
+	
+	  <dt>{{ "Total service price" }}</dt>
+	  <dd><b class="text-success">{{ asComData[0]['service_price'] }} Eur.</b></dd>
+	</dl>	
+	
+</div>

@@ -1,0 +1,134 @@
+<div class="row uniqueid">{{'Unikalus Nr.'}}&nbsp;&nbsp;{{ oQuoteDetail.UniqueId }}</div>
+	<div class="row">
+	{% if asCommunicationDetail|length > 0 %}	
+		{% set ssOfferDescription = '' %}
+		{% for asComData in asCommunicationDetail %}
+		{% if loop.first and asComData.user_type == 'user' %}
+			<div class="boxs whitebox">
+				<h5>{{ oQuoteDetail.firstname~" "~oQuoteDetail.lastname}} <span>{{ asComData.created_at|date('Y - m - d') }}</span></h5>
+				<p>--- <a href="javascript:void(0)" onClick="hideshowreplyformdiv({{ asComData.id }})">{{'Užklausą'}}</a> {{'atsiuntė'}} <strong>{{ oQuoteDetail.firstname~" "~oQuoteDetail.lastname}}</strong> į {{ app.user.name }} ----</p>
+					<div id="add_offer_div_{{ asComData.id }}" style="display:none">
+						<div class="row vertical_form">
+							{{ oQuoteDetail.healthProblem }}
+						</div>
+					</div>
+			</div>
+		{% elseif asComData.user_type == 'user' %}
+			<div class="row">
+				<div class="boxs whitebox">
+					<h5>{{ oQuoteDetail.firstname~" "~oQuoteDetail.lastname}}<span>{{ asComData.created_at|date('Y - m - d') }}</span></h5>
+					<p>
+					{% if asComData.edited_by_admin == 'Yes' %}
+						<i class="icon-user"></i> -- {{'Administratorius pakoregavo pranešimą.'}} {{ asComData.reply_message_content }}
+					{% elseif asComData.reservation_type == 'twenty_four' %}							
+						<b>24h</b> -- {{'Klientas atliko laikiną rezervacija (24 val.)'}} {{ ssOfferDescription }}.
+					{% elseif asComData.reservation_type == 'paid' %}
+						<b><i class="icon-ok"></i></b> -- {{'Klientas patvirtino paslaugų užsakymą'}} {{ ssOfferDescription }}.
+					{% else %}
+					{{ asComData.reply_message_content }}
+					{% endif %}
+					</p>
+				</div>
+			</div>
+		{# elseif loop.last and asComData.user_type == 'company' #}
+		{% elseif asComData.user_type == 'company' %}
+		{% set ssOfferDescription = asComData.service_description %}
+		<div class="row">
+			<div class="boxs graybox">
+				<h5>{{ app.user.name }} <span>{{ asComData.created_at|date('Y - m - d') }}</span></h5>
+								
+				{% if asComData.company_offered_unique == 'Yes' %}
+				<div class="showall_wrap" id="add_offer_show_link_{{ asComData.id }}">
+				<a href="javascript:void(0)" onClick="hideshowreplyformdiv({{ asComData.id }})">{{'Rodyti pasiūlymą'}}</a>
+				<a class="btn btn-default bluebtn input-sm" href="#">
+				<i>--- {{'pasiūlė'}} {{ asComData.service_description }} už {{ asComData.service_price }} Eur. ---</i>
+				</a>
+				</div>
+				
+				
+				{% set objId = ((objComm.Id != '') ? objComm.Id : '') %}
+				<form action="{{ path('clinic_medical_reply', {'quote_id': quote_id,'communication_id': objId }) }}" method="post" class="form-horizontal">
+					<div id="add_offer_div_{{ asComData.id }}" style="display:none">
+						{% set ssString = asComData.id %}
+						{% include "ClinicCommunicationBundle:Default:offerform.html.twig" %}
+						<div class="row vertical_form">
+							<label><span>{{'Žinutė klientui'}}</span></label>							
+							{% set ReplyMessageContent = ((objComm.ReplyMessageContent != '') ? objComm.ReplyMessageContent : '') %}
+							<textarea name="clinic_communicationbundle_user_company_communication[reply_message_content]" id="clinic_communicationbundle_user_company_communication_reply_message_content" >{{ objComm.ReplyMessageContent }}</textarea>
+						</div>
+						<div id="add_offer_reply_send_div_{{ asComData.id }}" style="display:none">
+							<input class="btn btn-default bluebtn input-sm" type="submit" value="{{'Siųsti pasiūlymą'}}" name="reply">
+						</div>
+					</div>
+				</form>
+				{% endif %}
+				<div id="add_offer_message_content_{{ asComData.id }}">
+				<p>				
+				{% if asComData.edited_by_admin == 'Yes' %}
+					<i class="icon-user"></i> -- {{'Administratorius pakoregavo pranešimą'}} {{ asComData.reply_message_content }}
+				{% else %}
+					{{ asComData.reply_message_content }}
+				{% endif %}
+				</p>				
+				</div>
+				
+			</div>
+		</div>	
+		{% endif %}
+		{% endfor %}
+		
+		{# if loop.last and asComData.user_type == 'user' #}
+		{% set objId = ((objComm.Id != '') ? objComm.Id : '') %}
+		<div class="row">
+			<div class="boxs graybox">
+				<h5>{{ app.user.name }} <span>{{ "now"|date('Y - m - d') }}</span></h5>
+				{% if app.session.flashbag.has('service_price_error')  %}
+					{% set ssDisplayDiv = "display:block" %}
+					{% set ssReplyDisplayDiv = "display:none" %}
+				{% else %}
+					{% set ssDisplayDiv = "display:none" %}
+					{% set ssReplyDisplayDiv = "display:block" %}						
+				{% endif %}
+				<div id="add_offer_link_last" style="{{ssReplyDisplayDiv}}">
+					<div class="addoffer">
+						<a href="javascript:void(0)" onClick="hideshowreplyformdiv('last')">+ {{'Pateikti pasiūlymą'}}</a>
+					</div>
+				</div>
+				<form action="{{ path('clinic_medical_reply', {'quote_id': quote_id , 'communication_id':objId}) }}" method="post" class="form-horizontal">
+					
+					<div id="add_offer_div_last" style="{{ ssDisplayDiv }}">
+						{% set ssString = 'last' %}
+						{% include "ClinicCommunicationBundle:Default:offerform.html.twig" %}					
+					</div>
+					<div class="row vertical_form">
+						<label><span>{{'Žinutė klientui'}}</span></label>											
+						{% set ReplyMessageContent = ((objComm.ReplyMessageContent != '') ? objComm.ReplyMessageContent : '') %}						
+<textarea name="clinic_communicationbundle_user_company_communication[reply_message_content]" id="clinic_communicationbundle_user_company_communication_reply_message_content" ></textarea>
+					</div>
+					<div id="add_offer_submit_last" style="{{ ssReplyDisplayDiv }}">
+						<div class="row">							
+							<input class="btn btn-default bluebtn input-sm" type="submit" value="{{'Siųsti'}}" name="reply">
+						</div>
+					</div>
+					<div id="add_offer_reply_send_div_last" style="{{ ssDisplayDiv }}">
+						<input class="btn btn-default bluebtn input-sm" type="submit" value="{{'Siųsti pasiūlymą'}}" name="reply">
+					</div>
+				</form>
+			</div>
+		</div>
+{% endif %}
+</div>
+<script type="text/javascript">	
+$('.date-picker').datepicker({format: 'yyyy-mm-dd'});
+$('.input-small').timepicker({
+	minuteStep: 1,
+	showSeconds: false,
+	showMeridian: false
+});
+function InvalidMsg(textbox) {
+    if (textbox.value == '') {
+        textbox.setCustomValidity('Prašome užpildyti');
+    }
+    return true;
+}
+</script>

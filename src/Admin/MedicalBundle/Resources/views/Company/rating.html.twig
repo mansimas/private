@@ -1,0 +1,106 @@
+{% set snRateId = app.request.get('rate_id') != '' ? app.request.get('rate_id'): '' %}    
+<div class="page-content">
+	{% include "AdminMedicalBundle::messages.html.twig" %}
+	<div class="page-header position-relative">
+		<h1>
+			Rating
+			<small>
+				<i class="icon-double-angle-right"></i>
+				addedit
+			</small>
+		</h1>
+	</div><!-- /.page-header -->
+
+	<div class="row-fluid">
+		<div class="span12">
+			<!-- PAGE CONTENT BEGINS -->
+			<form class="form-horizontal" action="{{ path('medical_company_rating', {'id': snConpanyId, 'rate_id': snRateId}) }}" method="post" enctype="multipart/form-data">		   
+			<!--<form class="form-horizontal">-->
+			<div class="medical_company_rating_left">
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(objRatings.only_rating) }}</label>
+					<div class="controls">	
+						{{ form_widget(objRatings.only_rating) }}																
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(objRatings.name) }}</label>
+					<div class="controls">	
+						{{ form_widget(objRatings.name) }}
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(objRatings.lastname) }}</label>
+					<div class="controls">	
+						{{ form_widget(objRatings.lastname) }}
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(objRatings.email) }}</label>
+					<div class="controls">	
+						{{ form_widget(objRatings.email) }}					
+					</div>
+				</div>				
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(objRatings.countries) }}</label>
+					<div class="controls">	
+						{{ form_widget(objRatings.countries) }}
+					</div>
+				</div>				
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(objRatings.rating_date) }}</label>
+					<div class="controls">
+						<div class="row-fluid input-append">
+						{{ form_widget(objRatings.rating_date) }}
+						<span class="add-on"><i class="icon-calendar"></i></span>
+						</div>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(objRatings.comments) }}</label>
+					<div class="controls">	
+						{{ form_widget(objRatings.comments) }}
+					</div>
+				</div>
+			</div>
+			<div class="medical_company_rating_right">
+				<div class="control-group">
+					<label class="radio_label_hide control-label" for="form-field-1">{{ form_label(objRatings.services) }}</label>
+					<div class="controls ratting_note">	
+						<div class="ratting_note_left">(Bad) <b>1</b></div>
+						<div class="ratting_note_right"><b>10</b> (Excellent)</div>
+						{{ form_widget(objRatings.services) }}	
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(objRatings.environment) }}</label>
+					<div class="controls">	
+						{{ form_widget(objRatings.environment) }}			
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(objRatings.staff) }}</label>
+					<div class="controls">	
+						{{ form_widget(objRatings.staff) }}
+					</div>
+				</div>
+			</div>
+			<div class="clr"></div>
+				<div class="form-actions">															
+					<input style="width:83px;height:42px;" class="btn btn-info" type="submit" name="Save" value="Save" tabindex="1" title="Save">
+					&nbsp; &nbsp; &nbsp;
+					<div class="btn">													
+						<a href="{{ path('medical_company')}}" tabindex="1">Cancel</a>
+					</div>
+				</div>	
+			</form>			
+		</div><!-- /.span -->
+	</div><!-- /.row-fluid -->
+</div><!-- /.page-content -->
+
+<div id="rating_listing">
+{% include 'AdminMedicalBundle:Company:ratelisting.html.twig' %}
+</div>
+<script type="text/javascript">
+$('.date-picker').datepicker({format: 'yyyy-mm-dd'});
+</script>

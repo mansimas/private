@@ -1,0 +1,175 @@
+{% extends 'AdminMedicalBundle::layout.html.twig' %}
+
+{% block title %}special detail{% endblock %}
+{% set snSpecialofferId = app.request.get('id') != '' ? app.request.get('id'): '' %}
+
+{% block body %}
+{% if asSpecialOfferData|length > 0 %}
+{% set asData = asSpecialOfferData[0][0] %}
+<div class="main-content">
+	<div class="span6 widget-container-span ui-sortable">
+		<div class="widget-box">
+			<div class="widget-body">
+				<div class="padding-6">
+					<div class="tab-content">
+						<div class="tab-pane active" id="company_profile">
+							<div class="page-content">	
+								<a href="{{ path('medical_specialoffers') }}"></a>
+								<div class="row-fluid">
+									<div class="span12 form-horizontal specialoffer_detail">
+										<!--<form class="form-horizontal">-->
+											<div class="pull-left span6 ">
+											<b>Offer details</b>
+											<div class="control-group">
+												<label class="control-label" for="form-field-1">Unique ID</label>
+												<div class="controls">	
+													<b>{{ asData.unique_id }}</b>
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="form-field-1">Company</label>
+												<div class="controls">	
+												<b>{{ asSpecialOfferData[0].name }}</b>
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="form-field-1">Status</label>
+												<div class="controls">	
+													{{ asData.status }}																
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="form-field-1">Offer period</label>
+												<div class="controls">
+													{{ asData.start_date|date('Y m d')~" "~asData.start_time|date('H:i') }} -
+													{{ asData.end_date|date('Y m d')~" "~asData.end_time|date('H:i') }}
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="form-field-1">Title</label>
+												<div class="controls">	
+													<b>{{ asData['title'] }}</b>
+													&nbsp;&nbsp;
+													<a href="{{ path('medical_company_addedit') }}?id={{asSpecialOfferData[0].company_id}}&special_id={{ asData.id }}">Edit offer</a>
+												</div>
+											</div>
+											</div>
+											<div class="pull-left span6 ">
+											<b>Sales details</b>
+											<div class="control-group">
+												<label class="control-label" for="form-field-1">Sales price</label>
+												<div class="controls">	
+													{{ asData.sales_price }} Eur. /345 Lt
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="form-field-1">Commissions fee</label>
+												<div class="controls">
+												{% if asData.client_fee != '' %}
+													{% set fee = asData.client_fee %}
+													{{ fee }} Eur from sale price						
+												{% else %}
+													{% set fee = ((asData.sales_price * asData.client_fee_percentage)/100) %}
+													{{ fee }} Eur from sale price						
+												{% endif %}					
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="form-field-1">Total sales</label>
+												<div class="controls">	
+													<b>{{ asData.sales_price * asSpecialOfferData[0].total_sale_count }}</b> Eur.
+												</div>
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="form-field-1">Commissions fee total</label>
+												<div class="controls">	
+													<b>{{ fee * asSpecialOfferData[0].total_sale_count }}</b> Eur from sale price
+												</div>					
+											</div>
+											<div class="control-group">
+												<label class="control-label" for="form-field-1">Total sales</label>
+												<div class="controls">	
+													<b>{% if asSpecialOfferData[0].total_count == '' %}
+													0
+													{% else %}
+													{{ asSpecialOfferData[0].total_count }}{% endif %}</b>
+												</div>
+											</div>				
+											<div class="control-group">
+												<label class="control-label" for="form-field-1">Coupons sold</label>
+												<div class="controls">
+													<b>{{ asSpecialOfferData[0].total_sale_count }}</b>
+												</div>
+											</div>
+											</div>
+											<div class="clr"></div>
+									</div><!-- /.span -->
+								</div><!-- /.row-fluid -->
+								<b>Coupon codes</b>
+								<a href="{{ path('medical_specialoffers_pdf', {'id': snSpecialofferId})}}" style="float:right"><b>Save PDF</b></a>
+								<table id="sample-table-2" class="table table-striped table-bordered table-hover">
+									<thead>
+										<tr>
+											<th>ID</th>
+											<th>Coupon ID</th>
+											<th>Date</th>								
+											<th>Time</th>
+											<th>Email</th>								
+											<th>Phone</th>				
+										</tr>
+									</thead>
+									<tbody>
+										{% if asData.specialoffersales|length > 0 %}
+										{% for key,asSpecial in asData.specialoffersales %}	
+											{% if asSpecial.couponcodes|length > 0 %}
+												{% for snCodekey,asSpecialCodes in asSpecial.couponcodes %}
+													<tr>
+														<td>{{ asSpecial.id }}</td>
+														<td>{{ asSpecialCodes.unique_code }}</td>
+														<td>{{ asSpecial.created_at|date('Y m d') }}</td>
+														<td>{{ asSpecial.created_at|date('H:i') }}</td>
+														<td>{{ asSpecial.email }}</td>
+														<td>{{ asSpecial.phone }}</td>
+													</tr>
+												{% endfor %}
+											{% endif %}
+										{% endfor %}
+										{% endif %}
+									</tbody>
+								</table>
+							</div><!-- /.page-content -->
+						</div>
+					</div>
+				</div>
+			</div>	
+		</div>
+	</div>
+</div>
+{% endif %}
+<script type="text/javascript">
+	jQuery(function($) {
+		$('#sample-table-2').dataTable({                
+                "aaSorting": [[ 0, "desc" ]],                
+                "bAutoWidth": true,
+                "aoColumnDefs": [{ 
+                    "bSearchable": false, 
+                    "bVisible": false, 
+                    "aTargets": [ 0 ]
+                }]
+            });			
+		$('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+		function tooltip_placement(context, source) {
+			var $source = $(source);
+			var $parent = $source.closest('table')
+			var off1 = $parent.offset();
+			var w1 = $parent.width();
+	
+			var off2 = $source.offset();
+			var w2 = $source.width();
+	
+			if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
+			return 'left';
+		}
+	})
+</script>
+{% endblock %}

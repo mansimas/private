@@ -1,0 +1,22 @@
+Admin\MedicalBundle\Entity\Testimonialvideo:
+    type: entity
+    table: testimonial_video
+    repositoryClass: Admin\MedicalBundle\Entity\TestimonialvideoRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        youtube_url:
+            type: text
+            nullable: true
+        created_at:
+            type: datetime
+            nullable: true
+        updated_at:
+            type: datetime		
+            nullable: true
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAtValue ]
+        preUpdate: [ setUpdatedAtValue ]

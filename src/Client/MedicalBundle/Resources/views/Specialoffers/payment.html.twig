@@ -1,0 +1,22 @@
+{% block javascripts %}	
+	<script src="{{ asset('admin/js/jquery.min.js') }}"></script>
+{% endblock %}
+{% block body %}
+
+<script type="text/javascript">
+$(document).ready(function () {
+	$("#paypal_form").submit();
+});	
+</script>
+
+<form method="post" id="paypal_form" action="{{ paypal_url }}">	
+	<input type='hidden' name='business' value='{{ paypal_email_id }}'>
+    <input type='hidden' name='cmd' value='_xclick'>	
+	<input type='hidden' name='item_number' value="{{ offer_id }}">
+	<input type='hidden' name='amount' value="{{ offer_sales_price }}">  			  
+	<input type='hidden' name='currency_code' value='USD'>
+	<input type='hidden' name='cancel_return' value='{{ paypal_cancel_url }}'>
+	<input type='hidden' name='return' value="{{site_url}}client/buysuccess/{{ offer_id }}/{{ sale_id }}/{{ email }}">
+</form>
+
+{% endblock %}

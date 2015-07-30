@@ -1,0 +1,50 @@
+{% extends 'ClientMedicalBundle::layout.html.twig' %}
+
+{% block metakeyword %}
+	{% if asMetaData|length > 0 and asMetaData[0]['url'] != '' and asData|length > 0 and asData[0]['url'] != '' %}
+		{% set ssMetaKeyword = asMetaData[0]['url']|striptags~","~asData[0]['url']|striptags %}
+	{% elseif asMetaData|length > 0 and asMetaData[0]['url'] != '' %}
+		{% set ssMetaKeyword = asMetaData[0]['url']|striptags %}
+	{% elseif asData|length > 0 and asData[0]['url'] != '' %}
+		{% set ssMetaKeyword = asData[0]['url']|striptags %}
+	{% else %}
+		{% set ssMetaKeyword = '' %}
+	{% endif %}	
+	
+	{% if asMetaData|length > 0 and asMetaData[0]['description'] != '' %}
+		{% set ssMetaDescription = asMetaData[0]['description']|striptags %}	
+	{% else %}
+		{% set ssMetaDescription = '' %}
+	{% endif %}	
+	<meta name="keywords" content="{{ ssMetaKeyword }}">
+	<meta name="description" content="{{ ssMetaDescription }}">
+{% endblock %}
+
+{% block title %}
+	{% if asData|length > 0 and asData[0]['title'] != ''%}
+		{{asData[0]['title']}}{{' | '}}{{'Medical Tourism Information - medical.lt'|trans}}
+	{%else%}
+		{{'Medical Tourism Information'|trans}}
+	{%endif%}
+{% endblock %}
+
+{% block body %} 
+{% include 'ClientMedicalBundle:Company:quicksearch.html.twig' %}
+<div class="row news_detail">
+    <div class="col-md-9 companylist_container newsdetilspage bannerheight">
+	  <a href="{{ path('client_medical_homepage') }}" class="btn btn-default whitebtn back_link">&lt;&lt; {{'Back'|trans}} </a>
+	  {% if asData|length > 0%}
+		{% for data in asData%}  
+		<h3>{{ data['title'] }}</h3>		
+		<p>{{ data['description']|raw }}</p>
+	  {% endfor %}
+	  {% endif %}
+	</div>	
+	<div class="col-md-3 right_part">
+		<div class="news_banner_wrapper">
+			{{ render(controller('ClientMedicalBundle:News:banners',{'ssPage':'static_articles','lang':'lt'})) }}
+		</div>
+			{#{{ render(controller('ClientMedicalBundle:Company:specialoffers',{'ssRoute':route})) }}#}
+	</div>	
+	</div>
+{% endblock %}

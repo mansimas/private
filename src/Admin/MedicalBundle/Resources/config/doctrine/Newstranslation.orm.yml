@@ -1,0 +1,30 @@
+Admin\MedicalBundle\Entity\Newstranslation:
+    type: entity
+    table: newstranslation
+    repositoryClass: Admin\MedicalBundle\Entity\NewstranslationRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        locale:
+            type: string
+            length: null
+            nullable: true
+        field:
+            type: string
+            length: null
+            nullable: true
+        content:
+            type: text
+            nullable: true
+    manyToOne:
+        object:
+            targetEntity: News
+            inversedBy: translations
+            joinColumn:
+                name: object_id
+                referencedColumnName: id
+                onDelete: CASCADE
+    lifecycleCallbacks: {  }

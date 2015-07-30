@@ -1,0 +1,74 @@
+Admin\MedicalBundle\Entity\News:
+    type: entity
+    table: news
+    gedmo:
+      translation:        
+        entity: Admin\MedicalBundle\Entity\Newstranslation
+    repositoryClass: Admin\MedicalBundle\Entity\NewsRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        photo:
+            type: text
+            length: null
+        status:
+            type: string
+            length: '100'
+        news_date:
+            type: datetime
+            nullable: true
+        url:
+            type: text            
+            nullable: true
+            gedmo:
+                - translatable
+        title:
+            type: text            
+            nullable: true
+            gedmo:
+                - translatable
+        description:
+            type: text            
+            nullable: true
+            gedmo:
+                - translatable
+        created_at:
+            type: datetime
+            nullable: true
+        updated_at:
+            type: datetime		
+            nullable: true
+    manyToMany:	  
+      company:
+        targetEntity: Company
+        inversedBy: news
+        joinTable:
+          name:  news_companies
+          joinColumns:
+            news_id:
+              referencedColumnName: id
+          inverseJoinColumns:
+            company_id:
+              referencedColumnName: id
+      categories:
+        targetEntity: Category
+        inversedBy: news
+        joinTable:
+          name:  news_categories
+          joinColumns:
+            news_id:
+              referencedColumnName: id
+          inverseJoinColumns:
+            category_id:
+              referencedColumnName: id
+    oneToMany:
+        translations:
+            targetEntity: Newstranslation
+            mappedBy: object
+            cascade: ["all"]
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAtValue ]
+        preUpdate: [ setUpdatedAtValue ]

@@ -1,0 +1,120 @@
+{% if asSpecialOfferData|length > 0 %}
+	{% set asData = asSpecialOfferData[0] %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<style>
+  body { font-family: DejaVu Sans, sans-serif; }
+</style>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href='http://fonts.googleapis.com/css?family=Roboto:100,400,500,700' rel='stylesheet' type='text/css'>
+<title>Kuponas</title>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-55572047-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+</head>
+
+<body style="padding:0; margin:0; sans-serif; color:#030000;font-family:dejavu sans, sans-serif;">
+<div style="margin:0 auto; width:1024px;" >
+    	<div style="display:block;">
+			<img src="{{ upload_photo_url }}images/pdf_images/header_img.jpg" align="Header Image" />
+		</div>
+    	<table width="100%" cellpadding="0" cellspacing="0" style="font-size:20px;margin-top:30px; line-height:22px;padding-bottom:20px;">
+			<tr>
+				<td style="margin:auto;font-size:20px; width:33.3%;">Client details</td>
+				<td style="margin:auto;font-size:20px; width:33.3%;">Clinic details</td>
+				<td style="33.3%;">
+					<h4 style="font-size:20px;margin:auto;color:#0173b4;text-align:left;text-transform:uppercase;">Coupon No. {{ coupon_code }}</h4>
+				</td>
+			</tr>
+			<tr>
+				<td style="">
+					<h4 style="font-size:22px;margin:10px auto;">{{ name }}</h4>
+				</td>
+				<td style="">{{ asData['company']['name'] }}</td>
+				<td style="margin:10px auto;font-size:20px;text-align:left;">Coupon valid till:{{ asData['coupon_valid_date']|date('Y. m. d.') }}</td>
+			</tr>
+			<tr>
+				<td style="font-size:20px">Purchase date: {{ "now"|date('Y. m. d.')}}<br/>
+				Price: {{ asData['sales_price'] }} Eur.</td>
+				<td>{{ asData['company']['address'] }}</td><td></td>
+			</tr>
+		</table>
+		
+		<table>
+			<tr>
+				<td>
+					<table>
+						<tr>
+							<td>
+							{% if asData['specialofferimages']|length > 0%}		  
+								{% set ssImageName = asData['specialofferimages'][asData['specialofferimages']|length - 1]['photo'] %}
+									{% if asset_exists('uploads/coupon_images/'~asData['id']~'/'~ssImageName) %}	
+										<img width="330" height="197" src="{{ upload_photo_url }}uploads/coupon_images/{{ asData['id'] }}/{{ ssImageName }}" alt="Thumb - 1"/>
+									{% else %}
+										<img width="330" height="197" src="{{ upload_photo_url }}client/images/no_image_big.png" alt="No Image" />
+									{% endif %}
+							{% else %}
+								<img width="330" height="197" src="{{ upload_photo_url }}client/images/no_image_big.png" alt="No Image" />
+							{% endif %}						
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td style="float: left;margin: auto auto auto 40px;width: 654px;vertical-align:top;">
+					<table>
+						<tr>
+							<td><h4 style="font-size:26px;margin:auto;color:#0173b4;text-align:justify;line-height:42px;text-transform:uppercase;">{{ asData['translations'][2]['content'] }}</h4>
+							</td>
+						</tr>						
+						<tr>
+						<td>
+							{% if asData['translations'][1]['content']|length > 100%}
+								{{ asData['translations'][1]['content']|raw|slice(0,100) }}...
+							{% else%}
+								{{ asData['translations'][1]['content']|raw }}
+							{%endif%}
+						</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			</table>
+			<table width="100%">
+				<tr>
+					<td width="130" style="vertical-align:top;text-align:right;">Responsible person:</td>
+					<td style="vertical-align:top;">{{ asData['responsible_person'] }}</td>
+				</tr>
+				<tr>
+					<td style="vertical-align:top;text-align:right;">Contacts:</td>
+					<td style="vertical-align:top;">{{ asData['contract_num'] }}</td>
+				</tr>
+			</table>				     
+        <div>
+			{{ asData['translations'][0]['content']|raw }}
+			<h3 style="margin-bottom:auto;">Conditions</h3>        
+            <div style="text-align:justify;">
+                {% if asConditionData|length > 0%}
+					{{ asConditionData[0]['description']|raw }}
+				{% endif %}
+            </div>
+			<table width="100%" cellpadding="0" cellspacing="0"  style="margin-top:50px auto auto;background-color:#0073b4;text-align:center;color:#fff;padding:0px;">
+				<tr>
+					<td width="142px"><img src="{{ upload_photo_url }}images/pdf_images/footer_logo.jpg" alt="Footer Logo" style="float:left;" /></td>
+					<td style="background-color:#0073b4;text-align:center;color:#fff;font-family: 'Roboto';font-size: 22px;font-weight: bold;padding: 10px 0;">These services were booked through www.medical.lt<br />
+					Therefore the Client has a right for a FREE (30 min.) lawyer consultation<br />
+					in case if any disputes with medical service provider arise.</td>
+				</tr>
+			</table>
+            <p style="color:#696969;font-size:20px;font-family:Arial, Helvetica, sans-serif;">2013 Medical.lt All rights reserved.</p>           
+                
+        </div>
+	</div>
+</body>
+</html>
+{% endif %}

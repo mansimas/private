@@ -1,0 +1,47 @@
+{% extends 'AdminMedicalBundle::layout2.html.twig' %}
+
+{% block title %}Medical Admin Login{% endblock %}
+
+{% block body %}
+ <div class="main-content"> 
+	
+	<div class="page-content" style="margin-left:200px;">
+		<div class="page-header position-relative" style="width:560px;margin-top: 70px;">
+			<h1>
+				Admin Login - Medical
+			</h1>
+		</div><!-- /.page-header -->
+
+		<div class="row-fluid">
+			<div class="span12">
+				<!-- PAGE CONTENT BEGINS -->
+          <form id="login-form" action="{{ path("medical_admin_login_check") }}" method="POST" class="form-horizontal">
+						 {% if error %}
+							 <div class="alert alert-error">{{ error.message|trans }}</div>			  
+						 {% endif %}
+            <div class="control-group">
+              <!--<label for="login-username">Username</label>-->
+              <label class="control-label" for="form-field-1">Username</label>
+              <div class="controls"><input type="text" class="form-control" id="login-username" placeholder="User Name" name="_username"></div>
+            </div>
+            
+            <div class="control-group">
+              <label class="control-label" for="form-field-2">Password</label>
+              <!--<label for="login-password">Password</label>-->
+              <div class="controls"><input type="password" class="form-control" id="login-password" placeholder="Password" name="_password"></div>
+            </div>
+            
+            <div class="form-actions" style="width:360px;">
+              <!--<button type="submit" id="login-btn" class="btn btn-success btn-block">Login</button>-->
+   						<input style="width:83px;height:42px;" class="btn btn-info" type="submit" name="Login" value="Login" tabindex="1" title="Login">
+    						&nbsp; &nbsp; &nbsp;
+        				<div class="btn">						
+              			<a href="{{ path('medical_advertisement')}}" title="Cancel" tabindex="1">Cancel</a>
+                </div>
+            </div>
+          </form>
+      	</div><!-- /.span -->
+		</div><!-- /.row-fluid -->
+	</div><!-- /.page-content -->
+</div><!-- /.main-content -->
+{% endblock %}

@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>medical</title>
+<link href='http://fonts.googleapis.com/css?family=Roboto:100,400,500,700' rel='stylesheet' type='text/css'>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-55572047-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+</head>
+<body style="padding:0; margin:0; sans-serif; color:#030000;">
+<div style="margin:0 auto; width:1024px;">   
+   <div style="display:block;">
+		<img src="{{ upload_photo_url }}images/pdf_images/header_img.jpg" align="Header Image" />
+	</div>  
+	<table width="100%" style="font-size:20px;margin-top:30px; line-height:38px;" cellpadding="0" cellspacing="0">
+		<tr>
+		<td width="35%" valign="top">
+			{% if asSpecialOfferData|length > 0 %}
+			 {% set asData = asSpecialOfferData[0][0] %}
+			<table>
+				<tr><td  colspan="2" style="font-size:20px; text-transform:uppercase; color:#030000;">Offer details</td></tr>
+				<tr><td style="color:#898989; text-align:right;margin-right:10px;">Unique ID</td><td style="border-left:solid 1px #c1b7b4;padding-left:10px;margin-left:10px;">{{ asData.unique_id }}</td></tr>
+				<tr><td style="color:#898989; text-align:right;margin-right:10px;">Company</td><td style="border-left:solid 1px #c1b7b4;padding-left:10px;margin-left:10px;">{{ asSpecialOfferData[0].name }}</td></tr>
+				<tr><td style="color:#898989; text-align:right;margin-right:10px;">Offer ends on</td><td style="border-left:solid 1px #c1b7b4;padding-left:10px;margin-left:10px;">{{ asData.end_date|date('Y m d')~" "~asData.end_time|date('H:i') }}</td></tr>				
+			</table>
+			{% endif %}
+		</td>
+		<td width="30%" valign="top">
+			
+		</td>
+		<td width="35%" valign="top">
+			{% if asSpecialOfferData|length > 0%}	
+			<table>
+				<tr><td colspan="2" style="font-size:20px; text-transform:uppercase; color:#030000; width:135px;">Sales details</td></tr>
+				<tr><td style="color:#898989; text-align:right;margin-right:10px; width:135px;">Sales price</td><td style="border-left:solid 1px #c1b7b4;padding-left:10px;margin-left:10px;">{{ asData.sales_price }} Eur. /345 Lt</td></tr>
+				<tr><td style="color:#898989; text-align:right;margin-right:10px; width:135px;">Clinic fee</td><td style="border-left:solid 1px #c1b7b4;padding-left:10px;margin-left:10px;">
+					{% if asData.client_fee != '' %}
+						{{ asData.client_fee }} Eur
+					{% else %}
+						{{ ((asData.sales_price * asData.client_fee_percentage)/100) }} Eur
+					{% endif %}
+				</td></tr>
+				<tr><td style="color:#898989; text-align:right;margin-right:10px; width:135px;">Total sales</td><td style="border-left:solid 1px #c1b7b4;padding-left:10px;margin-left:10px;">{{ asData.sales_price * asSpecialOfferData[0].total_sale_count }}</td></tr>				
+			</table>
+			{% endif %}
+		</td>
+		</tr>
+	</table>
+    	
+	<table cellpadding="10" cellspacing="0" width="100%" style="font-size:20px; border-collapse:collapse; margin-top:100px;">
+    <tr>
+      <th style="border:solid 1px #000; background:#e9e7e8;width:60px">Coupon ID</th>
+      <th style=" border:solid 1px #000; background:#e9e7e8;">Date</th>
+      <th style=" border:solid 1px #000; background:#e9e7e8;">Time</th>
+      <th style=" border:solid 1px #000; background:#e9e7e8;">Email</th>
+      <th style=" border:solid 1px #000; background:#e9e7e8;">Phone</th>
+    </tr>
+	{% if asData.specialoffersales|length > 0 %}
+		{% for key, asSpecial in asData.specialoffersales%}		
+			{% if asSpecial.couponcodes|length > 0 %}
+				{% for snCodekey,asSpecialCodes in asSpecial.couponcodes %}
+					<tr>
+						<td style=" border:solid 1px #000; text-align:center;">{{ asSpecialCodes.unique_code }}</td>
+						<td style=" border:solid 1px #000; text-align:center;">{{ asSpecial.created_at|date('Y m d') }}</td>
+						<td style=" border:solid 1px #000; text-align:center;">{{ asSpecial.created_at|date('H:i') }}</td>
+						<td style=" border:solid 1px #000; text-align:center;">{{ asSpecial.email }}</td>
+						<td style=" border:solid 1px #000; text-align:center;">{{ asSpecial.phone }}</td>
+					</tr>
+			{% endfor %}
+			{% endif %}
+		{% endfor %}
+	{% endif %}
+      
+  </table>
+
+	<table width="100%" style="margin-top:50px">
+		<tr>
+			<td width="142px"><img src="{{ upload_photo_url }}images/pdf_images/footer_logo.jpg" alt="Footer Logo" style="float:left;" /></td>
+			<td style="background-color:#0073b4;text-align:center;color:#fff;font-family: 'Roboto';font-size: 22px;font-weight: bold;padding: 10px 0;">These services were booked through www.medical.lt<br />
+				Therefore the Client has a right for a FREE (30 min.) lawyer consultation<br />
+				in case if any disputes with medical service provider arise.</td>
+		</tr>
+	</table>
+	
+  <div style="color:#030000; font-size:22px; font-weight:bold; margin-top:90px;"> Disclaimer </div>
+  <div style="color:#030000; font-size:22px; margin-top:15px; margin-bottom:44px;text-align:justify;color:#898989;font-weight:100;"> Phasellus porta. Fusce suscipit varius mi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla dui. Fusce feugiat malesuada odio. Morbi nunc odio, gravida at, cursus nec, luctus a, lorem. Maecenas tristique orci ac sem. Duis ultricies pharetra magna. Donec accumsan malesuada orci. Donec sit amet eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Mauris fermentum dictum magna. Sed laoreet aliquam leo. Ut tellus dolor, dapibus eget, elementum vel, cursus eleifend, elit. Aenean auctor wisi et urna. Aliquam erat volutpat. Duis ac turpis. Integer rutrum ante eu lacus.
+    Quisque nulla. Vestibulum libero nisl, porta vel, scelerisque eget, malesuada.</div>
+  <p style="color:#696969;font-size:20px;font-family:Arial, Helvetica, sans-serif;">2013 Medical.lt All rights reserved.</p>           
+</div>
+</body>
+</html>

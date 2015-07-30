@@ -1,0 +1,30 @@
+Admin\MedicalBundle\Entity\Staticarticletranslation:
+    type: entity
+    table: staticarticlestranslation
+    repositoryClass: Admin\MedicalBundle\Entity\StaticarticletranslationRepository    
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        locale:
+            type: string
+            length: null
+            nullable: true
+        field:
+            type: string
+            length: null
+            nullable: true
+        content:
+            type: text
+            nullable: true
+    manyToOne:
+        object:
+            targetEntity: StaticArticles
+            inversedBy: translations
+            joinColumn:
+                name: object_id
+                referencedColumnName: id
+                onDelete: CASCADE
+    lifecycleCallbacks: {  }

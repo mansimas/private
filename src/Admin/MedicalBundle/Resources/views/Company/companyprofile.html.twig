@@ -1,0 +1,338 @@
+{% set snServiceId = app.request.get('service_id') != '' ? app.request.get('service_id'): '' %}
+<div class="page-content">
+	{% include "AdminMedicalBundle::messages.html.twig" %}
+	<div class="page-header position-relative">
+		<h1>
+			Company creation
+			<small>
+				<i class="icon-double-angle-right"></i>
+				{% if snConpanyId != ''%}
+					edit
+				{% else %}
+					add
+				{% endif%}
+			</small>
+		</h1>
+	</div><!-- /.page-header -->
+	<div class="row-fluid">
+		<div class="span12">			
+			<!-- PAGE CONTENT BEGINS -->
+		   {{ form_start(form, {'action': path('medical_company_addedit', {'id': snConpanyId }), 'attr': {'class': 'form-horizontal'} }) }}		   
+			<!--<form class="form-horizontal">-->
+				<div class="pull-left span6 ">
+				Company details
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(form.categories) }}</label>
+					<div class="controls">	
+						{{ form_widget(form.categories) }}																
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(form.doctors) }}</label>
+					<div class="controls">	
+						{{ form_widget(form.doctors) }}																
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(form.name) }}</label>
+					<div class="controls">	
+						{{ form_widget(form.name) }}																
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(form.company_code) }}</label>
+					<div class="controls">	
+						{{ form_widget(form.company_code) }}																
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(form.vat_code) }}</label>
+					<div class="controls">	
+						{{ form_widget(form.vat_code) }}																
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(form.licence_number) }}</label>
+					<div class="controls">	
+						{{ form_widget(form.licence_number) }}																
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ "Minimal fee (EUR)" }}</label>
+					<div class="controls">	
+						{{ form_widget(form.fixed_fee) }}																
+					</div>
+				</div>
+				<!--<div class="control-group">					
+					<div class="controls">	
+						<b>OR</b>
+					</div>
+				</div>-->
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ "Comissions (%)" }}</label>
+					<div class="controls">	
+						{{ form_widget(form.fixed_fee_percentage) }}																
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(form.address) }}</label>
+					<div class="controls">	
+						{{ form_widget(form.address) }}																
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(form.city) }}</label>
+					<div class="controls">	
+						{{ form_widget(form.city) }}																
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(form.zip) }}</label>
+					<div class="controls">	
+						{{ form_widget(form.zip) }}																
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(form.countries) }}</label>
+					<div class="controls">	
+						{{ form_widget(form.countries) }}																
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ "Phone call on inquiry" }}</label>
+					<div class="controls">	{{form_widget(form.small_company)}}						
+					</div>
+				</div>
+				<div class="row">
+					<div class="span12">
+						<div class="checksmall">{{ form_label(form.disable_quotes) }} {{ form_widget(form.disable_quotes, {'attr': {'onClick': "disableinquiryandfinalprice()" }}) }}</div>
+						<div class="checksmall">{{ "Inquiry info" }} {{ form_widget(form.premium_company) }}</div>
+						<div class="checksmall">{{ form_label(form.final_price_info) }} {{ form_widget(form.final_price_info) }}</div>
+						<div class="clr"></div>
+					</div>
+				</div>
+				<div id="googleMap" style="width:400px;height:400px;"></div>
+				</div>
+				<div class="pull-left span6 ">
+				Contact details
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(form.primary_phone) }}</label>
+					<div class="controls">	
+						{{ form_widget(form.primary_phone) }}																
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(form.cell_phone) }}</label>
+					<div class="controls">	
+						{{ form_widget(form.cell_phone) }}																
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(form.fax) }}</label>
+					<div class="controls">	
+						{{ form_widget(form.fax) }}																
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(form.email) }}</label>
+					<div class="controls">	
+						{{ form_widget(form.email) }}
+						{% if form_errors(form.email) %}
+						<div class="chng_err_msg">
+							{{ form_errors(form.email) }}
+						</div>
+						{% endif %}
+					</div>					
+					<p class="for_quotes">for quotes</p>
+				</div>
+                <div class="control-group">
+                    <label class="control-label" for="form-field-1">{{ form_label(form.username) }}</label>
+                    <div class="controls">
+                        {{ form_widget(form.username) }}
+                        {% if form_errors(form.username) %}
+                            <div class="chng_err_msg">
+                                {{ form_errors(form.username) }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <p class="for_quotes">for login</p>
+                </div>
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(form.password) }}</label>
+					<div class="controls">	
+						{{ form_widget(form.password) }}																
+					</div>
+				</div>				
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(form.badges) }}</label>
+					<div class="controls">
+						{% for child in form.badges %}
+						<div class="radio_badges">
+							{{ form_widget(child) }}
+							{{ form_label(child) }}
+						</div>
+						{% endfor %}																					
+					</div>
+				</div>
+                <div class="companymetadetail">
+                    {{ form_widget(form.translations) }}
+                </div>
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(form.languagess) }}</label>
+					<div class="controls">	
+						{% for child in form.languagess %}
+						<div class="radio_language">
+							{{ form_widget(child) }}
+							{{ form_label(child) }}
+						</div>
+						{% endfor %}																						
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(form.paymentoptions) }}</label>
+					<div class="controls">
+						{% for child in form.paymentoptions %}
+						<div class="radio_payment_option">
+							{{ form_widget(child) }}
+							{{ form_label(child) }}
+						</div>
+						{% endfor %}																					
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">Notes about company <p class="notesaboutcompany">(for admin only)</p></label>
+					<div class="controls">	
+						{{ form_widget(form.company_note) }}																
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(form.insurances) }}</label>
+					<div class="controls">	
+						{{ form_widget(form.insurances) }}																
+					</div>					
+				</div>
+
+				</div>
+				<div class="clr"></div>
+				<input type="hidden" id="image_count" name="image_count" value="0">				
+				<div id="medical_save_button" class="form-actions company_profilesave">															
+					<input style="width:83px;height:42px;" class="btn btn-info" type="submit" name="Save" value="Save" tabindex="1" title="Save">
+					&nbsp; &nbsp; &nbsp;
+					<div class="btn">													
+							<a href="{{ path('medical_company')}}" tabindex="1">Cancel</a>
+					</div>
+				</div>
+				<!-- Youtube logic start -->
+			<div class="imageupload_wraper video dz-started ">
+			<div id="bootbox-regular" class="youtube">Add youtube</div>
+				<div id="youtube_hidden_url"></div>
+				<div id="db_delete_youtube_url"></div>
+				
+
+				
+				<div id="display_youtube_hidden">				
+				{% if asVideoData|length > 0%}
+					{% for snKey,asData in asVideoData%}				
+					<div id="youtube_video_{{ asData.id}}" class="you_tube_video">
+						<a  class="delete_youtube" href="javascript:void(0)" onClick = "deletevideo('youtube_video_{{ asData.id}}','{{ asData.id }}','')">
+						<img src="{{ asset('images/admin/delete.jpg') }}" />
+						</a>
+						<iframe width="100" height="100" src="{{ asData.url }}" frameborder="0" allowfullscreen>
+						</iframe>
+					</div>
+					{% endfor %}
+					<input id="hidden_count_id" type="hidden" value="{{ asVideoData|length }}">
+				{% endif %}
+				</div>
+				<div class="clr"></div>
+				</div>
+				<!-- Youtube logic end -->
+				
+			{{ form_end(form) }}						
+			
+			<div class="imageupload_wraper">				
+				<form action="{{ path("medical_company_imageupload") }}" class="dropzone" id="my-awesome-dropzone">
+				  <div class="fallback">
+					<input name="file" type="file" multiple />
+				  </div>
+				<div class="clr"></div>
+				</form>
+			</div>
+
+		</div><!-- /.span -->
+	</div><!-- /.row-fluid -->
+</div><!-- /.page-content -->
+<script type="text/javascript">
+$(document).ready(function () {
+disableinquiryandfinalprice();
+});
+jQuery(function($) 
+				{
+					$("#bootbox-regular").on(ace.click_event, function() 
+						{
+							test(bootbox,'');
+						});
+				});
+	$(".chosen-select").chosen();
+	$('#chosen-multiple-style').on('click', function(e){
+		var target = $(e.target);
+		var which = parseInt($.trim(target.text()));
+		if(which == 2) $('#admin_medicalbundle_company_insurances').addClass('tag-input-style');
+		 else $('#admin_medicalbundle_company_insurances').removeClass('tag-input-style');
+	});
+$('.date-picker').datepicker({'format':'mm/dd/yyyy'});
+
+function deletevideo(divId, dbId, hiddenId)
+{
+	$("#"+divId).hide();	
+	
+	if(dbId != '')
+	{
+		var element = '<input type="hidden" name="deleteurl[]" value='+dbId+'>';
+		$('#db_delete_youtube_url').append(element);
+	}
+	if(hiddenId != '')
+	{
+		$("#"+hiddenId).remove();
+	}
+}
+function test(bootbox, ssMsg)
+{
+	bootbox.prompt("Youtube URL<h6>(http://www.youtube.com/embed/F0dugc4TrlE)</h6>"+ssMsg, function(result) {					
+		if (result === null)
+		{		
+		}
+		else
+		{
+			//var matches = result.match(/^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((.|-){11})(?:\S+)?$/);
+			var matches = url.match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\|\/user\/\S+|\/ytscreeningroom\?v=|\/sandalsResorts#\w\/\w\/.*\/))([^\/&]{10,12})/);
+			if(matches)
+			{				
+				var snTotalCount = parseInt($('#hidden_count_id').val());
+				var temp = snTotalCount + 1;
+				
+				var element = '<input type="hidden" id="hidden_url_'+temp+'" name="url[]" value='+result+'>';
+				$('#youtube_hidden_url').append(element);
+				
+				var video = '<div class="you_tube_video" id="youtube_video_'+temp+'"><a class="delete_youtube" href="javascript:void(0)" onClick = deletevideo("youtube_video_'+temp+'","","hidden_url_'+temp+'")><img src="{{ asset("images/admin/delete.jpg") }}" /></a><iframe width="100" height="100" src="'+result+'" frameborder="0" allowfullscreen></iframe></div>'
+				$('#display_youtube_hidden').append(video);
+				
+				$('#hidden_count_id').val(temp);
+			}
+			else
+			{
+				if (result == '') 
+				{
+					test(bootbox,'<br><h5 style="color:red">please enter URL</h5>');					
+				} 
+				else
+				{
+					test(bootbox,'<br><h5 style="color:red">Please enter valid URL</h5>');
+					$(".input-block-level").val(result);
+					$(".input-block-level").select();
+				}
+			}
+		}
+	});
+}
+</script>

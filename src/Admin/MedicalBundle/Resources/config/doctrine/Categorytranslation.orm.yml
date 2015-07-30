@@ -1,0 +1,30 @@
+Admin\MedicalBundle\Entity\Categorytranslation:
+    type: entity
+    table: categorytranslation
+    repositoryClass: Admin\MedicalBundle\Entity\CategorytranslationRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        locale:
+            type: string
+            length: null
+            nullable: true
+        field:
+            type: string
+            length: null
+            nullable: true
+        content:
+            type: text
+            nullable: true
+    manyToOne:
+        object:
+            targetEntity: Category
+            inversedBy: translations
+            joinColumn:
+                name: object_id
+                referencedColumnName: id
+                onDelete: CASCADE
+    lifecycleCallbacks: {  }

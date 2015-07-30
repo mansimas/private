@@ -1,0 +1,185 @@
+{% extends 'ClientMedicalBundle::layout.html.twig' %}
+
+{% block metakeyword %}
+	{% if asNewsData|length > 0 and asNewsData[0]['title'] != '' %}
+		{% set ssMetaKeyword = asNewsData[0]['title']|striptags %}
+	{% else %}
+		{% set ssMetaKeyword = '' %}
+	{% endif %}
+	<meta name="keywords" content="{{ ssMetaKeyword }}">
+{% endblock %}
+
+{% block title %}
+	{% if asNewsData|length > 0 and asNewsData[0]['title'] != ''%}
+		{{asNewsData[0]['title']}}{{' | '}}{{'Medical Tourism Information - medical.lt'|trans}}
+	{%else%}
+		{{'Medical Tourism Information'|trans}}
+	{%endif%}
+{% endblock %}
+
+{% block body %}
+
+ <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+			var cboxMapOptions = {  
+						width: '95%',
+						height: '95%',
+						maxWidth: '943px',
+						maxHeight: '443px',
+					}
+					
+			$('.showmap').colorbox(cboxMapOptions);
+			$(window).resize(function(){
+			  $.colorbox.resize({
+				width: window.innerWidth > parseInt(cboxMapOptions.maxWidth) ? cboxMapOptions.maxWidth : cboxMapOptions.width,
+				height: window.innerHeight > parseInt(cboxMapOptions.maxHeight) ? cboxMapOptions.maxHeight : cboxMapOptions.height
+			  });
+			});
+			
+			});
+			
+</script>
+{% include 'ClientMedicalBundle:Company:quicksearch.html.twig' %}
+<div class="row news_detail">	
+	<div class="clearfix"></div>
+    <div class="col-md-8 companylist_container newsdetilspage bannerheight">
+	<a href="{{ path('client_medical_news') }}" class="btn btn-default whitebtn back_link">&lt;&lt; {{'Back to news'|trans}}</a>
+	  {% if asNewsData|length > 0%}
+	  <div>
+	  {% for asData in asNewsData %}	  
+		<h3>{{ asData['title']|striptags }}</h3>
+		<span>{{ asData['news_date']|date('d m Y') }}</span>			
+	  <div class="row">
+		<div class="col-md-4 offer_img">
+			{% if asset_exists('uploads/news/'~asData.photo) %}
+				<img src="{{ asset('uploads/news/'~asData.photo) }}"  width="136px" />
+			{% else %}
+				<img src="{{ asset('client/images/no_image.png') }}" alt="No Image"  width="136px"/>
+			{% endif %}			
+		</div>
+		<div class="col-md-8">				   
+		  <div class="row offer_detils">
+			<p><b></b></p>
+			<p><b></b></p>
+		  </div>		  
+		</div>
+	  </div>
+			<p>{{ asData['description']|raw }}</p>
+	  {% endfor %}
+	  </div>
+	  {% endif %}
+	  {% set route = path(ssRoute,{'id':asNewsData[0]['id']}) %}
+	  <div class="related_clinics col-xs-8 col-md-12">
+		{% if asNewsData|length > 0%}
+			{% set snCatIds = "" %}
+			{% set snIds = "" %}
+			{% set asNewsData = asNewsData[0] %}			
+			{% if asNewsData.company|length > 0 %}
+				<h6>{{'Related clinics'|trans}}</h6>				
+				{% for asData in asNewsData.company %}					
+				{% set ssCompanyName = em.getRepository("AdminMedicalBundle:Company").Slug(asData.name) %}
+					<div class="row companylists_row col-xs-6 ">
+						<div class="col-xs-4 offer_img">
+							{% if asData.companyimages|length > 0%}		  
+								  {% set ssImageName = asData['companyimages'][asData.companyimages|length - 1]['photo'] %}
+								  {% if asset_exists('uploads/company/'~asData.id~'/'~ssImageName) %}												
+										<a href="{{ path('client_medical_company_detail', {'id':asData.id,'name':ssCompanyName})}}"><img src="{{ asset('uploads/company/'~asData.id~'/'~ssImageName) }}" alt="No Image" /></a>
+								  {% else %}
+										{% set ssImageName = 'no_image.png' %}
+										<a href="{{ path('client_medical_company_detail', {'id':asData.id, 'name':ssCompanyName})}}"><img src="{{ asset('client/images/'~ssImageName) }}" alt="No Image" /></a>
+								  {% endif %}
+							{% else %}
+								{% set ssImageName = 'no_image.png' %}
+								<a href="{{ path('client_medical_company_detail', {'id':asData.id, 'name':ssCompanyName})}}"><img src="{{ asset('client/images/'~ssImageName) }}" alt="No Image" /></a>
+							{% endif %}
+							</div>
+						<div class="col-xs-8">
+							<h3><a href="{{ path('client_medical_company_detail', {'id':asData.id, 'name':ssCompanyName})}}">{{ asData.name }}</a></h3>
+							<div class="address">
+							<a class="nav_location_icon showmap" href="{{ path('client_medical_showmap', {'address': asData.address,'company_name': asData.name })}}"></a>
+							{{ asData.address }}
+							</div>
+						</div>
+						<div class="clr"></div>
+						<div class="disc">
+							{% if asData.category|length > 0 %}
+								{% for cat in asData.category%}
+									<span class="comp_cat_subcat_list">{{ cat['roots']['name'] }}</span>
+								{% endfor %}
+							{% endif %}						
+						</div>
+					</div>
+					{% if asNewsData.categories|length != 0 %}
+						{% for category in asNewsData.categories%}
+							{% set snCatIds = category.id~","~snCatIds %}
+						{% endfor %}
+					{% endif %}
+				{% endfor %}
+				<div class="clr"></div>				
+				{% if asNewsData.categories|length != 0 %}
+				{% set ascategoryData = em.getRepository("AdminMedicalBundle:Category").getCatgoryDetails(snCatIds|slice(0,snCatIds|length-1)) %}
+				{% for ascatData in ascategoryData %}
+					{% set snIds = ascatData.root_id~","~snIds %}
+				{% endfor %}
+				<form method="POST" action="{{ path('client_medical_company') }}">
+					<input type="hidden" name="news_category_ids" value="{{ snIds|slice(0,snIds|length-1) }}"> 
+					<input class="btn btn-default bluebtn" type="submit" value="{{'Show more clinics'|trans}}">			
+				</form>			
+				{% endif %}				
+				{% else %}
+					{% if asNewsData.categories|length != 0 %}
+					<h6>{{'Related clinics'|trans}}</h6>
+					{% set ascategoryData = em.getRepository("AdminMedicalBundle:Company").getRandomCompany(locale) %}
+					{% if ascategoryData|length > 0 %}
+						{% for asData in ascategoryData %}							
+						<div class="row companylists_row col-xs-6 ">
+							<div class="col-xs-4 offer_img">
+								{% if asData.companyimages|length > 0%}		  
+									  {% set ssImageName = asData['companyimages'][asData.companyimages|length - 1]['photo'] %}
+									  {% if asset_exists('uploads/company/'~asData.id~'/'~ssImageName) %}												
+											<a href="{{ path('client_medical_company_detail', {'id':asData.id, 'name':ssCompanyName})}}"><img src="{{ asset('uploads/company/'~asData.id~'/'~ssImageName) }}" alt="No Image" /></a>
+									  {% else %}
+											{% set ssImageName = 'no_image.png' %}
+											<a href="{{ path('client_medical_company_detail', {'id':asData.id, 'name':ssCompanyName})}}"><img src="{{ asset('client/images/'~ssImageName) }}" alt="No Image" /></a>
+									  {% endif %}
+								{% else %}
+									{% set ssImageName = 'no_image.png' %}
+									<a href="{{ path('client_medical_company_detail', {'id':asData.id, 'name':ssCompanyName})}}"><img src="{{ asset('client/images/'~ssImageName) }}" alt="No Image" /></a>
+								{% endif %}
+								</div>
+							<div class="col-xs-8">
+								<h3><a href="{{ path('client_medical_company_detail', {'id':asData.id, 'name':ssCompanyName})}}">{{ asData.name }}</a></h3>
+								<div class="address">
+								<a class="nav_location_icon showmap" href="{{ path('client_medical_showmap', {'address': asData.address,'company_name': asData.name })}}"></a>
+								{{ asData.address }}
+								</div>
+							</div>
+							<div class="clr"></div>
+							<a href="#" class="disc">
+							{% if asData.category|length > 0 %}
+								{% for category in asData.category%}
+									<span class="comp_cat_subcat_list">{{ category.roots.name }}</span>
+								{% endfor %}
+							{% endif %}
+							</a>
+						</div>
+						{% endfor %}
+					{% endif %}
+					<div class="clr"></div>
+					{% endif %}
+			{% endif %}
+			
+			<div class="clr"></div>
+	    {% endif %}
+		</div>
+	</div>
+	<div class="col-md-3 right_part">
+	  <div class="news_banner_wrapper">
+		{{ render(controller('ClientMedicalBundle:News:banners',{'ssPage':'news'})) }}
+	  </div>
+		{{ render(controller('ClientMedicalBundle:Company:specialoffers',{'ssRoute':route})) }}
+	</div>
+	<div class="clr"></div>	
+	</div>
+{% endblock %}

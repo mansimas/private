@@ -1,0 +1,32 @@
+Admin\MedicalBundle\Entity\PaymentOption:
+    type: entity
+    table: payment_option
+    repositoryClass: Admin\MedicalBundle\Entity\PaymentOptionRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        title:
+            type: string
+            length: null
+        photo:
+            type: string
+            length: null
+            nullable: true
+        createdAt:
+            type: datetime
+            nullable: true
+            column: created_at
+        updatedAt:
+            type: datetime
+            nullable: true
+            column: updated_at
+    manyToMany:      
+      companies:
+        targetEntity: Company
+        mappedBy: paymentoptions
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAtValue ]
+        preUpdate: [ setUpdatedAtValue ]

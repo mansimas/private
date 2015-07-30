@@ -1,0 +1,159 @@
+client_medical_homepage:
+    pattern:  /
+    defaults: { _controller: ClientMedicalBundle:Default:index }
+client_medical_company:
+    pattern:  /company/{category_ids}
+    defaults: { _controller: ClientMedicalBundle:Company:index, category_ids: null }
+client_medical_company_search:
+    pattern:  /companysearch/{category_ids}
+    defaults: { _controller: ClientMedicalBundle:Company:companysearch, category_ids: null }
+client_medical_save_user_company:
+    pattern:  /saveusercompany
+    defaults: { _controller: ClientMedicalBundle:Company:saveusercompany }
+client_medical_company_detail:
+    pattern:  /clinic/{id}/{name}
+    defaults: { _controller: ClientMedicalBundle:Company:companydetail ,id:null,name:null}
+client_medical_company_insurances:
+    pattern:  /company/insurance/
+    defaults: { _controller: ClientMedicalBundle:Company:insurancedetail }
+client_medical_language:
+    pattern:  /language/{locale}
+    defaults: { _controller: ClientMedicalBundle:Company:changelanguage }
+client_medical_rating:
+    pattern:  /rating
+    defaults: { _controller: ClientMedicalBundle:Rating:index }
+client_medical_add_rating:
+    pattern:  /rating/add/{id}
+    defaults: { _controller: ClientMedicalBundle:Rating:addrating }
+client_medical_add_mail_rating:
+    pattern:  /addrating/{id}
+    defaults: { _controller: ClientMedicalBundle:Rating:mailaddrating }
+client_medical_user_company:
+    pattern:  /myclinics
+    defaults: { _controller: ClientMedicalBundle:Company:usercompany }
+client_medical_remove_user_company:
+    pattern:  /removeusercompany
+    defaults: { _controller: ClientMedicalBundle:Company:removeusercompany }
+client_medical_sendquote:
+    pattern:  /sendquote
+    defaults: { _controller: ClientMedicalBundle:Company:sendquote }
+client_medical_sendquotepopup:
+    pattern:  /sendquotepopup
+    defaults: { _controller: ClientMedicalBundle:Company:sendquotepopup }
+client_medical_sendquotesuccess:
+    pattern:  /success
+    defaults: { _controller: ClientMedicalBundle:Company:sendquotesuccess }
+client_medical_news:
+    pattern:  /news
+    defaults: { _controller: ClientMedicalBundle:News:index }
+client_medical_news_detail:
+    pattern:  /news/{id}/{name}
+    defaults: { _controller: ClientMedicalBundle:News:newsdetail, id:null,name:null}
+client_medical_special_offers:
+    pattern:  /specialoffers
+    defaults: { _controller: ClientMedicalBundle:Specialoffers:index }
+client_medical_buy_special_offers:
+    pattern:  /specialoffers/buy/{id}
+    defaults: { _controller: ClientMedicalBundle:Specialoffers:buyspecialoffer}
+client_medical_special_offers_detail:
+    pattern:  /specialoffers/{id}/{name}
+    defaults: { _controller: ClientMedicalBundle:Specialoffers:specialofferdetail,id:null,name:null}
+client_buysuccess:
+    pattern:  /buysuccess
+    defaults: { _controller: ClientMedicalBundle:Specialoffers:buysuccess}
+client_communication:
+    pattern:  /communication/{quote_id}/{company_id}
+    defaults: { _controller: ClientMedicalBundle:Communication:index, quote_id:null, company_id:null}
+client_reply_communication:
+    pattern:  /clientreply/{quote_id}/{company_id}
+    defaults: { _controller: ClientMedicalBundle:Communication:clientreply, quote_id:null, company_id:null}
+client_final_reservation:
+    pattern:  /finalreservation/{quote_id}/{company_id}
+    defaults: { _controller: ClientMedicalBundle:Communication:finalreservation}
+client_success_reservation:
+    pattern:  /successreservation/{quote_id}/{company_id}
+    defaults: { _controller: ClientMedicalBundle:Communication:successreservation}
+client_twentyfour_reservation:
+    pattern:  /twentyfourhrsreservation/{quote_id}/{company_id}
+    defaults: { _controller: ClientMedicalBundle:Communication:twentyfourhrsreservation}
+client_thankyou:
+    pattern:  /thankyou
+    defaults: { _controller: ClientMedicalBundle:Communication:thankyou}
+client_medical_places_to_visit:
+    pattern:  /visitsplace
+    defaults: { _controller: ClientMedicalBundle:Default:placestovisit }
+client_medical_consultantion:
+    pattern:  /consultantion
+    defaults: { _controller: ClientMedicalBundle:Default:consultantion }
+client_medical_insurance_fund:
+    pattern:  /insurancefund
+    defaults: { _controller: ClientMedicalBundle:Default:insurancefund }
+client_medical_visatravels:
+    pattern:  /visatravels
+    defaults: { _controller: ClientMedicalBundle:Default:visatravels }
+client_medical_about:
+    pattern:  /about
+    defaults: { _controller: ClientMedicalBundle:Default:aboutmedical }
+client_medical_casedispute:
+    pattern:  /casedispute
+    defaults: { _controller: ClientMedicalBundle:Default:casedispute }
+client_medical_showmap:
+    pattern:  /showmap
+    defaults: { _controller: ClientMedicalBundle:Default:showmap }
+client_medical_category:
+    pattern:  /category
+    defaults: { _controller: ClientMedicalBundle:Category:index }
+client_medical_category_detail:
+    pattern:  /category/{id}/{name}
+    defaults: { _controller: ClientMedicalBundle:Category:categorydetail , id:null, name:null}
+client_medical_autocomplete:
+    pattern:  /autocomplete
+    defaults: { _controller: ClientMedicalBundle:Company:autocomplete }
+client_category_fetch:
+    pattern:  /fetch
+    defaults: { _controller: "ClientMedicalBundle:Default:fetch" }
+client_communication_payment:
+    pattern:  /payment
+    defaults: { _controller: "ClientMedicalBundle:Communication:payment" }
+client_specialoffer_callback:
+    pattern:  /callback
+    defaults: { _controller: "ClientMedicalBundle:Specialoffers:callback" }
+client_specialoffer_cancel:
+    pattern:  /cancel/{id}
+    defaults: { _controller: "ClientMedicalBundle:Specialoffers:cancel", id:null }
+client_specialoffer_payment:
+    pattern:  /specialoffer/payment
+    defaults: { _controller: "ClientMedicalBundle:Specialoffers:payment" }
+client_user_mail:
+    pattern:  /usercompanymail
+    defaults: { _controller: "ClientMedicalBundle:Cron:sendmailtousercompany" }
+client_testimonial_video:
+    pattern:  /testimonials
+    defaults: { _controller: "ClientMedicalBundle:Default:testimonial" }
+client_medical_banner_update_count:
+    pattern:  /bannerupdate
+    defaults: { _controller: ClientMedicalBundle:Company:updatebannercount }
+client_medical_termsofuse:
+    pattern:  /termsofuse/{popup}
+    defaults: { _controller: ClientMedicalBundle:Default:termsofuse, popup: null }
+client_medical_allreviews:
+    pattern:  /allreviews
+    defaults: { _controller: ClientMedicalBundle:Default:allreviews }
+client_medical_guaranties:
+    pattern:  /guaranties
+    defaults: { _controller: ClientMedicalBundle:Default:guaranties }
+client_medical_forclinics:
+    pattern:  /forclinics
+    defaults: { _controller: ClientMedicalBundle:Default:forclinics }
+client_medical_foragencies:
+    pattern:  /foragencies
+    defaults: { _controller: ClientMedicalBundle:Default:foragencies }
+client_medical_contacts:
+    pattern:  /contacts
+    defaults: { _controller: ClientMedicalBundle:Default:contacts }
+client_medical_doctor:
+    pattern:  /doctors
+    defaults: { _controller: ClientMedicalBundle:Doctor:index }
+client_medical_doctor_detail:
+    pattern:  /doctor/{id}/{name}
+    defaults: { _controller: ClientMedicalBundle:Doctor:doctordetail , id:null, name:null}

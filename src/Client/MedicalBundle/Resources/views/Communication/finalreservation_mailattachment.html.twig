@@ -1,0 +1,149 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>medical</title>
+<link href='http://fonts.googleapis.com/css?family=Roboto:100,400,500,700' rel='stylesheet' type='text/css'>
+<style>
+
+body {
+  font-family: "DejaVu sans" /* unicode font from the box */
+}
+</style>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-55572047-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+</head>
+<body style="padding:0; margin:0; sans-serif; color:#030000;font-family:dejavu sans;">
+<div style="margin:0 auto; width:1024px;">   
+   <div style="display:block;">
+		<img src="{{ upload_photo_url }}images/pdf_images/header_img.jpg" align="Header Image" />
+	</div>  
+	<table width="100%" style="font-size:20px;margin-top:30px; line-height:38px;" cellpadding="0" cellspacing="0">
+		<tr>
+		<td valign="top" style="word-break: break-all; width:300px;">
+			{% if asReservationData|length > 0 %}
+			<table style="word-break: break-all; width:100%;">
+				<tr><td colspan="2" style="font-size:20px; text-transform:uppercase; color:#030000;"valign="top">Client details</td></tr>
+				<tr><td style="color:#898989; text-align:right;margin-right:10px;"valign="top">Unique ID</td><td style="border-left:solid 1px #c1b7b4;padding-left:10px;margin-left:10px;"valign="top">{{ asReservationData[0].reservation_id }}</td></tr>
+				<tr><td style="color:#898989; text-align:right;margin-right:10px;"valign="top">First name</td><td style="border-left:solid 1px #c1b7b4;padding-left:10px;margin-left:10px;"valign="top">{{ asReservationData[0]['userquotedetails']['firstname'] }}</td></tr>
+				<tr><td style="color:#898989; text-align:right;margin-right:10px;"valign="top">Middle name</td><td style="border-left:solid 1px #c1b7b4;padding-left:10px;margin-left:10px;"valign="top">{{ asReservationData[0]['userquotedetails'].middlename }}</td></tr>
+				<tr><td style="color:#898989; text-align:right;margin-right:10px;"valign="top">Last name</td><td style="border-left:solid 1px #c1b7b4;padding-left:10px;margin-left:10px;"valign="top">{{ asReservationData[0]['userquotedetails'].lastname }}</td></tr>
+				<tr><td style="color:#898989; text-align:right;margin-right:10px;"valign="top">E - mail</td>
+				<td style="border-left:solid 1px #c1b7b4;padding-left:10px;margin-left:10px;"valign="top">
+				{{  asReservationData[0]['userquotedetails'].email|slice(0,25) }}<br/>
+				{{  asReservationData[0]['userquotedetails'].email|slice(25,100) }}
+				</td>
+				</tr>
+				<tr><td style="color:#898989; text-align:right;margin-right:10px;"valign="top">Ph.number</td><td style="border-left:solid 1px #c1b7b4;padding-left:10px;margin-left:10px;"valign="top">{{ asReservationData[0]['userquotedetails'].phone }}</td></tr>
+			</table>
+			{% endif %}
+		</td>
+		<td style="word-break: break-all; width:300px;" valign="top">
+			{% if asReservationData|length > 0%}
+			<table style="word-break: break-all; width:100%;">
+				<tr><td style="font-size:20px; text-transform:uppercase; color:#030000; float:left;">&nbsp;</td><td>&nbsp;</td></tr>
+				<tr><td style="color:#898989; text-align:right;margin-right:10px;"valign="top">Address</td><td style="border-left:solid 1px #c1b7b4;padding-left:10px;margin-left:10px;"valign="top">{{ asReservationData[0].resi_address_one }}</td></tr>
+				<tr><td style="color:#898989; text-align:right;margin-right:10px;"valign="top">Address 2</td><td style="border-left:solid 1px #c1b7b4;padding-left:10px;margin-left:10px;"valign="top">{{ asReservationData[0].resi_address_two }}</td></tr>
+				<tr><td style="color:#898989; text-align:right;margin-right:10px;"valign="top">City</td><td style="border-left:solid 1px #c1b7b4;padding-left:10px;margin-left:10px;"valign="top">{{ asReservationData[0].resi_city }}</td></tr>
+				<tr><td style="color:#898989; text-align:right;margin-right:10px;"valign="top">State</td><td style="border-left:solid 1px #c1b7b4;padding-left:10px;margin-left:10px;"valign="top">{{ asReservationData[0].resi_state }}</td></tr>
+				<tr><td style="color:#898989; text-align:right;margin-right:10px;"valign="top">ZIP</td><td style="border-left:solid 1px #c1b7b4;padding-left:10px;margin-left:10px;"valign="top">{{ asReservationData[0].resi_zip }}</td></tr>				
+				<tr><td style="color:#898989; text-align:right;margin-right:10px;"valign="top">Country</td><td style="border-left:solid 1px #c1b7b4;padding-left:10px;margin-left:10px;"valign="top">{% if asReservationData[0]['userquotedetails']['countries']|length > 0%}{{ asReservationData[0]['userquotedetails']['countries']['name'] }}{% endif %}</div></td></tr>
+			</table>
+			{% endif %}
+		</td>
+		<td style="word-break: break-all; width:300px;" valign="top">
+			{% if asQuoteOfferInfo|length > 0%}	
+			<table style="word-break: break-all; width:100%;">
+				<tr><td colspan="2" style="font-size:20px; text-transform:uppercase; color:#030000;"valign="top">Clinic details</td></tr>
+				<tr><td style="color:#898989; text-align:right;margin-right:10px;"valign="top">Company</td><td style="border-left:solid 1px #c1b7b4;padding-left:10px;margin-left:10px;"valign="top">{{ asQuoteOfferInfo[0]['company']['name'] }}</td></tr>
+				<tr><td style="color:#898989; text-align:right;margin-right:10px; "valign="top">Company code</td><td style="border-left:solid 1px #c1b7b4;padding-left:10px;margin-left:10px;"valign="top">{{ asQuoteOfferInfo[0]['company']['company_code'] }}</td></tr>
+				<tr><td style="color:#898989; text-align:right;margin-right:10px;"valign="top">VAT code</td><td style="border-left:solid 1px #c1b7b4;padding-left:10px;margin-left:10px;"valign="top">{{ asQuoteOfferInfo[0]['company']['vat_code'] }}</td></tr>
+				<tr><td style="color:#898989; text-align:right;margin-right:10px; "valign="top">Licence number</td><td style="border-left:solid 1px #c1b7b4;padding-left:10px;margin-left:10px;"valign="top">{{ asQuoteOfferInfo[0]['company']['licence_number'] }}</td></tr>
+				<tr><td valign="top" style="color:#898989; text-align:right;margin-right:10px; "valign="top">Address</td><td style="border-left:solid 1px #c1b7b4;padding-left:10px;margin-left:10px;"valign="top">{{ asQuoteOfferInfo[0]['company']['address'] }}</td></tr>								
+			</table>
+			{% endif %}
+		</td>
+		</tr>
+	</table>
+    
+	<table width="100%" style="font-size:20px;margin-top:20px; line-height:38px;" cellpadding="0" cellspacing="0">
+		<tr><td colspan="2" style="font-size:20px; text-transform:uppercase; color:#030000;float:left;"valign="top">Treatment details</td></tr>
+		<tr><td style="color: #898989; width:235px;text-align:right;"valign="top">Treatment</td><td style="border-left: 1px solid #c1b7b4;padding-left:10px;margin-left:10px;"valign="top">{{ asQuoteOfferInfo[0]['service_description'] }}</td></tr>
+		<tr><td style="color: #898989; width:235px;text-align:right;"valign="top">Brief service description</td><td style="font-weight:100;text-align:justify;border-left: 1px solid #c1b7b4;padding-left:10px;margin-left:10px;"valign="top">{{ asQuoteOfferInfo[0]['brief_service_description'] }}</td></tr>
+		<tr>
+			<td style="color: #898989; width:235px;text-align:right;"valign="top">
+				Responsible person
+			</td>
+			<td style="border-left: 1px solid #c1b7b4;padding-left:10px;margin-left:10px;"valign="top">
+				{{ asQuoteOfferInfo[0]['responsible_person_doctor'] }}
+			</td>
+		</tr>
+		<tr>
+		<td style="width: width:235px;text-align:right;"valign="top">
+			Treatment date
+		</td>
+		<td style="border-left: 1px solid #c1b7b4;padding-left:10px;margin-left:10px;"valign="top">
+		<div style="background-color: #0173b4;border-radius: 5px;color: #ffffff;font-weight: bold;padding: 0 10px; width:200px;">{{ asQuoteOfferInfo[0]['reservation_date']|date('Y m d')~" "~asQuoteOfferInfo[0]['reservation_time']|date('H:i') }}</div>      
+		</td>
+		</tr>
+	</table>
+	<table width="100%" style="font-size:20px;margin-top:20px; line-height:38px;" cellpadding="0" cellspacing="0">
+		<tr><td style="font-size:20px; text-transform:uppercase; color:#030000; float:left;"valign="top">Sales details</td></tr>
+		<tr>
+			<td style="color: #898989; width:235px;text-align:right;"valign="top">
+				Purchase date
+			</td>
+			<td style="border-left: 1px solid #c1b7b4;padding-left:10px;margin-left:10px;"valign="top">
+				{{ "now"|date('Y. m. d.')}}
+			</td>
+		</tr>
+		<tr>
+			<td style="color: #898989; width:235px;text-align:right;"valign="top">
+				Order no.
+			</td>
+			<td style="border-left: 1px solid #c1b7b4;padding-left:10px;margin-left:10px;"valign="top">
+				{% if asReservationData|length > 0%}{{ asReservationData[0].reservation_id }}{% endif %}
+			</td>
+		</tr>
+		<tr>
+			<td style="color: #898989; width:235px;text-align:right;"valign="top">
+				Total service offer
+			</td>
+			<td style="border-left: 1px solid #c1b7b4;padding-left:10px;margin-left:10px;"valign="top">
+				{{ asQuoteOfferInfo[0]['service_price'] }} Eur.
+			</td>
+		</tr>
+		<tr>
+			<td style="color: #898989; width:235px;text-align:right;"valign="top">
+				Reservation fee
+			</td>
+			<td style="border-left: 1px solid #c1b7b4;padding-left:10px;margin-left:10px;"valign="top">
+				{{ snReservationFee }} Eur.</br>
+				*This amount will be deducted
+				from final price after services
+				are provided.
+			</td>
+		</tr>
+	</table>
+
+	<table width="100%" style="margin-top:50px">
+		<tr>
+			<td width="142px"><img src="{{ upload_photo_url }}images/pdf_images/footer_logo.jpg" alt="Footer Logo" style="float:left;" /></td>
+			<td style="background-color:#0073b4;text-align:center;color:#fff;font-family: 'Roboto';font-size: 22px;font-weight: bold;padding: 10px 0;">These services were booked through www.medical.lt<br />
+				Therefore the Client has a right for a FREE (30 min.) lawyer consultation<br />
+				in case if any disputes with medical service provider arise.</td>
+		</tr>
+	</table>
+	
+  <div style="color:#030000; font-size:22px; font-weight:bold; margin-top:0px;"> Disclaimer </div>
+  <div style="color:#030000; font-size:22px; margin-top:15px; margin-bottom:44px;text-align:justify;color:#898989;font-weight:100;"> Phasellus porta. Fusce suscipit varius mi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla dui. Fusce feugiat malesuada odio. Morbi nunc odio, gravida at, cursus nec, luctus a, lorem. Maecenas tristique orci ac sem. Duis ultricies pharetra magna. Donec accumsan malesuada orci. Donec sit amet eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Mauris fermentum dictum magna. Sed laoreet aliquam leo. Ut tellus dolor, dapibus eget, elementum vel, cursus eleifend, elit. Aenean auctor wisi et urna. Aliquam erat volutpat. Duis ac turpis. Integer rutrum ante eu lacus.
+    Quisque nulla. Vestibulum libero nisl, porta vel, scelerisque eget, malesuada.</div>
+  <p style="color:#696969;font-size:20px;font-family:Arial, Helvetica, sans-serif;">2013 Medical.lt All rights reserved.</p>           
+</div>
+</body>
+</html>

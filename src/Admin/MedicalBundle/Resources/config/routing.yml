@@ -1,0 +1,145 @@
+admin_medical_homepage:
+    pattern:  /
+    defaults: { _controller: AdminMedicalBundle:Company:index }
+medical_advertisement:
+    pattern:  /advertisebanner
+    defaults: { _controller: "AdminMedicalBundle:Advertisement:index"}
+medical_addedit_advertisement:
+    pattern:  /advertisebanner/addedit/{id}
+    defaults: { _controller: "AdminMedicalBundle:Advertisement:addedit", id: null }
+medical_advertisement_delete:
+    pattern:  /delete
+    defaults: { _controller: "AdminMedicalBundle:Advertisement:delete"}
+medical_testimonial:
+    pattern:  /testimonial
+    defaults: { _controller: "AdminMedicalBundle:Testimonial:index" }
+medical_testimonial_addedit:
+    pattern:  testimonial/addedit/{id}
+    defaults: { _controller: "AdminMedicalBundle:Testimonial:addedit", id: null}
+medical_testimonial_delete:
+    pattern:  /testimonial/delete
+    defaults: { _controller: "AdminMedicalBundle:Testimonial:delete" }
+medical_news:
+    pattern:  /news
+    defaults: { _controller: "AdminMedicalBundle:News:index" }
+medical_news_addedit:
+    pattern:  news/addedit/{id}
+    defaults: { _controller: "AdminMedicalBundle:News:addedit" , id: null}
+medical_news_delete:
+    pattern:  /news/delete
+    defaults: { _controller: "AdminMedicalBundle:News:delete" }
+medical_quotes:
+    pattern:  /quotes
+    defaults: { _controller: "AdminMedicalBundle:Quotes:index" }
+medical_quotes_addedit:
+    pattern:  /quotes/addedit/{id}/{company_id}
+    defaults: { _controller: "AdminMedicalBundle:Quotes:addedit" , company_id: null}
+medical_quotes_company_delete:
+    pattern:  /quotes/delete
+    defaults: { _controller: "AdminMedicalBundle:Quotes:deletequotescompany" }
+medical_quotes_document_delete:
+    pattern:  /document/delete
+    defaults: { _controller: "AdminMedicalBundle:Quotes:deletequotesdocument" }
+medical_admin_login:
+    pattern: /login
+    defaults: { _controller: AdminMedicalBundle:Admin:login }
+medical_admin_login_check:
+    pattern: /admin/logincheck/
+    defaults: { _controller: AdminMedicalBundle:Admin:logincheck }
+medical_admin_logout:
+    pattern:  /admin/logout
+    defaults: { _controller: AdminMedicalBundle:Admin:logout}
+medical_settings_emails:
+    pattern:  /settings/emails
+    defaults: { _controller: "AdminMedicalBundle:Settings:emailtemplates" }
+medical_emails_addedit:
+    pattern:  /settings/email/addedit/{id}
+    defaults: { _controller: "AdminMedicalBundle:Settings:emailaddedit" , id: null}
+medical_settings_languages:
+    pattern:  /settings/languages
+    defaults: { _controller: "AdminMedicalBundle:Settings:languages" }
+medical_settings_languages_addedit:
+    pattern:  /settings/languages/addedit/{id}
+    defaults: { _controller: "AdminMedicalBundle:Settings:languagesaddedit" , id: null}
+medical_settings_languages_delete:
+    pattern:  /settings/deletelanguage
+    defaults: { _controller: "AdminMedicalBundle:Settings:deletelanguage" }
+medical_settings_articles:
+    pattern:  /settings/articles
+    defaults: { _controller: "AdminMedicalBundle:Settings:articles" }
+medical_settings_articles_addedit:
+    pattern:  /settings/articles/addedit/{id}
+    defaults: { _controller: "AdminMedicalBundle:Settings:articlesaddedit" , id: null}
+medical_settings_articles_delete:
+    pattern:  /settings/delete
+    defaults: { _controller: "AdminMedicalBundle:Settings:delete" }
+medical_settings_paymentoption:
+    pattern:  /settings/paymentoption
+    defaults: { _controller: "AdminMedicalBundle:Settings:paymentoption" }
+medical_settings_paymentoption_addedit:
+    pattern:  /settings/paymentoption/addedit/{id}
+    defaults: { _controller: "AdminMedicalBundle:Settings:addeditpaymentoption" , id: null}
+medical_settings_paymentoption_delete:
+    pattern:  /settings/paymentoption/delete
+    defaults: { _controller: "AdminMedicalBundle:Settings:paymentoptiondelete" }
+medical_settings_city:
+    pattern:  /settings/city
+    defaults: { _controller: "AdminMedicalBundle:Settings:city" }
+medical_settings_city_addedit:
+    pattern:  /settings/city/addedit/{id}
+    defaults: { _controller: "AdminMedicalBundle:Settings:addeditcity" , id: null}
+medical_settings_city_delete:
+    pattern:  /settings/city/delete
+    defaults: { _controller: "AdminMedicalBundle:Settings:citydelete" }
+medical_specialoffers:
+    pattern:  /specialoffers
+    defaults: { _controller: "AdminMedicalBundle:Specialoffers:index" }
+medical_specialoffers_detail:
+    pattern:  /specialoffers/detail/{id}
+    defaults: { _controller: "AdminMedicalBundle:Specialoffers:specialoffersdetail" }
+medical_specialoffers_pdf:
+    pattern:  /downloadpdf/{id}
+    defaults: { _controller: "AdminMedicalBundle:Specialoffers:specialoffersPDF" }
+medical_reservation:
+    pattern:  /reservation
+    defaults: { _controller: "AdminMedicalBundle:Reservation:index" }
+medical_reservation_detail:
+    pattern:  /reservation/detail/{quote_id}/{company_id}
+    defaults: { _controller: "AdminMedicalBundle:Reservation:reservationdetail" }
+medical_communication_message_addedit:
+    pattern:  /communication/addedit/{id}/{quote_id}
+    defaults: { _controller: "AdminMedicalBundle:Quotes:communicationmessageaddedit" }
+
+medical_settings_usermanager:
+    pattern:  /settings/usermanager
+    defaults: { _controller: "AdminMedicalBundle:Settings:usermanager" }
+medical_settings_usermanager_addedit:
+    pattern:  /settings/usermanager/addedit/{id}
+    defaults: { _controller: "AdminMedicalBundle:Settings:usermanageraddedit" , id: null}
+medical_settings_usermanager_delete:
+    pattern:  /settings/deleteusermanager
+    defaults: { _controller: "AdminMedicalBundle:Settings:deleteusermanager" }
+medical_video:
+    pattern:  /video
+    defaults: { _controller: "AdminMedicalBundle:Video:index" }
+medical_video_addedit:
+    pattern:  video/addedit/{id}
+    defaults: { _controller: "AdminMedicalBundle:Video:addedit" , id: null}
+medical_video_delete:
+    pattern:  /video/delete
+    defaults: { _controller: "AdminMedicalBundle:Video:delete" }
+medical_download_document:
+    pattern:  /download/{id}/{filename}
+    defaults: { _controller: "AdminMedicalBundle:Quotes:downloaddocuments" }
+adyax_cache_clear:
+    pattern:  /settings/cacheclear
+    defaults: { _controller: "AdminMedicalBundle:Settings:cacheclear" }
+medical_doctor:
+    pattern:  /doctor
+    defaults: { _controller: "AdminMedicalBundle:Doctor:index" }
+medical_doctor_addedit:
+    pattern:  doctor/addedit/{id}
+    defaults: { _controller: "AdminMedicalBundle:Doctor:addedit" , id: null}
+medical_doctor_delete:
+    pattern:  /doctor/delete
+    defaults: { _controller: "AdminMedicalBundle:Doctor:delete" }

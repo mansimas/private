@@ -1,0 +1,30 @@
+{% extends 'ClientMedicalBundle::layout.html.twig' %}
+{% block metakeyword %} {% include 'ClientMedicalBundle:Default:websitemetasettings.html.twig'%} {% endblock %}
+{% block title %}{{'Medical Tourism Information'|trans}}{% endblock %}
+{% block body %}
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
+{% include 'ClientMedicalBundle:Company:quicksearch.html.twig' %}
+<div class="row show-grid companylistpage myclinics">     
+	<div class="col-md-6 companylist_container">	
+		{% include 'ClientMedicalBundle:Company:usercompanywishlist.html.twig' %}		
+	</div>
+	<div class="col-md-6 right_part">
+		<div class="work_description">
+			<div class="how_it_work">{{'How it work?'|trans}}</div>
+			<ul class="choose_all_clinics">
+			<li>1) {{'Choose all clinics you like'|trans}}</li>
+			<li>2) {{'Save to list'|trans}}</li>
+			<li>3) {{'Click "Send quote to all clinics'|trans}}</li>
+			<li>4) {{'Fill your requirements'|trans}}</li>
+			<li>5) {{'And get personalised offer for service'|trans}}</li>
+			</ul>
+		</div>
+		<div class="need_help_wrap">
+			<div class="need_help">{{'Need help?'|trans}}</div>
+			<div class="live_chat">{{'Live Chat'|trans}}</div>
+		</div>
+	</div>  
+	<div class="clearfix"></div>
+</div>
+
+{% endblock %}

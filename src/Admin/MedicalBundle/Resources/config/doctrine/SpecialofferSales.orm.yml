@@ -1,0 +1,53 @@
+Admin\MedicalBundle\Entity\SpecialofferSales:
+    type: entity
+    table: specialoffer_sales
+    repositoryClass: Admin\MedicalBundle\Entity\SpecialofferSalesRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        name:
+            type: string
+            nullable: true				
+        email:
+            type: string
+            nullable: true
+        phone:
+            type: integer
+            nullable: true
+        number_of_coupon:
+            type: integer
+            nullable: true
+        paypal_transaction_id:
+            type: text                      
+            nullable: true
+        paypal_payment_status:
+            type: string               
+            nullable: true
+        checked_by_admin:
+            type: string
+            length: 3
+            nullable: true
+        created_at:
+            type: datetime
+            nullable: true
+        updated_at:
+            type: datetime		
+            nullable: true
+    manyToOne:
+      specialoffers:
+        targetEntity: SpecialOffers
+        inversedBy: specialoffersales
+        joinColumn:
+          name: specialoffer_id
+          referencedColumnName: id
+          onDelete: CASCADE
+    oneToMany:
+        couponcodes:
+            targetEntity: SpecialCouponCodes
+            mappedBy: specialsale
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAtValue ]
+        preUpdate: [ setUpdatedAtValue ]

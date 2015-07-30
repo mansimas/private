@@ -1,0 +1,115 @@
+{# {% extends 'ClientMedicalBundle::layout.html.twig' %} #}
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,700,900,100' rel='stylesheet' type='text/css'>
+	<link href="{{ asset('client/css/bootstrap.css') }}" rel="stylesheet" />
+	<link href="{{ asset('client/css/justified-nav.css') }}" rel="stylesheet" />
+	<link href="{{ asset('client/css/grid.css') }}" rel="stylesheet" />		
+	<link href="{{ asset('client/css/uniform.default.css') }}" rel="stylesheet" />
+	<link href="{{ asset('admin/css/chosen.css') }}" rel="stylesheet" />	
+	<link href="{{ asset('client/css/slider.css') }}" rel="stylesheet" />
+	<link href="{{ asset('client/css/colorbox.css') }}" rel="stylesheet" />
+	<link href="{{ asset('css/jquery.rating.css') }}" rel="stylesheet" />
+	<link href="{{ asset('client/css/jquery.autocomplete.css') }}" rel="stylesheet" />	
+	<link href="{{ asset('css/communication.css') }}" rel="stylesheet" />
+	{% if app.session.get('_locale') == 'en' %}
+		<link href="{{ asset('client/css/en_style.css') }}" rel="stylesheet" />
+		<link href="{{ asset('client/css/style.css') }}" rel="stylesheet" />
+	{% elseif app.session.get('_locale') == 'lt' %}
+		<link href="{{ asset('client/css/lt_style.css') }}" rel="stylesheet" />
+	{% elseif app.session.get('_locale') == 'ru' %}
+		<link href="{{ asset('client/css/ru_style.css') }}" rel="stylesheet" />
+		<link href="{{ asset('client/css/style.css') }}" rel="stylesheet" />
+	{% elseif app.session.get('_locale') == 'de' %}
+		<link href="{{ asset('client/css/de_style.css') }}" rel="stylesheet" />
+		<link href="{{ asset('client/css/style.css') }}" rel="stylesheet" />
+	{% else %}
+		<link href="{{ asset('client/css/en_style.css') }}" rel="stylesheet" />
+		<link href="{{ asset('client/css/style.css') }}" rel="stylesheet" />
+	{% endif%}
+{% block body %}
+
+<script type="text/javascript">
+$(document).ready(function(){
+				var cboxOptions = {  
+				width: {{ (snFromTab) ? '75%' : '95%' }},
+				height: '95%',
+				maxWidth: {{ (snFromTab) ? '750px' : '960px' }},
+				maxHeight: '960px',
+				iframe:true
+			}
+
+	$('.ajax').colorbox(cboxOptions);
+
+	$(window).resize(function(){
+	  $.colorbox.resize({
+		width: window.innerWidth > parseInt(cboxOptions.maxWidth) ? cboxOptions.maxWidth : cboxOptions.width,
+		height: window.innerHeight > parseInt(cboxOptions.maxHeight) ? cboxOptions.maxHeight : cboxOptions.height
+	  });
+	});
+});			
+function quicksearch(route, page)
+{
+	$("#loader").show("fast"); 
+	$.ajax({
+				type: 'post',
+				url : route,
+				data: "page="+page+"&ss_flag=true&id={{ app.request.get('id')}}",
+				success: function(result)
+						{
+							$("#rating_listing").html(result);
+							$("#loader").hide("fast"); 
+						}
+			})
+}
+</script>
+<div class="container">
+	<div class="popup">
+		<a class="close"></a>
+		{% if pagination|length > 0 %}
+		<h2>{{ pagination[0].comp_name }}</h2>
+        <div class="row clearfix">
+            <div class="total_rating">
+                <span><b>{{'Total rating'|trans}} :</b></span>
+                <div class="total_rating_dic">					
+					{{ '%.2f' | format(pagination[0].total_service_staff_environment_avg) }}
+				</div>
+                <span>{{'Based on'|trans}} {{ pagination.getTotalItemCount }} {{'reviews'|trans}}</span>
+                {#<span>Max 10</span>#}
+                
+            </div>
+            <div class="ratting_start_wrap">
+                <div class="ratting_stars clearfix">
+					<h3>{{'Services'|trans}} </h3>
+					{% set data = '%.2f' | format(pagination[0].services_avg) %}
+					{% include 'ClientMedicalBundle:Default:ratingstar.html.twig' %}					
+					<span>({{ data }})</span>
+				</div>
+                <div class="ratting_stars clearfix">
+					<h3>{{'Environment'|trans}} </h3>
+					{% set data = '%.2f' | format(pagination[0].environment_avg) %}
+					{% include 'ClientMedicalBundle:Default:ratingstar.html.twig' %}					
+					<span>({{ data }})</span>
+				</div>
+                <div class="ratting_stars clearfix">
+					<h3>{{'Staff'|trans}} </h3>
+					{% set data = '%.2f' | format(pagination[0].staff_avg) %}
+					{% include 'ClientMedicalBundle:Default:ratingstar.html.twig' %}					
+					<span>({{ data }})</span>
+				</div>
+                <div class="are_you_client take_buttan">
+					<span>{{'Are you a client'|trans}}</span>
+					<a  class="ajax btn btn-default bluebtn" href="{{ path('client_medical_add_rating', {'id':app.request.get('id')})}}">{{'Post a review'|trans}}</a>
+					<!--<input type="submit" value="Post a review" class="btn btn-default">-->
+				</div>
+            </div>
+        </div>
+		{% include "ClientMedicalBundle:Rating:ratinglisting.html.twig"%}
+		{% else %}
+		 <div class="are_you_client take_buttan be_the_first">
+			<span>{{'Be the first to rate it, if you have already used their services'|trans}} </span>
+			<a  class="ajax btn btn-default bluebtn" href="{{ path('client_medical_add_rating', {'id':app.request.get('id')})}}">{{'Post a review'|trans}}</a>
+			<!--<input type="submit" value="Post a review" class="btn btn-default">-->
+		</div>
+        {% endif %}
+	</div>
+</div>
+{% endblock %}

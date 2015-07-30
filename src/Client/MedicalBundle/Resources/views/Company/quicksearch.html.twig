@@ -1,0 +1,12 @@
+<div class="quicksearch_div">
+  <h4 class="fourth_heading">{{'quick search'|trans}}</h4>
+  <form class="quicksearch" role="search" action="{{ path('client_medical_company_search') }}" method="get">
+	{% set ssSerachParam = ((ssSerachParam is defined and ssSerachParam != '' ) ? ssSerachParam : '') %}
+    <input value="{{ ssSerachParam }}" id="ssSearchParam" name="ssSearchParam" type="text" class="form-control"
+           placeholder="{{'Search for clinic, treatment, doctor'|trans}}">
+	<input type="submit" value="{{'SEARCH'|trans}}" class="btn btn-default" />
+	<a class="advance_search" href="{{ path('client_medical_homepage') }}">{{'Advance search'|trans}}</a>
+    <div class="clearfix"></div>
+  </form>
+  <div class="clearfix"></div>
+</div>

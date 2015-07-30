@@ -1,0 +1,39 @@
+{% set snDoctorId = ((asDoctorData[0]['id'] is defined) ? asDoctorData[0]['id'] : '') %}
+<div class="page-content">
+	<div class="page-header position-relative">
+		<h1>
+			Doctor
+			<small>
+				<i class="icon-double-angle-right"></i>
+				addedit
+			</small>
+		</h1>
+	</div><!-- /.page-header -->
+
+	<div class="row-fluid">
+		<div class="span12">
+			<!-- PAGE CONTENT BEGINS -->
+		   {{ form_start(form, {'action': path('medical_company_doctor', {'id': snConpanyId, 'doctor_id':snDoctorId }), 'attr': {'class': 'form-horizontal'} }) }}
+			<!--<form class="form-horizontal">-->
+			
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(objDoctor.translations) }}</label>
+					<div class="controls">	
+						{{ form_widget(objDoctor.translations) }}																
+					</div>
+				</div>
+				
+				<div class="form-actions">															
+					<input style="width:83px;height:42px;" class="btn btn-info" type="submit" name="Save" value="Save" tabindex="1" title="Save">
+					&nbsp; &nbsp; &nbsp;
+					<div class="btn">													
+							<a href="{{ path('medical_company')}}" tabindex="1">Cancel</a>
+					</div>
+				</div>	
+			{{ form_end(form) }}
+			
+		</div><!-- /.span -->
+	</div><!-- /.row-fluid -->
+</div><!-- /.page-content -->
+
+	

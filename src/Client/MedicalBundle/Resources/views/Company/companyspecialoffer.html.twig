@@ -1,0 +1,51 @@
+<div id="companytab">
+{% if asCompanyData.specialoffers is defined and asCompanyData.specialoffers|length > 0%}
+				{% for asSpecialOffersData in asCompanyData.specialoffers %}				
+				<div class="companyrow clearfix">
+              		<div class="company_img">
+						<a href="{{ path('client_medical_special_offers_detail', {'id':asSpecialOffersData.id })}}">
+						{% if asSpecialOffersData['specialofferimages']|length > 0%}		  
+							{% set ssImageName = asSpecialOffersData['specialofferimages'][asSpecialOffersData['specialofferimages']|length - 1]['photo'] %}
+							{% if asset_exists('uploads/specialoffer/'~asSpecialOffersData['id']~'/'~ssImageName) %}	
+								<img src="{{ asset('uploads/specialoffer/'~asSpecialOffersData['id']~'/'~ssImageName) }}" width="156px"/>
+							{% else %}
+								<img src="{{ asset('client/images/no_image.png') }}" alt="No Image" width="156px"/>
+							{% endif %}
+						{% else %}
+								<img src="{{ asset('client/images/no_image.png') }}" alt="No Image" width="156px"/>
+						{% endif %}
+						</a>						
+					</div>
+					<div class="company_title">
+						<a href="{{ path('client_medical_special_offers_detail', {'id': asSpecialOffersData.id })}}">
+						<h3>{{ asSpecialOffersData['description']|raw}} <div class="clearfix"></div></h3>
+						</a>
+						<p>{{ asSpecialOffersData['introduction']|raw}}</p>
+						<div class="take_buttan offer_end">
+							<span class="col-md-4"><a href="#" class="quantity">{{ asSpecialOffersData.sales_price}} Lt</a><div class="regular_price">{{'Regular Price'|trans}} <b>{{asSpecialOffersData.regular_price}}</b></div></span>
+							<span class="col-md-5 endin">{{'Offer end in'|trans}} <b>							
+							{% set asEndDate = asSpecialOffersData.end_date|date('Y-m-d')|split('-') %}
+							{% set asTime = asSpecialOffersData.end_time|date('H:i:s')|split(':') %}
+							{% set route = path(ssRoute,{'id':snCompanyId}) %}
+							<script type="text/javascript">					
+								$(function () 
+								{							
+									austDay = new Date({{ asEndDate[0]}}, {{asEndDate[1]}} - 1, {{ asEndDate[2] }},{{asTime[0]}},{{asTime[1]}},{{ asTime[2] }});
+									$('#defaultCountdown_{{ asSpecialOffersData.id }}').countdown({until: austDay, padZeroes: true, compact: true,timezone: +3,onExpiry: function() {
+										updateSpecialoffer("{{route}}",'tab','companytab');
+									}});
+									$('#year').text(austDay.getFullYear());
+								});
+							</script>						
+							<span id="defaultCountdown_{{ asSpecialOffersData.id }}"> </span>
+							</b></span>
+							<a href="{{ path('client_medical_buy_special_offers',{'id':asSpecialOffersData.id}) }}" class="col-md-3 btn btn-default bluebtn">{{'Take it now'|trans}}!</a>
+							<div class="clearfix"></div>
+						</div>
+					</div>	                
+                </div>
+				{% endfor %}
+				{% else %}
+					{{'No special offers at the moment'|trans}}
+				{% endif %}
+</div>

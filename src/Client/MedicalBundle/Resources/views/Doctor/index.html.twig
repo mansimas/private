@@ -1,0 +1,52 @@
+{% extends 'ClientMedicalBundle::layout.html.twig' %}
+{% block title %}{{'Medical Doctor Listing'|trans}}{% endblock %}
+{% block metakeyword %}
+{% include 'ClientMedicalBundle:Default:websitemetasettings.html.twig'%}
+{% endblock %}
+{% block body %}
+{% include 'ClientMedicalBundle:Company:quicksearch.html.twig' %}
+<div>
+	<div id="clients_sidebar" class="row">
+			{% set firstLtr = '' %}
+			{% set i = 0 %}
+			{% set ssFlag = false %}
+			{% if asDoctorData|length > 0 %}				
+				{% for key,asDoctorList in asDoctorData %}	
+							
+							{% if firstLtr != asDoctorList['firstname']|first|upper %}
+								{% if ssFlag == true and key != 0 %}
+									</ul>
+									</div>
+										{% if i == 3 %}
+											<div class="clr"></div>
+										{% set i = 0 %}
+										{% endif %}
+								{% endif %}
+								<div class="category_list col-sm-4">
+								<h4>{{ asDoctorList['firstname']|first|upper  }}</h4>
+								{% set ssFlag = true %}
+								{% set i = i + 1 %}	
+								
+								<ul>
+								<li>
+								
+								{% set asDoctorName = em.getRepository("AdminMedicalBundle:Company").Slug(asDoctorList.firstname) %}
+								<a href="{{ path('client_medical_doctor_detail',{'id':asDoctorList.id,'name':asDoctorName}) }}">{{ asDoctorList['firstname']~" "~asDoctorList['lastname']}}</a>
+								
+								</li>
+								
+						{% elseif firstLtr == asDoctorList['firstname']|first|upper %}
+						<li>
+							{% set asDoctorName = em.getRepository("AdminMedicalBundle:Company").Slug(asDoctorList.firstname) %}
+							<a href="{{ path('client_medical_doctor_detail',{'id':asDoctorList.id,'name':asDoctorName}) }}">{{ asDoctorList['firstname']~" "~asDoctorList['lastname'] }}</a>
+						</li>
+						{% endif %}
+							
+						{% set firstLtr = asDoctorList['firstname']|first|upper %}
+				{% endfor %}
+			{% endif %}
+		</ul>
+	</div>	
+	<div class="clr"></div>
+</div>
+{% endblock %}

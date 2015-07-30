@@ -1,0 +1,32 @@
+<div class="sub_whitebox">
+	<div class="showall_wrap">
+		<a href="javascript:void(0)" onClick="hideshowreplyformdiv('{{ ssString }} ')">- {{'Hide Offer'|trans}}</a>
+	</div>
+	<p>{{'Official clinic offer for services described below'|trans}}
+	</p>
+	<dl class="dl-horizontal">
+	  <dt>{{ "Treatment" }}</dt>
+	  <dd><b>{{ asComData[0]['service_description'] }}</b></dd>
+	
+	  <dt>{{ 'Brief service desription'|trans }}</dt>
+	  <dd>{{ asComData[0]['brief_service_description'] }}</dd>
+	
+	  <dt>{{ 'Responsible person'|trans }}</dt>
+	  <dd>{{ asComData[0]['responsible_person_doctor'] }}</dd>
+	
+	  <dt>{{ 'Reservation date'|trans }}</dt>
+	  <dd><b>{{ asComData[0]['reservation_date']|date('Y m d')~" "~asComData[0]['reservation_time']|date('H:i') }}</b></dd>
+	
+	  <dt>{{ 'Total service price'|trans }}</dt>
+	  <dd><b class="text-success">{{ asComData[0]['service_price'] }} Eur.</b></dd>
+	</dl>	
+	<div class="row accept_wrap">
+	{% if "now"|date('Y m d') < asComData[0]['offer_end_date']|date('Y m d') %}	
+		<!--<input class="btn btn-default bluebtn  input-sm" type="submit" value="Accept and make reservation">-->
+		<a class="btn btn-default bluebtn  input-sm" href="{{ path('client_final_reservation', {'quote_id': quote_id, company_id: asComData['id']}) }}">{{'Accept and make reservation'|trans}}</a>
+		<a class="btn btn-default whitebtn input-sm" href="{{ path('client_twentyfour_reservation', {'quote_id': quote_id, company_id: asComData['id']})}}">{{'Make free 24h reservation'|trans}}</a>
+	{% else %}
+		{{ 'Offer time expired. Please contact the clinic to find out possibilities at present moment'|trans }}
+	{% endif %}
+	</div>
+</div>

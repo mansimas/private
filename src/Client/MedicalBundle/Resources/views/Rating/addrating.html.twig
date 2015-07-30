@@ -1,0 +1,196 @@
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,700,900,100' rel='stylesheet' type='text/css'>
+	<link href="{{ asset('client/css/bootstrap.css') }}" rel="stylesheet" />
+	<link href="{{ asset('client/css/justified-nav.css') }}" rel="stylesheet" />
+	<link href="{{ asset('client/css/grid.css') }}" rel="stylesheet" />		
+	<link href="{{ asset('client/css/uniform.default.css') }}" rel="stylesheet" />
+	<link href="{{ asset('admin/css/chosen.css') }}" rel="stylesheet" />	
+	<link href="{{ asset('client/css/slider.css') }}" rel="stylesheet" />
+	<link href="{{ asset('client/css/colorbox.css') }}" rel="stylesheet" />
+	<link href="{{ asset('css/jquery.rating.css') }}" rel="stylesheet" />
+	<link href="{{ asset('client/css/jquery.autocomplete.css') }}" rel="stylesheet" />	
+	<link href="{{ asset('css/communication.css') }}" rel="stylesheet" />
+	{% if app.session.get('_locale') == 'en' %}
+		<link href="{{ asset('client/css/en_style.css') }}" rel="stylesheet" />
+		<link href="{{ asset('client/css/style.css') }}" rel="stylesheet" />
+	{% elseif app.session.get('_locale') == 'lt' %}
+		<link href="{{ asset('client/css/lt_style.css') }}" rel="stylesheet" />
+	{% elseif app.session.get('_locale') == 'ru' %}
+		<link href="{{ asset('client/css/ru_style.css') }}" rel="stylesheet" />
+		<link href="{{ asset('client/css/style.css') }}" rel="stylesheet" />
+	{% elseif app.session.get('_locale') == 'de' %}
+		<link href="{{ asset('client/css/de_style.css') }}" rel="stylesheet" />
+		<link href="{{ asset('client/css/style.css') }}" rel="stylesheet" />
+	{% else %}
+		<link href="{{ asset('client/css/en_style.css') }}" rel="stylesheet" />
+		<link href="{{ asset('client/css/style.css') }}" rel="stylesheet" />
+	{% endif%}
+{% block body %}
+{% set snConpanyId = app.request.get('id') != '' ? app.request.get('id'): '' %}
+ 
+<script src="{{ asset('admin/js/jquery.min.js') }}"></script>
+<script type="text/javascript">
+$.noConflict();
+</script>
+{% block javascripts %}		
+
+	<script src="{{ asset('js/jquery-1.9.1.min.js') }}"></script>
+	<script src="{{ asset('js/jquery.form.js') }}"></script>
+	<script src="{{ asset('js/jquery.js') }}"></script>
+	<script src="{{ asset('js/jquery.MetaData.js') }}"></script>
+	<script src="{{ asset('js/jquery.rating.js') }}"></script>
+	<script src="{{ asset('js/jquery.rating.pack.js') }}"></script>
+	
+{% endblock %}
+
+{% block stylesheets %}	
+	<link href="{{ asset('css/jquery.rating.css') }}" rel="stylesheet" />	
+{% endblock %}
+
+
+
+<div class="container">
+	<div class="popup leavecomment" id="div_rating_frm">
+		<h2>{{'Leave your rating and comment'|trans}}</h2>
+        <div class="row clearfix">            
+			<form id="frm_details" action="{{ path('client_medical_add_rating', {'id':snConpanyId}) }}" method="post" class="label_with_select">
+              <div class="row input-group-sm">
+				{{ form_label(objRatings.name, 'Name'|trans) }}
+				{{ form_widget(objRatings.name, { 'attr': {'class': 'form-control'} }) }}				
+			  </div>
+              <div class="row input-group-sm">
+				{{ form_label(objRatings.lastname,'Lastname'|trans) }}
+				{{ form_widget(objRatings.lastname, { 'attr': {'class': 'form-control'} }) }}
+			  </div>
+              <div class="row input-group-sm">
+				{{ form_label(objRatings.email,'Email'|trans) }}
+				{{ form_widget(objRatings.email, { 'attr': {'class': 'form-control'} }) }}
+			  </div>
+              <div class="row">
+				{{ form_label(objRatings.countries,'Countries'|trans) }}
+				<!--<div class="selector" id="uniform-rating_popular_id">-->
+					<!--<span style="-moz-user-select: none;">Choose an option</span>-->
+						{{ form_widget(objRatings.countries, { 'attr': {'class': 'form-control input-sm'} }) }}
+				<!--</div>-->
+			   </div>
+              <div class="row">
+				{{ form_label(objRatings.comments,'Comments'|trans) }}
+				{{ form_widget(objRatings.comments) }}
+			  </div>
+			  <div class="hr_line"></div>
+              <div class="row edit_rating">
+                  <div class="row left_right_noew desktop">
+					<label class="radio_labe">&nbsp;</label>
+					<div class="radio_div">
+						<span class="left_note"><b>1</b>&nbsp;({{'Bad'|trans}})</span>
+						<span class="right_note"><b>10</b>({{'Excellent'|trans}})</span>
+						<div class="clearfix"></div>
+					</div>
+                  </div>
+                  <div class="row">
+                  	<label>{{'Services'|trans}} {# {{ form_label(objRatings.services) }} #}</label>
+					 <div class="radio_div">
+						<input name="admin_medicalbundle_ratings[services]" type="radio" class="service" value=1 /> 
+						<input name="admin_medicalbundle_ratings[services]" type="radio" class="service" value=2 /> 
+						<input name="admin_medicalbundle_ratings[services]" type="radio" class="service" value=3 /> 
+						<input name="admin_medicalbundle_ratings[services]" type="radio" class="service" value=4 /> 
+						<input name="admin_medicalbundle_ratings[services]" type="radio" class="service" value=5 /> 
+						<input name="admin_medicalbundle_ratings[services]" type="radio" class="service" value=6 /> 
+						<input name="admin_medicalbundle_ratings[services]" type="radio" class="service" value=7 /> 
+						<input name="admin_medicalbundle_ratings[services]" type="radio" class="service" value=8 /> 
+						<input name="admin_medicalbundle_ratings[services]" type="radio" class="service" value=9 /> 
+						<input name="admin_medicalbundle_ratings[services]" type="radio" class="service" value=10 />
+					</div>
+                  </div>
+                  <div class="row">
+                  	<label>{{'Environment'|trans}} {# {{ form_label(objRatings.environment) }} #} </label>
+                    <div class="radio_div">
+                    	{# {{ form_widget(objRatings.environment) }} #}
+						<input name="admin_medicalbundle_ratings[environment]" type="radio" class="environment" value=1 /> 
+						<input name="admin_medicalbundle_ratings[environment]" type="radio" class="environment" value=2 /> 
+						<input name="admin_medicalbundle_ratings[environment]" type="radio" class="environment" value=3 /> 
+						<input name="admin_medicalbundle_ratings[environment]" type="radio" class="environment" value=4 /> 
+						<input name="admin_medicalbundle_ratings[environment]" type="radio" class="environment" value=5 /> 
+						<input name="admin_medicalbundle_ratings[environment]" type="radio" class="environment" value=6 /> 
+						<input name="admin_medicalbundle_ratings[environment]" type="radio" class="environment" value=7 /> 
+						<input name="admin_medicalbundle_ratings[environment]" type="radio" class="environment" value=8 /> 
+						<input name="admin_medicalbundle_ratings[environment]" type="radio" class="environment" value=9 /> 
+						<input name="admin_medicalbundle_ratings[environment]" type="radio" class="environment" value=10 />
+					</div>
+                  </div>
+                  <div class="row">
+                  	<label>Staff {# {{ form_label(objRatings.staff) }} #} </label>
+                    <div class="radio_div">
+                    	{# {{ form_widget(objRatings.staff) }} #}
+						<input name="admin_medicalbundle_ratings[staff]" type="radio" class="staff" value=1 /> 
+						<input name="admin_medicalbundle_ratings[staff]" type="radio" class="staff" value=2 /> 
+						<input name="admin_medicalbundle_ratings[staff]" type="radio" class="staff" value=3 /> 
+						<input name="admin_medicalbundle_ratings[staff]" type="radio" class="staff" value=4 /> 
+						<input name="admin_medicalbundle_ratings[staff]" type="radio" class="staff" value=5 /> 
+						<input name="admin_medicalbundle_ratings[staff]" type="radio" class="staff" value=6 /> 
+						<input name="admin_medicalbundle_ratings[staff]" type="radio" class="staff" value=7 /> 
+						<input name="admin_medicalbundle_ratings[staff]" type="radio" class="staff" value=8 /> 
+						<input name="admin_medicalbundle_ratings[staff]" type="radio" class="staff" value=9 /> 
+						<input name="admin_medicalbundle_ratings[staff]" type="radio" class="staff" value=10 />						
+	                </div>
+                  </div>
+				<div class="row left_right_noew mobile">
+					<label class="radio_labe">&nbsp;</label>
+					<div class="radio_div">
+						<span class="left_note"><b>1</b>&nbsp;({{'Bad'|trans}})</span>
+						<span class="right_note"><b>10</b>({{'Excellent'|trans}})</span>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+
+              </div>
+              <div class="row take_buttan">
+              <label>&nbsp;</label>
+              	<input type="submit" value="Leave review" class="ajax btn btn-default bluebtn">              	
+				<a class="btn btn-default whitebtn" href="{{ path('client_medical_company_detail', {'id':snConpanyId})}}" tabindex="1">{{'Cancel'|trans}}</a>
+              </div>
+            </form>
+		</div>
+        
+    </div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+                $("#frm_details").on("submit", function(event) {
+                    event.preventDefault();
+ 
+                    $.ajax({
+                        url: "{{ path('client_medical_add_rating', {'id':snConpanyId}) }}",
+                        type: "post",
+                        data: $(this).serialize(),
+                        success: function(d) {
+							$("#cboxMiddleLeft").height(150);
+							$("#cboxContent").height(150);
+							$("#cboxLoadedContent").height(150);
+							$("#cboxMiddleRight").height(150);
+                            $("#div_rating_frm").html(d);
+                        }
+                    });
+                });
+            });
+
+$('.service').rating({
+  callback: function(value, link)
+  {
+	
+  }
+});
+$('.environment').rating({
+  callback: function(value, link)
+  {
+	
+  }
+});
+$('.staff').rating({
+  callback: function(value, link)
+  {
+	
+  }
+});
+</script>
+{% endblock %}

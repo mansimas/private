@@ -1,0 +1,76 @@
+<div id="updatespecial">
+<div class="row specialOffers_warp footer_offers">
+		{% if asRandomSpecialOffersData|length > 0 %}
+		{% set i = 0 %}
+		{% for asSpecialOfferData in asRandomSpecialOffersData if i < 3 %}
+		{% if asSpecialOfferData[0]['title'] != '' or asSpecialOfferData[0]['introduction'] != '' or asSpecialOfferData[0]['description'] != '' %}
+	  {% set i = i + 1%}
+		{% set asSpecialOfferName = em.getRepository("AdminMedicalBundle:Company").Slug(asSpecialOfferData[0]['title']) %}
+        <div class="col-md-4 col-xs-4">
+            <div class="box">
+                <div class="row_1">
+                  <div class="main_title">
+					<a href="{{ path('client_medical_special_offers_detail', {'id': asSpecialOfferData[0]['id'],'name':asSpecialOfferName})}}">
+					{{ asSpecialOfferData[0]['title'] }}</a>
+				  </div>                  
+					<div class="img_thubm_wrap">
+					  <div class="red_circle">			  
+					  {% set data = em.getRepository("AdminMedicalBundle:Company").calculateSpecialOfferDiscount(asSpecialOfferData[0]['regular_price'], asSpecialOfferData[0]['sales_price']) %}
+						-{{ data|round }}%
+					  </div>
+						{% if asSpecialOfferData[0]['specialofferimages']|length > 0%}		  
+							{% set ssImageName = asSpecialOfferData[0]['specialofferimages'][asSpecialOfferData[0]['specialofferimages']|length - 1]['photo'] %}
+								<a href="{{ path('client_medical_special_offers_detail', {'id': asSpecialOfferData[0]['id'],'name':asSpecialOfferName})}}">
+									{% if asset_exists('uploads/specialoffer/'~asSpecialOfferData[0]['id']~'/'~ssImageName) %}	
+										<img src="{{ asset('uploads/specialoffer/'~asSpecialOfferData[0]['id']~'/'~ssImageName) }}" width="156px" />
+									{% else %}
+										<img src="{{ asset('client/images/no_image.png') }}" alt="No Image"  width="156px"/>
+									{% endif %}
+								</a>
+						{% else %}
+								<img src="{{ asset('client/images/no_image.png') }}" alt="No Image"  width="156px"/>
+						{% endif %}                   
+	                </div>
+                </div>
+				<div class="txt">
+				{% if asSpecialOfferData[0]['introduction'] is defined %}
+					{% if asSpecialOfferData[0]['introduction']|length > 115 %}
+						{% set data = asSpecialOfferData[0]['introduction']|striptags %}
+						<p>{{ data|slice(0,115)}}...</p>
+						<!--<a href="{{ path('client_medical_special_offers')}}" class="more_info">{{'More info...'|trans}}</a>  -->
+					{% else %}
+						<p>{{ asSpecialOfferData[0]['introduction']|striptags }}</p>	
+					{% endif %}
+				{% endif %}
+				</div>
+					<div class="row_2"> 
+					<div class="sales_price_was_price">
+						<div class="sales_pricee">&euro;<b>{{ asSpecialOfferData[0]['sales_price'] }}</b></div>
+						<div class="was_price">Was&nbsp;<b>{{ asSpecialOfferData[0]['regular_price'] }},00</b></div>
+					</div>
+						<a class="btn btn-default bluebtn" href="{{ path('client_medical_buy_special_offers',{'id':asSpecialOfferData[0]['id']}) }}">{{'Take it'|trans}}</a> 
+                  <div class="clr"></div>
+                </div>																
+                <div class="offer">{{'Offer ends'|trans}}<span>
+				{% set asEndDate =  asSpecialOfferData[0]['end_date']|date('Y-m-d')|split('-') %}
+				{% set asTime = asSpecialOfferData[0]['end_time']|date('H:i:s')|split(':') %}	
+				{% set route = path(ssRoute,{'id':snCompanyId}) %}
+				<script type="text/javascript">					
+					$(function () 
+					{							
+						austDay = new Date({{ asEndDate[0]}}, {{asEndDate[1]}} - 1, {{ asEndDate[2] }},{{asTime[0]}},{{asTime[1]}},{{ asTime[2] }});
+						$("#defaultCountdown_{{ asSpecialOfferData[0]['id'] }}").countdown({until: austDay, padZeroes: true, compact: true,timezone: +3,onExpiry: function() {
+								updateSpecialoffer("{{route}}");
+							}});
+						$('#year').text(austDay.getFullYear());
+					});
+				</script>						
+				<span id="defaultCountdown_{{ asSpecialOfferData[0]['id'] }}"> </span>
+				</span></div>
+            </div>
+        </div> 
+		{% endif %}
+		{% endfor %}
+		{% endif %}
+	</div>
+</div>

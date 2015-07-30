@@ -1,0 +1,9 @@
+{% block body %}	
+	<script src="{{ asset('js/map.js') }}"></script>
+	<script>
+	  $(document).ready(function () {
+	  getGivenAddressMapInitialize('{{ ssAddress }}','{{ ssCompanyName }}')
+	  });
+	</script>
+<div id="show_address_map"></div>
+{% endblock %}

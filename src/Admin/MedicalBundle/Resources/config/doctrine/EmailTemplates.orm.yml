@@ -1,0 +1,28 @@
+Admin\MedicalBundle\Entity\EmailTemplates:
+    type: entity
+    table: email_templates
+    repositoryClass: Admin\MedicalBundle\Entity\EmailTemplatesRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        name:
+            type: string
+            length: null
+        title:
+            type: string
+            length: null        
+        description:
+            type: text
+            length: null
+        created_at:
+            type: datetime
+            nullable: true
+        updated_at:
+            type: datetime		
+            nullable: true
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAtValue ]
+        preUpdate: [ setUpdatedAtValue ]

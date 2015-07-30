@@ -1,0 +1,45 @@
+Admin\MedicalBundle\Entity\Doctor:
+    type: entity
+    table: doctor
+    gedmo:
+      translation:        
+        entity: Admin\MedicalBundle\Entity\Doctortranslation
+    repositoryClass: Admin\MedicalBundle\Entity\DoctorRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        firstname:
+            type: string
+            length: 255
+        lastname:
+            type: string
+            length: 255
+        photo:
+            type: text
+            length: null
+        description:
+            type: text
+            nullable: true
+            gedmo:
+                - translatable
+        created_at:
+            type: datetime
+            nullable: true
+        updated_at:
+            type: datetime		
+            nullable: true
+    oneToMany:
+        translations:
+            targetEntity: Doctortranslation
+            mappedBy: object
+            cascade: ["all"]
+    manyToMany:
+        companies:
+            targetEntity: Company
+            mappedBy: doctors
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAtValue ]
+        preUpdate: [ setUpdatedAtValue ]

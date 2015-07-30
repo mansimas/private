@@ -1,0 +1,26 @@
+Admin\MedicalBundle\Entity\UserQuoteDocuments:
+    type: entity
+    table: user_quote_documents
+    repositoryClass: Admin\MedicalBundle\Entity\UserQuoteDocumentsRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        documents:
+            type: text
+            length: null
+        description:
+            type: text
+            length: null
+            nullable: true
+    manyToOne:
+      userquotedetails:
+        targetEntity: UserQuoteDetail
+        inversedBy: userquotedocuments
+        joinColumn:
+          name: user_quote_detail_id
+          referencedColumnName: id
+          onDelete: CASCADE
+    lifecycleCallbacks: {  }

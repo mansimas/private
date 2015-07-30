@@ -1,0 +1,16 @@
+<div id="loader" style="display:none"></div>
+{% if asCompanyData.insurances is defined and asCompanyData.insurances|length > 0 %}
+{% for asInsuranceData in asCompanyData.insurances %}	
+	<div class="insurance_companie">
+		<div class="table">
+			{% if asset_exists('uploads/insurance/'~asInsuranceData.photo) %}
+				<img src="{{ asset('uploads/insurance/'~asInsuranceData.photo) }}" />
+			{% else %}
+				<img src="{{ asset('client/images/no_image.png') }}" alt="No Image" />
+			{% endif %}			
+		</div>
+	</div>
+{% endfor %}		
+{% else %}
+{{ 'No insurance found'|trans}}
+{% endif %}

@@ -1,0 +1,70 @@
+Admin\MedicalBundle\Entity\Ratings:
+    type: entity
+    table: ratings
+    repositoryClass: Admin\MedicalBundle\Entity\RatingsRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        name:
+            type: string
+            length: '100'
+            nullable: true
+        lastname:
+            type: string
+            length: '100'
+            nullable: true
+        email:
+            type: string
+            length: '100'
+            nullable: true        
+        comments:
+            type: text
+            length: null
+            nullable: true
+        services:
+            type: integer
+            length: null
+            nullable: true
+        environment:
+            type: integer
+            length: null
+            nullable: true
+        staff:
+            type: integer
+            length: null
+            nullable: true
+        only_rating:
+            type: boolean
+        rating_date:
+            type: datetime
+            nullable: true
+        verify_flag:
+            type: boolean
+            nullable: true
+        created_at:
+            type: datetime
+            nullable: true
+        updated_at:
+            type: datetime		
+            nullable: true
+    manyToOne:
+      company:
+        targetEntity: Company
+        inversedBy: ratings
+        joinColumn:
+          name: company_id
+          referencedColumnName: id
+          onDelete: CASCADE		  
+      countries:
+        targetEntity: Country
+        inversedBy: ratings
+        joinColumn:
+          name: country_id
+          referencedColumnName: id
+          onDelete: CASCADE
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAtValue ]
+        preUpdate: [ setUpdatedAtValue ]

@@ -1,0 +1,17 @@
+{% extends 'ClientMedicalBundle::layout.html.twig' %}
+{% block metakeyword %} {% include 'ClientMedicalBundle:Default:websitemetasettings.html.twig'%} {% endblock %}
+{% block title %}
+	{% if asSpecialOffersData|length > 0 and asSpecialOffersData[0][0]['title'] != ''%}
+		{{asSpecialOffersData[0][0]['title']}}{{' | '}}{{'Medical Tourism Information - medical.lt'|trans}}
+	{%else%}
+		{{'Medical Tourism Information'|trans}}
+	{%endif%}
+{% endblock %}
+
+{% set snCompanyId = app.request.get('id') %}
+{% block body %}
+
+{% include 'ClientMedicalBundle:Company:quicksearch.html.twig' %}
+
+{% include 'ClientMedicalBundle:Specialoffers:mainspecialofferdetail.html.twig' %}           
+{% endblock %}

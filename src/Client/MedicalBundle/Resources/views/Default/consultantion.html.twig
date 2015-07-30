@@ -1,0 +1,34 @@
+{% extends 'ClientMedicalBundle::layout.html.twig' %}
+
+{% block metakeyword %}
+	{% if asData|length > 0%}
+		<meta name="keywords" content="{{ asData[0]['url']|striptags }}">
+	{% endif %}
+{% endblock %}
+{% block title %}
+	{% if asData|length > 0 and asData[0]['title'] != ''%}
+		{{asData[0]['title']}}{{' | '}}{{'Medical Tourism Information - medical.lt'|trans}}
+	{%else%}
+		{{'Medical Tourism Information'|trans}}
+	{%endif%}
+{% endblock %}
+
+{% block body %} 
+{% include 'ClientMedicalBundle:Company:quicksearch.html.twig' %}
+<a href="{{ path('client_medical_homepage') }}" class="btn btn-default whitebtn back_link">&lt;&lt; {{'Back'|trans}} </a>
+<div class="row news_detail">
+    <div class="col-md-8 companylist_container newsdetilspage">
+	  {% if asData|length > 0%}
+		{% for data in asData%}  
+		<h3>{{ data['title'] }}</h3>		
+		<p>{{ data['description']|striptags|raw }}</p>
+	  {% endfor %}
+	  {% endif %}
+	</div>
+	<div class="col-md-4">
+		<div class="news_banner_wrapper">
+			{{ render(controller('ClientMedicalBundle:News:banners',{'ssPage':'static_articles'})) }}
+		</div>
+	</div>
+	</div>
+{% endblock %}

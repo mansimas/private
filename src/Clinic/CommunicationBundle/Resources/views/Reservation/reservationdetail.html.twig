@@ -1,0 +1,180 @@
+{% extends 'ClinicCommunicationBundle::layout.html.twig' %}
+
+{% block title %}{{ 'Priėmimo informacija' }}{% endblock %}
+
+{% set snSpecialofferId = app.request.get('id') != '' ? app.request.get('id'): '' %}
+
+{% block body %}
+{% if asQuoteAllData|length > 0 %}
+{% set asData = asQuoteAllData[0] %}
+<div class="row client_message_hed_row">
+  <div class="col-sm-3">&nbsp;</div>
+  <div class="col-sm-9 client_message_btns">
+		<a href="{{ path('clinic_communication_homepage') }}" class="btn btn-default whitebtn col-md-3">{{ 'Aktyvios užklausos'}}</a>
+		<a  href="{{ path('clinic_medical_reservation') }}" class="btn btn-default bluebtn col-md-3">{{ 'Rezervacijos'}}</a>
+  </div>
+</div>
+<div class="page-content">
+<a href="{{ path('clinic_medical_reservation') }}" class="btn whitebtn admin_back_btn"><< {{ 'Atgal į sąrašą' }}</a>
+<div class="row-fluid">
+  <div class="span12 form-horizontal clininc reservation_page formbox" style="margin-top:20px;">
+    <div class="row-fluid">
+      <div class="span6 ">
+        <h4>{{ 'Kliento informacija' }}</h4>
+        <dl class="dl-horizontal">
+          <dt>{{ 'Unikalus Nr.'}} </dt>
+          <dd> <b>{{ asData.userquotedetails.unique_id }}</b> </dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>{{ 'Vardas' }}</dt>
+          <dd> <b>{{ asData.userquotedetails.firstname }}</b> </dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>{{'Middlename'|trans}}</dt>
+          <dd> {{ asData.userquotedetails.middlename }} </dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>{{'Pavardė'}}</dt>
+          <dd> {{ asData.userquotedetails.lastname }} </dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>{{'el. paštas'}}</dt>
+          <dd> {{ asData.userquotedetails.email }} </dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>{{'tel. nr.'}}</dt>
+          <dd> {{ asData.userquotedetails.phone }} </dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>{{'Šalis'}}</dt>
+          <dd> {{ asData.userquotedetails.countries.name }} </dd>
+        </dl>
+      </div>
+      <div class="span6 ">
+        <h4>{{'Gyvenamasis adresas'}}</h4>
+        <dl class="dl-horizontal">
+          <dt>{{'adresas'}}</dt>
+          <dd> {{ asData.resi_address_one }} </dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>{{'adresas 2'}}</dt>
+          <dd>{{ asData.resi_address_two }}</dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>{{'Miestas'}}</dt>
+          <dd> {{ asData.resi_city }} </dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>{{'Valstija / Apskritis'}}</dt>
+          <dd> {{ asData.resi_state }} </dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>{{'Pašto kodas'}}</dt>
+          <dd> {{ asData.resi_zip }} </dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>{{'Šalis'}}</dt>
+          <dd> {% if asData.countries.name is defined %}{{ asData.countries.name }} {% endif %}</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <hr>
+    <div class="row-fluid">
+      <div class="span6 ">
+        <h4>{{'Gydymo įstaigos informacija'}}</h4>
+        <dl class="dl-horizontal">
+          <dt>{{'Gydymo įstaiga'}}</dt>
+          <dd> {{ asData.company.name }} </dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>{{'įm. kodas'}}</dt>
+          <dd> {{ asData.company.company_code }} </dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>{{'PVM kodas'}}</dt>
+          <dd> {{ asData.company.vat_code }} </dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>{{'Licencijos nr.'}}</dt>
+          <dd> {{ asData.company.licence_number }} </dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>{{'Adresas'}}</dt>
+          <dd> {{ asData.company.address }} </dd>
+        </dl>
+      </div>
+      <div class="span6 ">
+        <h4>{{'Užsakymo informacija'}}</h4>
+        <dl class="dl-horizontal">
+          <dt>{{'Data'}}</dt>
+          <dd> {{ asData.created_at|date('Y m d')~" "~asData.created_at|date('H:i') }} </dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>{{'Paslaugų kaina'}}</dt>
+          <dd> {{ asData.userquotedetails.usercompanycommunication[0].service_price }} Eur </dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>{{'Rezervacijos mokestis'}}</dt>
+          <dd> {{ snReservationFee }} Eur </dd>
+        </dl>
+        <h2 class="btn btn-success btn-large no_hover">{{'REZERVACIJA APMOKĖTA'}}</h2>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+    <hr>
+    <div class="row-fluid">
+      <div class="span6">
+        <h4>{{'Domina šios turizmo paslaugos'}}</h4>
+        {% set asOffers = asData.offers|split(',') %}
+        {% set offers = "" %}
+        <ul class="ok_icon_list">
+          {% for asOffer in asOffers %}
+          {% if asOffer == 1 %}
+          {% set offers = 'Pasiėmimas oro uoste' %}
+		  <li><i class="icon-ok"></i>&nbsp;{{ offers }}</li>
+          {% endif %}
+          {% if asOffer == 2 %}
+          {% set offers = 'Transportas ir gidas' %}
+		  <li><i class="icon-ok"></i>&nbsp;{{ offers }}</li>
+          {% endif %}
+          {% if asOffer == 3 %}
+          {% set offers = 'Turistiniai maršrutai' %}
+		  <li><i class="icon-ok"></i>&nbsp;{{ offers }}</li>
+          {% endif %}
+          
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="span6 ">
+        <h4>{{'Papildomos paslaugos'}}</h4>
+        <p>{{ asData.specific_wishes }}</p>
+      </div>
+      <div class="clearfix"></div>
+      <hr>
+      <div class="row-fluid">
+        <h4>{{'Medicinos paslaugų informacija'}}</h4>
+        <dl class="dl-horizontal">
+          <dt>{{'Gydymas / Procedūra'}}</dt>
+          <dd> {{ asData.userquotedetails.usercompanycommunication[0].service_description }} </dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>{{'Trumpas paslaugosaprašymas'}}</dt>
+          <dd> {{ asData.userquotedetails.usercompanycommunication[0].brief_service_description }} </dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>{{'Atsakingas asmuo'}}</dt>
+          <dd> {{ asData.userquotedetails.usercompanycommunication[0].responsible_person_doctor }} </dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>{{'Rezervacijos data'}}</dt>
+          <dd> {{ asData.userquotedetails.usercompanycommunication[0].reservation_date|date('Y m d')~" "~asData.userquotedetails.usercompanycommunication[0].reservation_time|date('H:i') }} </dd>
+        </dl>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.page-content -->
+{% endif %}
+{% endblock %}

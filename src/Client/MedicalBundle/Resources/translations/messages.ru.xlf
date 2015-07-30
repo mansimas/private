@@ -1,0 +1,1195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+  <file date="2015-02-12T10:12:32Z" source-language="en" target-language="ru" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+      <trans-unit id="b858cb282617fb0956d960215c8e84d1ccf909c6" resname=" ">
+        <source> </source>
+        <target> </target>
+      </trans-unit>
+      <trans-unit id="918e05eae3f7ec816edc052a62a2f7512772e8a1" resname="(10 coupons max per sale)">
+        <source>(10 coupons max per sale)</source>
+        <target>(максимум 10 купонов на одну покупку)</target>
+      </trans-unit>
+      <trans-unit id="62760841c8f00cdf4266e2cd03dd2d707db70174" resname="-- Choose a Category --">
+        <source>-- Choose a Category --</source>
+        <target>-- Выбрать категорию --</target>
+      </trans-unit>
+      <trans-unit id="dd210a042592a966784c6fbf44040d3885709293" resname="-- Choose a Sub - Sub category --">
+        <source>-- Choose a Sub - Sub category --</source>
+        <target>-- Выбрать вторую субкатегорию --</target>
+      </trans-unit>
+      <trans-unit id="a0cb8f6a42f0fedba5f5cf192eb6fed2f1c93892" resname="-- Choose a Sub category --">
+        <source>-- Choose a Sub category --</source>
+        <target>-- Выбрать субкатегорию --</target>
+      </trans-unit>
+      <trans-unit id="73117b58731cbc92649981718675e9c7acfb4b0f" resname="--Select--">
+        <source>--Select--</source>
+        <target>--Выбрать--</target>
+      </trans-unit>
+      <trans-unit id="1645b12796353526c2b7ab2c05a23468b9472455" resname="2013 Medical.lt All Rights Reserved.">
+        <source>2013 Medical.lt All Rights Reserved.</source>
+        <target>2013 Medical.lt Все права защищены.</target>
+      </trans-unit>
+      <trans-unit id="901549a76bdb664a0b03e94cde0f0e97b2ae840a" resname="About medical.It">
+        <source>About medical.It</source>
+        <target>Немного о medical.It</target>
+      </trans-unit>
+      <trans-unit id="a32d5412fdc4d34d30d9554f9695b6f4818f4f17" resname="Accept and make reservation">
+        <source>Accept and make reservation</source>
+        <target>Принять предложение и зарезервировать</target>
+      </trans-unit>
+      <trans-unit id="a733b809d2f1233496ab516eed0f3ef75cf3791a" resname="Active">
+        <source>Active</source>
+        <target>Активен</target>
+      </trans-unit>
+      <trans-unit id="cb5c9236772f858a4d5a6406ede69270cb69e45e" resname="Add more files">
+        <source>Add more files</source>
+        <target>Добавить еще файлов</target>
+      </trans-unit>
+      <trans-unit id="5618a8824e5647cbd834feb218ab3f44a4abe75b" resname="Add to list">
+        <source>Add to list</source>
+        <target>Добавить в список</target>
+      </trans-unit>
+      <trans-unit id="3a758929b80a3e284bd7b7ded7151cfabc6cc288" resname="Add to quote list">
+        <source>Add to quote list</source>
+        <target>Добавить в мой список</target>
+      </trans-unit>
+      <trans-unit id="8d66d47369d3691bedc44591fe0b709ce19b285c" resname="Added to quote list">
+        <source>Added to quote list</source>
+        <target>Добавлено</target>
+      </trans-unit>
+      <trans-unit id="911a0b354b810ade1b41221cd419095a4767144e" resname="Additional information">
+        <source>Additional information</source>
+        <target>Дополнительная информация</target>
+      </trans-unit>
+      <trans-unit id="d70f93df5e8f9b55be44fbeee9d203972e3383d4" resname="Address">
+        <source>Address</source>
+        <target>Адрес</target>
+      </trans-unit>
+      <trans-unit id="3611c499155db7df0ceac3835dd2da49e05c986a" resname="Address 2">
+        <source>Address 2</source>
+        <target>Адрес 2</target>
+      </trans-unit>
+      <trans-unit id="d4133215ab51dd699c270052d28a98181479e976" resname="Advance search">
+        <source>Advance search</source>
+        <target>Расширенный поиск</target>
+      </trans-unit>
+      <trans-unit id="70f8af0f0426a6bf866136bcce228dd18df8e697" resname="After reservation, we will send you confirmation and receipt to your email with all contact details.">
+        <source>After reservation, we will send you confirmation and receipt to your email with all contact details.</source>
+        <target>Сразу после отплаты резервационного взноса Вы получите подтверждение резервации и резервационный квит на Вашу электронную почту.</target>
+      </trans-unit>
+      <trans-unit id="322dba2f3eefa48cbebb6c7a4b6010d9c4d445e5" resname="All included assistance for your stay">
+        <source>All included assistance for your stay</source>
+        <target>Поддержка на время Вашего пребывания</target>
+      </trans-unit>
+      <trans-unit id="acf6608613aee223793146fd0b60e0f8fd26a934" resname="All reviews">
+        <source>All reviews</source>
+        <target>Все отзывы</target>
+      </trans-unit>
+      <trans-unit id="a33938c99df1c67f687541a927d4c6a69da1e052" resname="And get personalised offer for service">
+        <source>And get personalised offer for service</source>
+        <target>Получите индивидуальное предложение</target>
+      </trans-unit>
+      <trans-unit id="2621c6fd51a58e1d1d5c491aac71488647b20224" resname="Archive">
+        <source>Archive</source>
+        <target>Архив</target>
+      </trans-unit>
+      <trans-unit id="a20316b5c23c33a24f5e6d68d73b868210d8fe5c" resname="Are you a client">
+        <source>Are you a client</source>
+        <target>Являетесь ли Вы клиентом данного учреждения?</target>
+      </trans-unit>
+      <trans-unit id="b52b36b7269fbfc58ec24bb724691951a3decbe8" resname="Back">
+        <source>Back</source>
+        <target>Назад</target>
+      </trans-unit>
+      <trans-unit id="11cd7d04cbb2029c64d25b55d138c5647bb989ab" resname="Back to My list">
+        <source>Back to My list</source>
+        <target>Назад к моему списку</target>
+      </trans-unit>
+      <trans-unit id="e5ff25ae15650bdafe36d929f277ae22c31b2620" resname="Back to categories">
+        <source>Back to categories</source>
+        <target>Назад к категориям</target>
+      </trans-unit>
+      <trans-unit id="d3af023a7813a1357bb415d986f8a80aa7e4d4ac" resname="Back to clinic">
+        <source>Back to clinic</source>
+        <target>Назад к клинике</target>
+      </trans-unit>
+      <trans-unit id="c75cda196bb081a06c2a64166e4dbb4d96614e75" resname="Back to doctors">
+        <source>Back to doctors</source>
+        <target>Назад к врачам</target>
+      </trans-unit>
+      <trans-unit id="747f5bd6a0909c98fd90bd1e386d549c02dda9e0" resname="Back to list">
+        <source>Back to list</source>
+        <target>Назад к списку</target>
+      </trans-unit>
+      <trans-unit id="be6e5730bea539ecd4a78fa7412a0db08d114095" resname="Back to news">
+        <source>Back to news</source>
+        <target>Назад к новостям</target>
+      </trans-unit>
+      <trans-unit id="fcdc935d06172eb80047dc0d2470d15d7062a768" resname="Back to special offers">
+        <source>Back to special offers</source>
+        <target>Назад к спец-предложениям</target>
+      </trans-unit>
+      <trans-unit id="be7e10d1c5dd2ad77f6d5a617372a7bf013cb7bf" resname="Bad">
+        <source>Bad</source>
+        <target>Неудовлетворительно</target>
+      </trans-unit>
+      <trans-unit id="77bfa67a49fef6dcaad2ca14b2f3a394829e089b" resname="Based on">
+        <source>Based on</source>
+        <target>Всего</target>
+      </trans-unit>
+      <trans-unit id="87aecc73087df6e5d4944a51bf8e7c44471c1655" resname="Be the first to rate it, if you have already used their services">
+        <source>Be the first to rate it, if you have already used their services</source>
+        <target>Оцените первым(ой) данные медицинские услуги, если Вы уже ими воспользовались!</target>
+      </trans-unit>
+      <trans-unit id="0f40f4e0886a76b9cfe96db5fd93fe9aa5cc32bd" resname="Best rating first">
+        <source>Best rating first</source>
+        <target>Начать с высокого рейтинга</target>
+      </trans-unit>
+      <trans-unit id="99613c74ce010d98ed5501785f3591344a19bc17" resname="Blocked">
+        <source>Blocked</source>
+        <target>Недоступно</target>
+      </trans-unit>
+      <trans-unit id="9ef422aff026e83ec4f5b6b51c6c09668ad18fb8" resname="Brief service desription">
+        <source>Brief service desription</source>
+        <target>Короткое описание услуги</target>
+      </trans-unit>
+      <trans-unit id="77dfd2135f4db726c47299bb55be26f7f4525a46" resname="Cancel">
+        <source>Cancel</source>
+        <target>Отмена</target>
+      </trans-unit>
+      <trans-unit id="6ccb60071be8f00760a3824d9f7d0fad57de789f" resname="Categories">
+        <source>Categories</source>
+        <target>Категории</target>
+      </trans-unit>
+      <trans-unit id="a3c686e711e4720f99b4562bb3dbaae7ab658cf2" resname="Category">
+        <source>Category</source>
+        <target>Категория</target>
+      </trans-unit>
+      <trans-unit id="7f98f01046a6198ccbcf861dbc580f1de26a3117" resname="Certified">
+        <source>Certified</source>
+        <target>Сертифицировано</target>
+      </trans-unit>
+      <trans-unit id="b91bf5d476554fb895940922ff862621e1ca8a19" resname="Choose a category">
+        <source>Choose a category</source>
+        <target>Выберите категорию</target>
+      </trans-unit>
+      <trans-unit id="7843c8c20cac6fd217e9745839a8ed3a87fed63b" resname="Choose a country">
+        <source>Choose a country</source>
+        <target>Выберите страну</target>
+      </trans-unit>
+      <trans-unit id="b4ec8c14e12bb3bc0aec93bb23fdbde467a5bee8" resname="Choose all clinics you like">
+        <source>Choose all clinics you like</source>
+        <target>Выберите понравившиеся клиники</target>
+      </trans-unit>
+      <trans-unit id="4271627f4f0bef6104a95cca7bb21cda4d74503e" resname="City">
+        <source>City</source>
+        <target>Город</target>
+      </trans-unit>
+      <trans-unit id="c2569c9068e112582d50742acee40806b9fa7181" resname="Click &quot;Send quote to all clinics">
+        <source>Click "Send quote to all clinics</source>
+        <target>Нажмите "Отправить запрос всем клиникам"</target>
+      </trans-unit>
+      <trans-unit id="d94abea6dd1d8ba47ec651f78d4ac84e3bd4bc0b" resname="Clinic">
+        <source>Clinic</source>
+        <target>Клиника</target>
+      </trans-unit>
+      <trans-unit id="64511df3cb49c527472f20d74d35ce37f1f08e08" resname="Clinic details">
+        <source>Clinic details</source>
+        <target>Информация о клинике</target>
+      </trans-unit>
+      <trans-unit id="5f79caff0ce1473fc362b7aa380792ff3098498e" resname="Clinic offered">
+        <source>Clinic offered</source>
+        <target>Клиника предлагает</target>
+      </trans-unit>
+      <trans-unit id="996c44890f4cddad7261fa6c94fc5807d5ef635a" resname="Clinic rating not less than">
+        <source>Clinic rating not less than</source>
+        <target>Рейтинг клиники не меньше чем</target>
+      </trans-unit>
+      <trans-unit id="c63f23faacbc6fb64b3a6372bdeed736e90e60a7" resname="Clinic ratings">
+        <source>Clinic ratings</source>
+        <target>Рейтинг клиники</target>
+      </trans-unit>
+      <trans-unit id="90a5d91b77853bf4989432a7d61e56631396baeb" resname="Clinics that received your quote">
+        <source>Clinics that received your quote</source>
+        <target>Клиники, получившие Ваш запрос</target>
+      </trans-unit>
+      <trans-unit id="bbfa773e5a63a5ea58c9b6207e608ca0120e592a" resname="Close">
+        <source>Close</source>
+        <target>Закрыть</target>
+      </trans-unit>
+      <trans-unit id="7efa5d750c85c93127206f8d47e5a6cf92bb0a91" resname="Close and keep browsing">
+        <source>Close and keep browsing</source>
+        <target>Закрыть и продолжить искать</target>
+      </trans-unit>
+      <trans-unit id="73e8fab289dfa6644e93c1c2c17bee541f5d015f" resname="Close and keep browsing &gt;&gt;">
+        <source><![CDATA[Close and keep browsing >>]]></source>
+        <target><![CDATA[Закрыть и продолжить искать >>]]></target>
+      </trans-unit>
+      <trans-unit id="fce06e20e5f7f74aacccab40b59b75a56c8f7305" resname="Comments">
+        <source>Comments</source>
+        <target>Отзывы</target>
+      </trans-unit>
+      <trans-unit id="ade0d50c9254cf0c9459bbfe2398553c1fee3ecb" resname="Communication">
+        <source>Communication</source>
+        <target>Обратная связь</target>
+      </trans-unit>
+      <trans-unit id="7a1994999d181deea68e4304b3346e78f838ecb7" resname="Company">
+        <source>Company</source>
+        <target>Учреждение</target>
+      </trans-unit>
+      <trans-unit id="7d1ed2e564d541132b687d8c43efdebbee9bfb91" resname="Company center">
+        <source>Company center</source>
+        <target>Центр учреждения</target>
+      </trans-unit>
+      <trans-unit id="e9eebbed426c8c0dde5fe22815bd0a7f16cabdb9" resname="Company code">
+        <source>Company code</source>
+        <target>Код учреждения</target>
+      </trans-unit>
+      <trans-unit id="1798b3ba42ee08ea09d9720b2d9c0181abbfe3e4" resname="Completed">
+        <source>Completed</source>
+        <target>Завершено</target>
+      </trans-unit>
+      <trans-unit id="d4ec65ae3ccdb885ee8f80aa75396cdcd142d449" resname="Contact details">
+        <source>Contact details</source>
+        <target>Контактные данные</target>
+      </trans-unit>
+      <trans-unit id="b0dd615cbbdcbf21ffb72115599ca915634fcb85" resname="Contacts">
+        <source>Contacts</source>
+        <target>Контакты</target>
+      </trans-unit>
+      <trans-unit id="8467c0d99c7925d9e5fdb471fce551ee2115df40" resname="Countries">
+        <source>Countries</source>
+        <target>Страна</target>
+      </trans-unit>
+      <trans-unit id="d523ebbd10146cdfd39dee077f04c9d08468d0bc" resname="Country">
+        <source>Country</source>
+        <target>Страна</target>
+      </trans-unit>
+      <trans-unit id="f6fdbe48dc54dd86f63097a03bd24094dedd713a" resname="Delete">
+        <source>Delete</source>
+        <target>Удалить</target>
+      </trans-unit>
+      <trans-unit id="55f8ebc805e65b5b71ddafdae390e3be2bcd69af" resname="Description">
+        <source>Description</source>
+        <target>Описание</target>
+      </trans-unit>
+      <trans-unit id="8fa1d256d60855b26f645047553ed4a73e41d1e5" resname="Deutch">
+        <source>Deutch</source>
+        <target>Немецкий</target>
+      </trans-unit>
+      <trans-unit id="d71bfc967470b2cd4b9b36443bad875c8e999e4d" resname="Do you have any specific wishes?">
+        <source>Do you have any specific wishes?</source>
+        <target>Есть ли у Вас определенные пожелания?</target>
+      </trans-unit>
+      <trans-unit id="09dfa188c16b4e101d181b7639eb8d514903631c" resname="Doctors">
+        <source>Doctors</source>
+        <target>О клинике</target>
+      </trans-unit>
+      <trans-unit id="276e6994fe8484449e6fbde6d246e10fe2b6960b" resname="Doctors in Lithuania">
+        <source>Doctors in Lithuania</source>
+        <target>Врачи в Литве</target>
+      </trans-unit>
+      <trans-unit id="58a8fc90d43fe371d073eb751dd11fedc3c260ca" resname="Document only allowed with these formatted files &quot;pdf&quot;,&quot;doc&quot;,&quot;csv&quot;,&quot;xls&quot;,&quot;docx&quot;,&quot;txt&quot;,&quot;jpg&quot;, &quot;jpeg&quot;, &quot;png&quot;, &quot;bmp&quot;">
+        <source>Document only allowed with these formatted files "pdf","doc","csv","xls","docx","txt","jpg", "jpeg", "png", "bmp"</source>
+        <target>Документ доступен только в данных форматах: "pdf","doc","csv","xls","docx","txt","jpg", "jpeg", "png", "bmp"</target>
+      </trans-unit>
+      <trans-unit id="84add5b2952787581cb9a8851eef63d1ec75d22b" resname="Email">
+        <source>Email</source>
+        <target>Электронная почта</target>
+      </trans-unit>
+      <trans-unit id="649df08a448ee3fa90f3746baaf6b0907df42c91" resname="English">
+        <source>English</source>
+        <target>Английский</target>
+      </trans-unit>
+      <trans-unit id="d443a1185575c125d61e0af393b044d7b06ef572" resname="Environment">
+        <source>Environment</source>
+        <target>Атмосфера</target>
+      </trans-unit>
+      <trans-unit id="9a21ed84a8e929bab5b5faf73cbb3355fb349cc7" resname="Eur.">
+        <source>Eur.</source>
+        <target>Eur.</target>
+      </trans-unit>
+      <trans-unit id="1aafbf548bd1d2374a972243c72d497a1de66287" resname="Excellent">
+        <source>Excellent</source>
+        <target>Отлично</target>
+      </trans-unit>
+      <trans-unit id="8356f7798914e94f9bd6c5e87b06b3fa41b5ae01" resname="Expences covered by insurance fund">
+        <source>Expences covered by insurance fund</source>
+        <target>Расходы, покрываемые страхованием</target>
+      </trans-unit>
+      <trans-unit id="5b5aafe6b9e2094c341356cec8cab143fe29a38a" resname="Experience">
+        <source>Experience</source>
+        <target>Oборудование</target>
+      </trans-unit>
+      <trans-unit id="3da5d6c17cd08f8fd17c037a2c324328332c9e1f" resname="Expire">
+        <source>Expire</source>
+        <target>Срок окончания действия</target>
+      </trans-unit>
+      <trans-unit id="a14fbb0625d38462426b543d8d9341f3c1753ba9" resname="Fill your requirements">
+        <source>Fill your requirements</source>
+        <target>Впишите Ваши требования</target>
+      </trans-unit>
+      <trans-unit id="46cd53a1a608ce2d8b31c7a0b8a3225c44d5b56d" resname="Final reservation">
+        <source>Final reservation</source>
+        <target>Окончательная резервация</target>
+      </trans-unit>
+      <trans-unit id="afe7f42cc5ce245a500c97e85916b704d50e2df5" resname="Find insurance company">
+        <source>Find insurance company</source>
+        <target>Найти страховую компанию</target>
+      </trans-unit>
+      <trans-unit id="b6ea992aab4668311bb94778e056dd0285f27621" resname="First Name">
+        <source>First Name</source>
+        <target>Имя</target>
+      </trans-unit>
+      <trans-unit id="cf23ba48c06d7e6d4b41a205bfb3cac3bb7b1e38" resname="Firstname">
+        <source>Firstname</source>
+        <target>Имя</target>
+      </trans-unit>
+      <trans-unit id="536f4dc75687d36174905b7441aa0e56fcef7d3e" resname="For agencies">
+        <source>For agencies</source>
+        <target>Компаниям и фирмам</target>
+      </trans-unit>
+      <trans-unit id="fd8451ee6bb63d2e6dcf9bbc754f356e298c6259" resname="For clinics">
+        <source>For clinics</source>
+        <target>Клиникам и медицинским учреждениям</target>
+      </trans-unit>
+      <trans-unit id="441463303741b410ed2f9e9f7fd34e28ea28d155" resname="For communication if necessary">
+        <source>For communication if necessary</source>
+        <target>Связаться в случае необходимости</target>
+      </trans-unit>
+      <trans-unit id="669e550fb1292302b3823382b5376b65569ae080" resname="Free quote form">
+        <source>Free quote form</source>
+        <target>Бесплатная форма для запроса</target>
+      </trans-unit>
+      <trans-unit id="da91388c72d3e31da19dcd85c97374197748485d" resname="German">
+        <source>German</source>
+        <target>Немецкий</target>
+      </trans-unit>
+      <trans-unit id="02e3a582bd6fcc9737b7eebce3686461f83160c7" resname="Get a quote">
+        <source>Get a quote</source>
+        <target>Отправить запрос</target>
+      </trans-unit>
+      <trans-unit id="07aa41aa3e0f9485a29562cc1a2611894292028f" resname="Guaranties">
+        <source>Guaranties</source>
+        <target>Гарантии</target>
+      </trans-unit>
+      <trans-unit id="80eb34bc82b396ff126927618f72f3aec37b7170" resname="Guided tours in Lithuania">
+        <source>Guided tours in Lithuania</source>
+        <target>Туры в Литве</target>
+      </trans-unit>
+      <trans-unit id="e0a4f21096a8e422ce5b1e01d5aa0c5711089e98" resname="Health problem">
+        <source>Health problem</source>
+        <target>Проблема со здоровьем</target>
+      </trans-unit>
+      <trans-unit id="c7a227cfc21f32e7dcb126a4f78eef1b54d5d423" resname="Hide Offer">
+        <source>Hide Offer</source>
+        <target>Свернуть предложение</target>
+      </trans-unit>
+      <trans-unit id="22dd7beaab113b953b1acdfc187854910a19b630" resname="Home right">
+        <source>Home right</source>
+        <target>Главная</target>
+      </trans-unit>
+      <trans-unit id="4b86d2415f23764a0fe08fdbc95cda5495f5979f" resname="How it work?">
+        <source>How it work?</source>
+        <target>Как это работает?</target>
+      </trans-unit>
+      <trans-unit id="726420e513c28e26504b6b231eb57fd92d170a61" resname="How many coupons you need">
+        <source>How many coupons you need</source>
+        <target>Сколько купонов желаете?</target>
+      </trans-unit>
+      <trans-unit id="63dae79fc07323cfc7c55662f335a28fbda4e803" resname="I have read and agree with">
+        <source>I have read and agree with</source>
+        <target>Я ознакомился(ась) и согласен(на)</target>
+      </trans-unit>
+      <trans-unit id="aacc26332c174dfe0b8a4f608d3ddb773077538d" resname="INFORMATION CENTER in LITHUANIA">
+        <source>INFORMATION CENTER in LITHUANIA</source>
+        <target>МЕДИЦИНСКОГО ТУРИЗМА в ЛИТВЕ</target>
+      </trans-unit>
+      <trans-unit id="e2d34ccbb0b19d6b26736c6b81bdf1e680e378e6" resname="If you have any other information such as">
+        <source>If you have any other information such as</source>
+        <target>Если обладаете дополнительной информацией</target>
+      </trans-unit>
+      <trans-unit id="0a9e30cea8f2a9d861f63edd15e47679af228875" resname="In case of dispute">
+        <source>In case of dispute</source>
+        <target>Гарантии</target>
+      </trans-unit>
+      <trans-unit id="f744f99048d9adbb81785e329990c9a9e8f4efd5" resname="In the list">
+        <source>In the list</source>
+        <target>В списке</target>
+      </trans-unit>
+      <trans-unit id="bcf57cd978f4b8bf2ab7897b90435c672761ea28" resname="Input only digits">
+        <source>Input only digits</source>
+        <target>Вводите только цифры</target>
+      </trans-unit>
+      <trans-unit id="49e01b51c320ceba60592fba86cee89d7ddbbaae" resname="Insurance &amp; guaranties">
+        <source><![CDATA[Insurance & guaranties]]></source>
+        <target>Страхование</target>
+      </trans-unit>
+      <trans-unit id="453cb61eb9236c88b0783ff933c5c2901785d43d" resname="Insurance companies">
+        <source>Insurance companies</source>
+        <target>Страховые компании</target>
+      </trans-unit>
+      <trans-unit id="b693062047e701bbdc876c5a41335ca9e5967c78" resname="Insurance companies we work with">
+        <source>Insurance companies we work with</source>
+        <target>Страховые компании, с которыми мы сотрудничаем</target>
+      </trans-unit>
+      <trans-unit id="6dc061907be6fa536c2067d2f784f4dadfcbde43" resname="International partnership">
+        <source>International partnership</source>
+        <target>Международное сотрудничество</target>
+      </trans-unit>
+      <trans-unit id="2473e96bc614a911821242119918a241a41836d6" resname="Introduction">
+        <source>Introduction</source>
+        <target>Профиль</target>
+      </trans-unit>
+      <trans-unit id="1089e8e3e89833ff3efdc828839f75a7d4863d36" resname="I’m interested">
+        <source>I’m interested</source>
+        <target>Мне интересно</target>
+      </trans-unit>
+      <trans-unit id="07d18c380e22d9e0f31b7a4598cf73956ad07f39" resname="Keep browsing">
+        <source>Keep browsing</source>
+        <target>Искать дальше</target>
+      </trans-unit>
+      <trans-unit id="48a06e91f43bb32fc5867892633f57b691242fe8" resname="LITHUANIA MEDICINE NEWS">
+        <source>LITHUANIA MEDICINE NEWS</source>
+        <target>НОВОСТИ МЕДИЦИНЫ В ЛИТВЕ</target>
+      </trans-unit>
+      <trans-unit id="89b86ab0e66f527166d98df92ddbcf5416ed58f6" resname="Language">
+        <source>Language</source>
+        <target>Язык</target>
+      </trans-unit>
+      <trans-unit id="db07be184479f34078cd4fc76d248dc0975720e9" resname="Languages">
+        <source>Languages</source>
+        <target>Языки</target>
+      </trans-unit>
+      <trans-unit id="863cb39fbe7d70597076af1960b7ae4618d9e1bc" resname="Last Name">
+        <source>Last Name</source>
+        <target>Фамилия</target>
+      </trans-unit>
+      <trans-unit id="639860fbb86cea7f96e287fa3fecca62e4bb42f8" resname="Lastname">
+        <source>Lastname</source>
+        <target>Фамилия</target>
+      </trans-unit>
+      <trans-unit id="269a88913c38354eb68c76c5f80366b6eee2d568" resname="Leave your rating and comment">
+        <source>Leave your rating and comment</source>
+        <target>Оцените клинику и оставьте отзыв</target>
+      </trans-unit>
+      <trans-unit id="ef6e7f3e242facde3d5820d5cd6953c6e0a40b98" resname="Less popular">
+        <source>Less popular</source>
+        <target>Менее популярные</target>
+      </trans-unit>
+      <trans-unit id="4fb8032b23687331a5219d08c5c445eed74498c4" resname="Licence number">
+        <source>Licence number</source>
+        <target>Номер лицензии</target>
+      </trans-unit>
+      <trans-unit id="c7e02c95fe85052fcadf9745a5f1d0358088d936" resname="Like">
+        <source>Like</source>
+        <target>Мне нравится</target>
+      </trans-unit>
+      <trans-unit id="74a788cee27d549015a0786732c662e05cdd7567" resname="Lithuania">
+        <source>Lithuania</source>
+        <target>Литва</target>
+      </trans-unit>
+      <trans-unit id="553c519c9addc3f4dad41b4a23238251692354b7" resname="Lithuanian">
+        <source>Lithuanian</source>
+        <target>Литовский</target>
+      </trans-unit>
+      <trans-unit id="b102aaac2ec32dbf198514b467233bfb0803e8e5" resname="Live Chat">
+        <source>Live Chat</source>
+        <target>Помощь онлайн</target>
+      </trans-unit>
+      <trans-unit id="b27ea82b53496647896b773805927707e6b21dd6" resname="MEDICAL TOURISM">
+        <source>MEDICAL TOURISM</source>
+        <target>ИНФОРМАЦИОННЫЙ ЦЕНТР </target>
+      </trans-unit>
+      <trans-unit id="19259aa07fe3100e3c6bdeeb30caaa8cfe068092" resname="Main text">
+        <source>Main text</source>
+        <target>Основной текст</target>
+      </trans-unit>
+      <trans-unit id="843e374e86b9a8a9fcaaadfc1197562d8bcde14c" resname="Make free 24h reservation">
+        <source>Make free 24h reservation</source>
+        <target>Сделать резервацию на 24 часа</target>
+      </trans-unit>
+      <trans-unit id="20c5f3eba62ae869b10130e571ff51a7e997f663" resname="Make reservation">
+        <source>Make reservation</source>
+        <target>Подтвердить резервацию</target>
+      </trans-unit>
+      <trans-unit id="75f8bea86b414d15377e6f52ede983e88f9a0045" resname="Maximum 10 coupons per one purchase">
+        <source>Maximum 10 coupons per one purchase</source>
+        <target>Не более 10 купонов на покупку</target>
+      </trans-unit>
+      <trans-unit id="8bd624ac17c79f6da36110bb6c56fae36c69f2c9" resname="Medical Category Listing">
+        <source>Medical Category Listing</source>
+        <target>Категории медицинсих услуг</target>
+      </trans-unit>
+      <trans-unit id="76aad8a8c446d64024197a2c7ace1971f52cd398" resname="Medical Clinic Forgot Password">
+        <source>Medical Clinic Forgot Password</source>
+        <target>Medical Clinic Forgot Password</target>
+      </trans-unit>
+      <trans-unit id="f0712d828943e64c4431a6fd422935f514a43c85" resname="Medical Doctor Listing">
+        <source>Medical Doctor Listing</source>
+        <target>Список врачей</target>
+      </trans-unit>
+      <trans-unit id="22360eaa64bc410f6b6bb41686ee626b27c7a20a" resname="Medical Tourism Information">
+        <source>Medical Tourism Information</source>
+        <target>Информационный центр</target>
+      </trans-unit>
+      <trans-unit id="ea8923fe77ee82551c81c8a09d9afea927c5bbbd" resname="Medical Tourism Information - medical.lt">
+        <source>Medical Tourism Information - medical.lt</source>
+        <target>Центр медицинского туризма в Литве - medical.lt</target>
+      </trans-unit>
+      <trans-unit id="d4439380f8ab81d1effb1c34cacb04a2c31c83e7" resname="Medical Tourism Information Center">
+        <source>Medical Tourism Information Center</source>
+        <target>Информационный центр медицинского туризма в Литве</target>
+      </trans-unit>
+      <trans-unit id="eb797bc2929e37ee03a7d385b11c5d3c4ce6e418" resname="Medical lawyer consultantion for free">
+        <source>Medical lawyer consultantion for free</source>
+        <target>Бесплатная юридическая консультация</target>
+      </trans-unit>
+      <trans-unit id="305da2f0b8cf96a8a9724b8fea9b4f7890d33339" resname="Medical services">
+        <source>Medical services</source>
+        <target>Медицинские услуги</target>
+      </trans-unit>
+      <trans-unit id="5d0af90cf8c925b6a0c057ced6ed1904468b4b92" resname="Medical statements">
+        <source>Medical statements</source>
+        <target>Медицинские утверждения</target>
+      </trans-unit>
+      <trans-unit id="a4c2850a08982c29a1626da085053fb874f77ef9" resname="Medicine in Lithuania">
+        <source>Medicine in Lithuania</source>
+        <target>Медицина в Литве</target>
+      </trans-unit>
+      <trans-unit id="2fa0b0b7c782c8168553824d7644c51faa448ca7" resname="Member of association">
+        <source>Member of association</source>
+        <target>Членство в ассоциациях</target>
+      </trans-unit>
+      <trans-unit id="57f5f5efbc5990f5230aa95359042338b856707b" resname="Menu">
+        <source>Menu</source>
+        <target>Меню</target>
+      </trans-unit>
+      <trans-unit id="4d242444ca5e6471ea0445c6d1d8e07f1d18e8a2" resname="Message for clinic">
+        <source>Message for clinic</source>
+        <target>Сообщение клинике</target>
+      </trans-unit>
+      <trans-unit id="13273741eaddf28c6ae107bf719b905293dd86cc" resname="Meta Description">
+        <source>Meta Description</source>
+        <target>Мета Описание</target>
+      </trans-unit>
+      <trans-unit id="0ffb7074be05068a51b83b4f60a44d9affa61b75" resname="Meta description">
+        <source>Meta description</source>
+        <target>Мета описание</target>
+      </trans-unit>
+      <trans-unit id="7a7b7a9de67ca664b84cd90c27715b288d9539aa" resname="Meta keyword">
+        <source>Meta keyword</source>
+        <target>Мета ключевые слова</target>
+      </trans-unit>
+      <trans-unit id="32933765b38ee767195f6a3b70d049f183f11e7b" resname="Middle Name">
+        <source>Middle Name</source>
+        <target>Отчество</target>
+      </trans-unit>
+      <trans-unit id="34339054cd564ca84fa5f2f1bc73616e08fad579" resname="Middlename">
+        <source>Middlename</source>
+        <target>Отчество</target>
+      </trans-unit>
+      <trans-unit id="669a6f4707ef0dc76976eef4810feefdde68aad1" resname="Modern, clean design to give your business very highly professional appearance and to make sure it’s the best that i can possibly ever be. You know, all epic and really cool and ligid looking. But to be honest, the site is amazing and it has a lot of souland hard !work put in it, believe it or not!">
+        <source>Modern, clean design to give your business very highly professional appearance and to make sure it’s the best that i can possibly ever be. You know, all epic and really cool and ligid looking. But to be honest, the site is amazing and it has a lot of souland hard !work put in it, believe it or not!</source>
+        <target>Информационный центр медицинского туризма в Литве – medical.lt – абсолютно новая платформа для Вашего здоровья. Здесь Вы быстро и с удобством найдете нужные Вам медицинские учреждения, сможете их сравнить, зарезервировать время приема или процедуры, и оставить отзывы. На портале medical.lt Вы также найдете много информации не только об услугах, процедурах, и клиниках, но и о самых красивых и посещаемых местах Литвы, последних новостях медицины, страховых компаниях, и т.д. При помощи удобной поисковой системы на medical.lt Вы сможете отослать запросы сразу в несколько клиник, заказать гостиницу при надобности, и приобрести билеты на перелет. Информационный центр медицинского туризма в Литве medical.lt – все для Вашего здоровья!</target>
+      </trans-unit>
+      <trans-unit id="2b4cf2adc98025e1a3bee7e6258656e038b64aaf" resname="More info...">
+        <source>More info...</source>
+        <target>Читать дальше...</target>
+      </trans-unit>
+      <trans-unit id="5adbdd07e7a4b3d8cb2d190205a29f132375b2d8" resname="Most popular">
+        <source>Most popular</source>
+        <target>Самые популярные</target>
+      </trans-unit>
+      <trans-unit id="c1743d9e5cf116161b154cd82ae67566c9f2e0fa" resname="My saved clinics">
+        <source>My saved clinics</source>
+        <target>Мои клиники</target>
+      </trans-unit>
+      <trans-unit id="7fcac645905b5a649ec6ae063a8e7d4b8f26aabc" resname="NO record found">
+        <source>NO record found</source>
+        <target>Ничего не найдено</target>
+      </trans-unit>
+      <trans-unit id="709a23220f2c3d64d1e1d6d18c4d5280f8d82fca" resname="Name">
+        <source>Name</source>
+        <target>Имя</target>
+      </trans-unit>
+      <trans-unit id="ae23ff73c1c6bace7b9e2d5ef1b655ef4c5d697f" resname="Need a hotel? Book it for your stay:">
+        <source>Need a hotel? Book it for your stay:</source>
+        <target>Вам нужна гостиница? Можете выбрать:</target>
+      </trans-unit>
+      <trans-unit id="97e2e9fd57980decdd1004f953f3c50a6794f0aa" resname="Need help?">
+        <source>Need help?</source>
+        <target>Нужна помощь?</target>
+      </trans-unit>
+      <trans-unit id="4894cb39ee419a77b480060f3e4a6d0a4d0fa01f" resname="New Password">
+        <source>New Password</source>
+        <target>Новый пароль</target>
+      </trans-unit>
+      <trans-unit id="23098ebe03c11802ce16fa0dd99afb80f299e765" resname="News right">
+        <source>News right</source>
+        <target>Новости</target>
+      </trans-unit>
+      <trans-unit id="816c52fd2bdd94a63cd0944823a6c0aa9384c103" resname="No">
+        <source>No</source>
+        <target>Нет</target>
+      </trans-unit>
+      <trans-unit id="9f06506dcb206e1c31b64984c1d52d466255290a" resname="No detail">
+        <source>No detail</source>
+        <target>Нет информации</target>
+      </trans-unit>
+      <trans-unit id="689d76a236478d110e01eda3654729b81ed6caae" resname="No insurance found">
+        <source>No insurance found</source>
+        <target>Страховая компания не найдена</target>
+      </trans-unit>
+      <trans-unit id="153cf7b2016277ea2bd8c104ec3f9039042885ee" resname="No record">
+        <source>No record</source>
+        <target>Нет информации</target>
+      </trans-unit>
+      <trans-unit id="00416a07570df3ed62b93ecdfded8cd79635bdfa" resname="No record found">
+        <source>No record found</source>
+        <target>Нет информации</target>
+      </trans-unit>
+      <trans-unit id="1a20827f207eda7587b5b885562a1ca731390ada" resname="No special offers at the moment">
+        <source>No special offers at the moment</source>
+        <target>В данный момент специальных предложений нет</target>
+      </trans-unit>
+      <trans-unit id="1e170a44ec8cc4d245e7795ad8e4a562934bb2b0" resname="Offer end in">
+        <source>Offer end in</source>
+        <target>Предложение закончится через</target>
+      </trans-unit>
+      <trans-unit id="7ef00778311fe6e38f903b52303e3bb8217e9197" resname="Offer ends">
+        <source>Offer ends</source>
+        <target>Предложение закончится</target>
+      </trans-unit>
+      <trans-unit id="f41c2fb623b41081b098022e3283a946cc0f9e55" resname="Offer ends on">
+        <source>Offer ends on</source>
+        <target>Предложение закончится</target>
+      </trans-unit>
+      <trans-unit id="aa22b6a1f446ba220e497420e8645e46318d1d3c" resname="Offer time expired. Please contact the clinic to find out possibilities at present moment">
+        <source>Offer time expired. Please contact the clinic to find out possibilities at present moment</source>
+        <target>Срок действия предложения истек. Вы можете связаться с клиникой, чтобы узнать об актуальных предложениях и акциях.</target>
+      </trans-unit>
+      <trans-unit id="5a3eb4b7ea6ac379f907db9be1085220130069b1" resname="Official clinic offer for services described below">
+        <source>Official clinic offer for services described below</source>
+        <target>Официальное предложение клиники предоставлено ниже</target>
+      </trans-unit>
+      <trans-unit id="0f7891a533f2c29423eefaa865795a477e40d24f" resname="Other related documents">
+        <source>Other related documents</source>
+        <target>Похожие документы</target>
+      </trans-unit>
+      <trans-unit id="42c5cda0ffa59a8691d0bf44578f236901d42363" resname="PLAY">
+        <source>PLAY</source>
+        <target>ВОСПРОИЗВЕСТИ</target>
+      </trans-unit>
+      <trans-unit id="0e55fb3b04e225d83af1a64ec1cedc121fb61c32" resname="Payment method">
+        <source>Payment method</source>
+        <target>Метод оплаты</target>
+      </trans-unit>
+      <trans-unit id="f17b6bedfbe52df4995499393bbd71eb5c9f6e56" resname="Payment options">
+        <source>Payment options</source>
+        <target>Возможные методы оплаты</target>
+      </trans-unit>
+      <trans-unit id="77064d5265236e0ac252f3fc4a5ba7b274b6a583" resname="Phone">
+        <source>Phone</source>
+        <target>Телефон</target>
+      </trans-unit>
+      <trans-unit id="8961d3bf56ef1c18ef5c831ba0838e8b1f85e5de" resname="Phone number">
+        <source>Phone number</source>
+        <target>Номер телефона</target>
+      </trans-unit>
+      <trans-unit id="cb4f52efaf783d563f5e3d4974493e3a3458791e" resname="Phone number must be numeric characters only">
+        <source>Phone number must be numeric characters only</source>
+        <target>Номер телефона может состоять только из цифр</target>
+      </trans-unit>
+      <trans-unit id="c8b2e864eccb38901097806819bf6aba2eed7ae1" resname="Photos">
+        <source>Photos</source>
+        <target>Фотографии</target>
+      </trans-unit>
+      <trans-unit id="56541f6ff5013ed3d1b6fb474e7ca904a1e8b8de" resname="Pick up at the airport">
+        <source>Pick up at the airport</source>
+        <target>Сопровождение из аэропорта</target>
+      </trans-unit>
+      <trans-unit id="4e66aa5235ca7a2e5b146cff1f1525bc61f129fd" resname="Places to visit">
+        <source>Places to visit</source>
+        <target>Посещаемые места</target>
+      </trans-unit>
+      <trans-unit id="403f5f1842b48054ba1060b2faf2f5a92a8eafea" resname="Places to visit in Lithuania">
+        <source>Places to visit in Lithuania</source>
+        <target>Места в Литве, которые стоит посетить</target>
+      </trans-unit>
+      <trans-unit id="34a7ab6a87a8461d67d39c55b7dad5dcefa4e77c" resname="Play video to learn more">
+        <source>Play video to learn more</source>
+        <target>Воспроизвести видео, чтобы узнать побольше</target>
+      </trans-unit>
+      <trans-unit id="04e0948ee94b937e1db0143f50040fab44236d83" resname="Please provide email address">
+        <source>Please provide email address</source>
+        <target>Укажите, пожалуйста, адрес Вашей электронной почты</target>
+      </trans-unit>
+      <trans-unit id="a181826407116c9f20b2e345c581ceb36780e4bd" resname="Please provide name">
+        <source>Please provide name</source>
+        <target>Укажите, пожалуйста, Ваше имя</target>
+      </trans-unit>
+      <trans-unit id="d2d9f1e1db5b7007b982840b89b5342eb6aee346" resname="Please, fill all required fields. All required fields are marked with &quot;*&quot;">
+        <source>Please, fill all required fields. All required fields are marked with "*"</source>
+        <target>Заполните, пожалуйста, все необходимые окна, отмеченные знаком "*"</target>
+      </trans-unit>
+      <trans-unit id="6518908c275fd69520cdd81f89b4eb704ef25911" resname="Post a review">
+        <source>Post a review</source>
+        <target>Оценить клинику</target>
+      </trans-unit>
+      <trans-unit id="95f0eac6aac032b626c8050c24f00a2ed68bc583" resname="Praesent vestibulum molestie lacus aenean nonummy hendrerit mauris. Phasellus porta. Fusce suscipit varius mi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla dui. Fusce feugiat malesuada odio. Morbi nunc odio, gravida at cursus nec, luctus a, lorem. Maecenas tristique orci ac sem. Duis ultricies pharetra magna. Donec accumsan malesuada orci. Donec sit amet eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Mauris fermentum dictum magna.">
+        <source>Praesent vestibulum molestie lacus aenean nonummy hendrerit mauris. Phasellus porta. Fusce suscipit varius mi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla dui. Fusce feugiat malesuada odio. Morbi nunc odio, gravida at cursus nec, luctus a, lorem. Maecenas tristique orci ac sem. Duis ultricies pharetra magna. Donec accumsan malesuada orci. Donec sit amet eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Mauris fermentum dictum magna.</source>
+        <target>Praesent vestibulum molestie lacus aenean nonummy hendrerit mauris. Phasellus porta. Fusce suscipit varius mi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla dui. Fusce feugiat malesuada odio. Morbi nunc odio, gravida at cursus nec, luctus a, lorem. Maecenas tristique orci ac sem. Duis ultricies pharetra magna. Donec accumsan malesuada orci. Donec sit amet eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Mauris fermentum dictum magna.</target>
+      </trans-unit>
+      <trans-unit id="1d53cca57f2512432be3aa2fac0a46331282b962" resname="Prašome patikrinti savo elektroninį paštą">
+        <source>Prašome patikrinti savo elektroninį paštą</source>
+        <target>Проверьте, пожалуйста, Вашу электронную почту</target>
+      </trans-unit>
+      <trans-unit id="5acadc56c9426019959a01837cb8a52be4e986d9" resname="Prašome užpildyti">
+        <source>Prašome užpildyti</source>
+        <target>Заполните, пожалуйста</target>
+      </trans-unit>
+      <trans-unit id="48b52eb037c0bb8090a89500131fed80233360c7" resname="Prašome įvesti teisingą el.pašto adresą">
+        <source>Prašome įvesti teisingą el.pašto adresą</source>
+        <target>Укажите, пожалуйста, правильный адрес электронной почты</target>
+      </trans-unit>
+      <trans-unit id="dd19a61687b74ab714b7046bdd45a3ab7f0b578c" resname="Preferred Language">
+        <source>Preferred Language</source>
+        <target>Предпочтительный язык</target>
+      </trans-unit>
+      <trans-unit id="3f6ef31cfaf226750eed50b6e4e7b419ed9968c4" resname="Prices">
+        <source>Prices</source>
+        <target>Врачи</target>
+      </trans-unit>
+      <trans-unit id="722f7e2e0bd2f58d761d233256c4c2a4d486b6c1" resname="Professional travel agency will prepare offer no later than next working day.">
+        <source>Professional travel agency will prepare offer no later than next working day.</source>
+        <target>Туристическое агенство предоставит Вам индивидуальное предложение.</target>
+      </trans-unit>
+      <trans-unit id="483bf2075c12023a5e849d12a42027be89c5e94b" resname="Published">
+        <source>Published</source>
+        <target>Опубликовано</target>
+      </trans-unit>
+      <trans-unit id="309028a9e01273ac7a88142bf26446f3f2a8f06c" resname="Quote">
+        <source>Quote</source>
+        <target>Запрос</target>
+      </trans-unit>
+      <trans-unit id="6437b7bf655854909262d5f53fbe3bc7a6665b48" resname="Rating">
+        <source>Rating</source>
+        <target>Рейтинг</target>
+      </trans-unit>
+      <trans-unit id="b94a461fa5defe5b279c9608d6e61c90faa2d659" resname="Read more...">
+        <source>Read more...</source>
+        <target>Читать далее...</target>
+      </trans-unit>
+      <trans-unit id="4b92b5d3f522d0cad0b395d5bb25ddb4a86c92d4" resname="Received offers">
+        <source>Received offers</source>
+        <target>Полученные предложения</target>
+      </trans-unit>
+      <trans-unit id="b5688116d5715fd1e7aac62c22a0b18246a91e1c" resname="Refine search">
+        <source>Refine search</source>
+        <target>Обновить поиск</target>
+      </trans-unit>
+      <trans-unit id="858e0a59cfe720e4a36403942f34b76829d8d9a8" resname="Regular Price">
+        <source>Regular Price</source>
+        <target>Обычная цена</target>
+      </trans-unit>
+      <trans-unit id="2181ce09f56aba54842353551a7a1d77ea83ed04" resname="Related clinics">
+        <source>Related clinics</source>
+        <target>Похожие клиники</target>
+      </trans-unit>
+      <trans-unit id="23a97691b4e6c4fdf5bb0cb8f8d5ab31d1af9fd4" resname="Remove from list">
+        <source>Remove from list</source>
+        <target>Удалить из списка</target>
+      </trans-unit>
+      <trans-unit id="bab9bc458f38d4d574e5baa63c72341db6ddaa30" resname="Repeat Password">
+        <source>Repeat Password</source>
+        <target>Повторите пароль</target>
+      </trans-unit>
+      <trans-unit id="6c2bb735a46a8ff307fe2e638d581295b2a49e09" resname="Reply">
+        <source>Reply</source>
+        <target>Ответить</target>
+      </trans-unit>
+      <trans-unit id="9c157b36a3207d32c584b67b55e4fdaef76a64da" resname="Reservation date">
+        <source>Reservation date</source>
+        <target>Дата резервации</target>
+      </trans-unit>
+      <trans-unit id="3b5b91f4220600cd3868dc58c0814451b8547874" resname="Reservation fee">
+        <source>Reservation fee</source>
+        <target>Резервационный взнос</target>
+      </trans-unit>
+      <trans-unit id="40679b760295548fc24d9b4a4bbc0499350b3e24" resname="Residential address">
+        <source>Residential address</source>
+        <target>Адрес места проживания</target>
+      </trans-unit>
+      <trans-unit id="d575dc2e55d863a6c216e8fd662bcd13fa2757b2" resname="Responsible person">
+        <source>Responsible person</source>
+        <target>Ответственное лицо</target>
+      </trans-unit>
+      <trans-unit id="74ad93cbebf587ac46ab0ef1e3f24139ddd3f535" resname="Russian">
+        <source>Russian</source>
+        <target>Русский</target>
+      </trans-unit>
+      <trans-unit id="a62a7a3d235c34720bba36b65a056b4d3c6d005d" resname="SEARCH">
+        <source>SEARCH</source>
+        <target>ПОИСК</target>
+      </trans-unit>
+      <trans-unit id="9aa580ef8245ed58b655dd08f9ab3e4daf379040" resname="SPECIAL OFFERS">
+        <source>SPECIAL OFFERS</source>
+        <target>СПЕЦИАЛЬНЫЕ ПРЕДЛОЖЕНИЯ</target>
+      </trans-unit>
+      <trans-unit id="efc007a393f66cdb14d57d385822a3d9e36ef873" resname="Save">
+        <source>Save</source>
+        <target>Сохранить</target>
+      </trans-unit>
+      <trans-unit id="7931f74fc6b57965762aee6064476015441fcdbf" resname="Save to list">
+        <source>Save to list</source>
+        <target>Сохраните в список</target>
+      </trans-unit>
+      <trans-unit id="3dc31432e50c679e366bfdbcc0ea9598a1e0aca2" resname="Search for clinic, treatment, doctor">
+        <source>Search for clinic, treatment, doctor</source>
+        <target>Найти клинику, процедуру, врача</target>
+      </trans-unit>
+      <trans-unit id="a7cdaebc033e2f118a0e8384054d62e720d09db2" resname="Select Sub Category">
+        <source>Select Sub Category</source>
+        <target>Выбрать субкатегорию</target>
+      </trans-unit>
+      <trans-unit id="01f5882882153e2711808bba5b912a2ad09f7a42" resname="Send quote to all clinics">
+        <source>Send quote to all clinics</source>
+        <target>Отправить запрос всем клиникам</target>
+      </trans-unit>
+      <trans-unit id="51d12df84084c95e44c67fc48d97a71d65b7eb1f" resname="Send to get a quote">
+        <source>Send to get a quote</source>
+        <target>Отправить запрос</target>
+      </trans-unit>
+      <trans-unit id="329cb8b6ba8c427be7c09b298295c655415c7ac9" resname="Service">
+        <source>Service</source>
+        <target>Услуги и цены</target>
+      </trans-unit>
+      <trans-unit id="5cbd584046863bc7b753e57e8681a98a87f36f0f" resname="Services">
+        <source>Services</source>
+        <target>Услуги</target>
+      </trans-unit>
+      <trans-unit id="d2fdf33769180b41f7d38a78866f918706208698" resname="Services type">
+        <source>Services type</source>
+        <target>Тип услуги</target>
+      </trans-unit>
+      <trans-unit id="50a279de829f2dc398ac2ac7c9367508ea4b5df5" resname="Show all">
+        <source>Show all</source>
+        <target>Показать все</target>
+      </trans-unit>
+      <trans-unit id="2ef7b1d291ab20cadadee9b11accf2d2d5949750" resname="Show more clinics">
+        <source>Show more clinics</source>
+        <target>Показать больше клиник</target>
+      </trans-unit>
+      <trans-unit id="c51dbfa2b205ab799c1ee2d239d72313589d5d3d" resname="Show offer">
+        <source>Show offer</source>
+        <target>Показать предложение</target>
+      </trans-unit>
+      <trans-unit id="5ed4f4c1d1e38901fdd4c8481b349b28fe5d95fb" resname="Show on map">
+        <source>Show on map</source>
+        <target>Показать на карте</target>
+      </trans-unit>
+      <trans-unit id="a2a5bdeca9391be1e0cdff1c19895bae7fadc2c2" resname="Sort by">
+        <source>Sort by</source>
+        <target>Сортировать</target>
+      </trans-unit>
+      <trans-unit id="4ca20ea53cdc8eb821646bda26eb8562c36ae807" resname="Special SPA and Wellness offers">
+        <source>Special SPA and Wellness offers</source>
+        <target>Специальные предложения - СПА и оздоровление</target>
+      </trans-unit>
+      <trans-unit id="b3cfc6af689994b726479b661c66c2127c5f62b7" resname="Special price">
+        <source>Special price</source>
+        <target>Супер-цена</target>
+      </trans-unit>
+      <trans-unit id="adc3296dff7bc5290f96150d469f88acc0459b51" resname="Specials">
+        <source>Specials</source>
+        <target>Акции</target>
+      </trans-unit>
+      <trans-unit id="a4730a22cf494f758716c5c83bbf4c258c37a8b8" resname="Staff">
+        <source>Staff</source>
+        <target>Персонал</target>
+      </trans-unit>
+      <trans-unit id="a72502067518684f9deeec70cf119fd26326cd33" resname="State">
+        <source>State</source>
+        <target>Страна</target>
+      </trans-unit>
+      <trans-unit id="51e9111b87116e60566740d13ba1c1eddb042333" resname="Stopped">
+        <source>Stopped</source>
+        <target>Остановлено</target>
+      </trans-unit>
+      <trans-unit id="488e0aced88fc2dbad672f662645f3531479988d" resname="Sub category">
+        <source>Sub category</source>
+        <target>Субкатегория</target>
+      </trans-unit>
+      <trans-unit id="b11f44bb57967b98a415bed3daf778bbbf110ecd" resname="Sub-Sub category">
+        <source>Sub-Sub category</source>
+        <target>Вторая субкатегория</target>
+      </trans-unit>
+      <trans-unit id="57e8e2d5320cb302757cf5dea2429682b7bfe6ef" resname="TESTIMONIALS">
+        <source>TESTIMONIALS</source>
+        <target>ОТЗЫВЫ КЛИЕНТОВ</target>
+      </trans-unit>
+      <trans-unit id="cd04b22d02a30417be14994f3577f7e338f37624" resname="Take This Offer">
+        <source>Take This Offer</source>
+        <target>Хочу!</target>
+      </trans-unit>
+      <trans-unit id="c689fc7624f30ebdf2a3853249de7a1235430875" resname="Take it">
+        <source>Take it</source>
+        <target>Хочу!</target>
+      </trans-unit>
+      <trans-unit id="d5a9fabe0dd01e106378d398a4ba5e092ff9b614" resname="Take it now">
+        <source>Take it now</source>
+        <target>Приобрести сейчас!</target>
+      </trans-unit>
+      <trans-unit id="8a069ed1c667c9e5dc357ae198dc0a380968bcca" resname="Terms of use">
+        <source>Terms of use</source>
+        <target>Правила пользования</target>
+      </trans-unit>
+      <trans-unit id="74ceb97db527da47ce958a1a5f13b8f99072702d" resname="Test Application">
+        <source>Test Application</source>
+        <target>Пробная аппликация</target>
+      </trans-unit>
+      <trans-unit id="2c2cd2ae8ff170115855201664f8bc10a106aa1d" resname="Testimonials">
+        <source>Testimonials</source>
+        <target>Отзывы</target>
+      </trans-unit>
+      <trans-unit id="f5d86c8bb114ecf556a7cff5886f75fcb8f3b21a" resname="Thank you for 24h reservation!">
+        <source>Thank you for 24h reservation!</source>
+        <target>Спасибо Вам за резервацию на 24 часа!</target>
+      </trans-unit>
+      <trans-unit id="898b80748caa2afc82c5b279718830103fc5aa60" resname="Thank you for your rating!">
+        <source>Thank you for your rating!</source>
+        <target>Спасибо Вам за оценку!</target>
+      </trans-unit>
+      <trans-unit id="10418dec33dfc7b66437c41d4c5c81a866b88b53" resname="Thank you! Your request was received.">
+        <source>Thank you! Your request was received.</source>
+        <target>Спасибо! Ваш запрос получен.</target>
+      </trans-unit>
+      <trans-unit id="3fd7303da352d15c66572fc4ad36843af712e984" resname="There is a little bit of text missing here so I need to blab a little more. What a drag, huh">
+        <source>There is a little bit of text missing here so I need to blab a little more. What a drag, huh</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="768e0c1c69573fb588f61f1308a015c11468e05f" resname="Title">
+        <source>Title</source>
+        <target>Название</target>
+      </trans-unit>
+      <trans-unit id="d4f5f26825d710e94b6cfef68f259810014c83b4" resname="To complete you reservation, please check provided information and fill missing field.">
+        <source>To complete you reservation, please check provided information and fill missing field.</source>
+        <target>Проверьте, пожалуйста, Вашу информацию и заполните пустые окна, чтобы закончить регистрацию.</target>
+      </trans-unit>
+      <trans-unit id="1ec0b00d7e4a7ebd7e91c21e91a99ece12fa858a" resname="Toggle navigation">
+        <source>Toggle navigation</source>
+        <target>Менять навигацию</target>
+      </trans-unit>
+      <trans-unit id="160d28e68b78d48adf956d5e4bd44c7fff298f39" resname="Total rating">
+        <source>Total rating</source>
+        <target>Общий рейтинг</target>
+      </trans-unit>
+      <trans-unit id="ae2e7def1aae6524a3a29838c22ab4a84afdbd6c" resname="Total service offer">
+        <source>Total service offer</source>
+        <target>Всего предложений с данной услугой</target>
+      </trans-unit>
+      <trans-unit id="1001a668020a1211e3850460c71cb7e47f9908ae" resname="Total service price">
+        <source>Total service price</source>
+        <target>Общая сумма за услуги</target>
+      </trans-unit>
+      <trans-unit id="8ad8302d110b05d7e02330dac58628134fdcff02" resname="Translations">
+        <source>Translations</source>
+        <target>Переводы</target>
+      </trans-unit>
+      <trans-unit id="6f96100c404821e9d0d4f88e695c1287e4c5a2b0" resname="Travel agency will preapre for you a personal offer. You’ll be able to customize it">
+        <source>Travel agency will preapre for you a personal offer. You’ll be able to customize it</source>
+        <target>Туристическое агенство подготовит для Вас индивидуальное предложение, которое Вы сможете подстроить под себя.</target>
+      </trans-unit>
+      <trans-unit id="23c859f4f777dc72aa029df6686fccf5faec11cf" resname="Treatment">
+        <source>Treatment</source>
+        <target>Процедуры и услуги</target>
+      </trans-unit>
+      <trans-unit id="82743a5a5837d1d43ea3e306108beb3c7ca011a4" resname="Treatment details">
+        <source>Treatment details</source>
+        <target>Что нужно знать о процедуре</target>
+      </trans-unit>
+      <trans-unit id="0e2d9b0777a485c1276de0803c12a7d76fbc5c39" resname="URL">
+        <source>URL</source>
+        <target>URL</target>
+      </trans-unit>
+      <trans-unit id="7aba334bb9bfea08f2a6f73498cb3ea1bd39a93f" resname="Unique ID">
+        <source>Unique ID</source>
+        <target>Уникальный ID</target>
+      </trans-unit>
+      <trans-unit id="fc6556a7ab9565ea063ccbb95f4445dc1b10fbf5" resname="Unpublished">
+        <source>Unpublished</source>
+        <target>Неопубликовано</target>
+      </trans-unit>
+      <trans-unit id="eb27a190c0733b4991d4e1b2ba39a3a2c4d9e023" resname="Unverified">
+        <source>Unverified</source>
+        <target>Неподтверждено</target>
+      </trans-unit>
+      <trans-unit id="fb91e24fa52d8d2b32937bf04d843f730319a902" resname="Update">
+        <source>Update</source>
+        <target>Обновлено</target>
+      </trans-unit>
+      <trans-unit id="dc6104f16a3e55fe17da3f50f52fe301427cf911" resname="Upload it here">
+        <source>Upload it here</source>
+        <target>Скачать здесь</target>
+      </trans-unit>
+      <trans-unit id="992ff53fbbe70f296bcc981203239a7974604a40" resname="Urgent medical service">
+        <source>Urgent medical service</source>
+        <target>Неотложные медицинские услуги</target>
+      </trans-unit>
+      <trans-unit id="a32959d6cdd4500a095ff22a20fff18ca8765db1" resname="Url">
+        <source>Url</source>
+        <target>Url</target>
+      </trans-unit>
+      <trans-unit id="e538be810a074c31e8f82fabe79ec1618e326dea" resname="VAT code">
+        <source>VAT code</source>
+        <target>Код НДС</target>
+      </trans-unit>
+      <trans-unit id="77966641b7a9b96e0e6dd42591dabab1f15fc3dc" resname="View all news">
+        <source>View all news</source>
+        <target>Показать все новости</target>
+      </trans-unit>
+      <trans-unit id="f1384ee1bd37a85682690a341e94c7946a09fa72" resname="View all special offers">
+        <source>View all special offers</source>
+        <target>Показать все специальные предложения</target>
+      </trans-unit>
+      <trans-unit id="51e47f0139c33a8a6e905ff4cf2f5764b0cf3bf9" resname="Visas &amp; Travel">
+        <source><![CDATA[Visas & Travel]]></source>
+        <target>Путешествие</target>
+      </trans-unit>
+      <trans-unit id="a6b2ec6a129f9f286075a7218985c405aacaadc9" resname="Visas &amp; travel">
+        <source><![CDATA[Visas & travel]]></source>
+        <target>Виза и путешествие</target>
+      </trans-unit>
+      <trans-unit id="9f39c0281a688c25a8d725fc4c337cde771ea83c" resname="Was">
+        <source>Was</source>
+        <target>Был</target>
+      </trans-unit>
+      <trans-unit id="98defd2a17839bac68d384e6af458168033de402" resname="We accept">
+        <source>We accept</source>
+        <target>Мы принимаем</target>
+      </trans-unit>
+      <trans-unit id="7a1966affe7542b25994a269ff9d33d3e5a0e640" resname="We speak">
+        <source>We speak</source>
+        <target>Мы говорим</target>
+      </trans-unit>
+      <trans-unit id="fc6adf2e2af6269e39846df7b85064c9dac137b4" resname="We will send your coupon after checkout">
+        <source>We will send your coupon after checkout</source>
+        <target>Мы отправим Вам купон сразу после оплаты</target>
+      </trans-unit>
+      <trans-unit id="3886e089aed07380306b81457a578f9f22aa4c7d" resname="Whats is next">
+        <source>Whats is next</source>
+        <target>Что дальше</target>
+      </trans-unit>
+      <trans-unit id="b7ab8e03f2e5755a179b7096ebfba7c00414282f" resname="While thinking, I’ll send you an e-mail later for:">
+        <source>While thinking, I’ll send you an e-mail later for:</source>
+        <target>Пока Вы думаете, мы отправим Вам письмо касательно:</target>
+      </trans-unit>
+      <trans-unit id="c04eb4629e494b6225f878f9f7f420a98853e0ae" resname="Worst rating first">
+        <source>Worst rating first</source>
+        <target>Начать с низкого рейтинга</target>
+      </trans-unit>
+      <trans-unit id="848a8dd1f238d94000f046c3b696e65dcc59f377" resname="Would you like to get free offer for">
+        <source>Would you like to get free offer for</source>
+        <target>Хотели бы Вы получить бесплатное предложение касательно</target>
+      </trans-unit>
+      <trans-unit id="9898a2c9e2c84804f023e75909ebf67d09730d2a" resname="Yes, I need medical services ASAP">
+        <source>Yes, I need medical services ASAP</source>
+        <target>Да, я нуждаюсь в медицинской помощи в срочном порядке</target>
+      </trans-unit>
+      <trans-unit id="613b16268964717ed23a63c09dfdfddc4357a525" resname="You can send as many free quote as needed">
+        <source>You can send as many free quote as needed</source>
+        <target>Вы можете отправить любое количество запросов</target>
+      </trans-unit>
+      <trans-unit id="ba19fdf62c3ad8d027a469933d20f9328fe0c64e" resname="Your 24h reservation will available untill">
+        <source>Your 24h reservation will available untill</source>
+        <target>Ваша резервация на 24 часа действительна до</target>
+      </trans-unit>
+      <trans-unit id="52e95a8f9554a2038e68f9dc7656dfb5c88da2a8" resname="Your payment done successfully">
+        <source>Your payment done successfully</source>
+        <target>Оплата прошла успешно</target>
+      </trans-unit>
+      <trans-unit id="d55010930ea1ab614d6fa9753004a259374eac0a" resname="Your payment is cancel!">
+        <source>Your payment is cancel!</source>
+        <target>Оплата отклонена!</target>
+      </trans-unit>
+      <trans-unit id="06042e23e0c11b6bf03482bbd712a6a23d128148" resname="Your payment is failed, try again!">
+        <source>Your payment is failed, try again!</source>
+        <target>Ошибка при оплате, попробуйте, пожалуйста, еще раз!</target>
+      </trans-unit>
+      <trans-unit id="01ee3e98a4f8a2d2368230f670e56153431e3565" resname="Your quote was sent to selected clinics">
+        <source>Your quote was sent to selected clinics</source>
+        <target>Ваш запрос отправлен отмеченным клиникам</target>
+      </trans-unit>
+      <trans-unit id="4c8bb5cee2085878a255046d70a11f81e59166c1" resname="Your rating will go live as soon as our staff verifies it">
+        <source>Your rating will go live as soon as our staff verifies it</source>
+        <target>Ваш отзыв будет виден другим, как только наш администратор просмотрит его.</target>
+      </trans-unit>
+      <trans-unit id="d9d220ab2925c9b97a98a9d9b35059f864dbe73a" resname="ZIP">
+        <source>ZIP</source>
+        <target>ZIP</target>
+      </trans-unit>
+      <trans-unit id="aec742c8cd57ac5fee0ad76b17e91c6d76608cb3" resname="Zip">
+        <source>Zip</source>
+        <target>Zip</target>
+      </trans-unit>
+      <trans-unit id="408158643ed564c72fa0921826f8294d71ccbf7c" resname="by">
+        <source>by</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="5e24628f368839c9a090757b8a858be884f8c694" resname="choose an option">
+        <source>choose an option</source>
+        <target>Выбрать</target>
+      </trans-unit>
+      <trans-unit id="cdaaa12922c06f8fc0b262e949468467d689e400" resname="clinic">
+        <source>clinic</source>
+        <target>клиника</target>
+      </trans-unit>
+      <trans-unit id="cb329146a0dd0d566b0628744d67936558741ffa" resname="description">
+        <source>description</source>
+        <target>описание</target>
+      </trans-unit>
+      <trans-unit id="43eef9a62abb8b1e1654f8a890aae054abffa82b" resname="for">
+        <source>for</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="aedf1a39ab1b4e9c783c76874194306e73502162" resname="form was sen by">
+        <source>form was sen by</source>
+        <target>Форму прислал(а)</target>
+      </trans-unit>
+      <trans-unit id="50f013532a9770a2c2cfdc38b7581dd01df69b70" resname="n/a">
+        <source>n/a</source>
+        <target>н/a</target>
+      </trans-unit>
+      <trans-unit id="7a94e68b81c29354c714877323bca815ba855503" resname="quick search">
+        <source>quick search</source>
+        <target>Быстрый поиск</target>
+      </trans-unit>
+      <trans-unit id="61e62b213a1a56f7695845df4fc372a10cb0a73e" resname="review">
+        <source>review</source>
+        <target>оценка</target>
+      </trans-unit>
+      <trans-unit id="7b2c6e04fe9dbd399e6a1f2c83d85c5fda5a3de5" resname="reviews">
+        <source>reviews</source>
+        <target>оценки(-ок)</target>
+      </trans-unit>
+      <trans-unit id="d613b447133d72c9fabc6d6252aabb90b700695c" resname="slaptažodis">
+        <source>slaptažodis</source>
+        <target>Пароль</target>
+      </trans-unit>
+      <trans-unit id="f137c5ff1a0c3d6361d0021b179ffbeb74acbe6e" resname="terms of use">
+        <source>terms of use</source>
+        <target>Правила пользования</target>
+      </trans-unit>
+      <trans-unit id="4c862e418d0a4c3ccfd4fc7e3d647e224caed8bc" resname="that may be useful for doctor to see">
+        <source>that may be useful for doctor to see</source>
+        <target>that may be useful for doctor to see</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

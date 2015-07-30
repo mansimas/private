@@ -1,0 +1,71 @@
+<div id="allspecialoffer">
+{% if asSpecialOffersData|length > 0%}	  
+	<div class="row specialOffers_warp">
+	{% for asData in asSpecialOffersData %}	
+	{% if asData[0]['title'] != '' or asData[0]['introduction'] != '' or asData[0]['description'] != '' %}
+	{% set asSpecialOfferName = em.getRepository("AdminMedicalBundle:Company").Slug(asData[0]['title']) %}
+        <div class="col-md-4 col-xs-4">
+            <div class="box">
+                <div class="row_1">
+                  <div class="main_title">
+					<a href="{{ path('client_medical_special_offers_detail', {'id': asData[0]['id'],'name':asSpecialOfferName })}}">
+					{{ asData[0]['title'] }}
+					</a>
+				  </div>     
+					<div class="img_thubm_wrap">
+						<div class="red_circle">
+						{% set data = em.getRepository("AdminMedicalBundle:Company").calculateSpecialOfferDiscount(asData[0]['regular_price'], asData[0]['sales_price']) %}
+						-{{ data|round }}%</div>
+						<a href="{{ path('client_medical_special_offers_detail', {'id': asData[0]['id'],'name':asSpecialOfferName  })}}">
+							{% if asData[0]['specialofferimages']|length > 0%}		  
+								{% set ssImageName = asData[0]['specialofferimages'][asData[0]['specialofferimages']|length - 1]['photo'] %}
+									{% if asset_exists('uploads/specialoffer/'~asData[0]['id']~'/'~ssImageName) %}	
+										<img src="{{ asset('uploads/specialoffer/'~asData[0]['id']~'/'~ssImageName) }}" />
+									{% else %}
+										<img src="{{ asset('client/images/no_image.png') }}" alt="No Image"  width="156px"/>
+									{% endif %}
+							{% else %}
+								<img src="{{ asset('client/images/no_image.png') }}" alt="No Image"  width="156px"/>
+							{% endif %}
+						</a>
+					</div>
+                  </div>
+					{% if asData[0]['introduction'] is defined %}						
+						{% if asData[0]['introduction']|length > 115 %}
+							{% set data = asData[0]['introduction']|striptags %}
+							<div class="txt">{{ data|slice(0,115)}}...</div>							
+						{% else %}
+							<div class="txt">{{ asData[0]['introduction']|striptags }}</div>
+						{% endif %}
+					{% endif %}                
+					<div class="row_2"> 
+					<div class="sales_price_was_price">
+						<div class="sales_pricee">&#8364;<b>{{ asData[0]['sales_price'] }}</b></div>
+						<div class="was_price">{{'Was'|trans}}&nbsp;<b>{{ asData[0]['regular_price'] }},00</b></div>
+					</div>
+						<a href="{{ path('client_medical_buy_special_offers',{'id':asData[0]['id']}) }}" class="btn btn-default bluebtn">{{'Take it'|trans}}</a> 
+                  <div class="clr"></div>
+                </div>						
+                <div class="offer">{{'Offer ends'|trans}}<span>
+					{% set asEndDate = asData[0]['end_date']|date('Y-m-d')|split('-') %}
+					{% set asTime = asData[0]['end_time']|date('H:i:s')|split(':') %}	
+					{% set route = path(ssRoute) %}
+					<script type="text/javascript">					
+						$(function () 
+						{							
+							austDay = new Date({{ asEndDate[0]}}, {{asEndDate[1]}} - 1, {{ asEndDate[2] }},{{asTime[0]}},{{asTime[1]}},{{ asTime[2] }});
+							$("#defaultCountdown_{{ asData[0]['id'] }}").countdown({until: austDay, padZeroes: true, compact: true,timezone: +3,onExpiry: function() {
+										updateSpecialoffer("{{route}}",'all','allspecialoffer');
+									}});
+							$('#year').text(austDay.getFullYear());
+						});
+					</script>						
+					<span id="defaultCountdown_{{ asData[0]['id'] }}"> </span>
+				</span></div>
+            </div>
+        </div>   
+{% endif %}		
+	{% endfor %}
+	</div>
+	{% endif %}
+</div>

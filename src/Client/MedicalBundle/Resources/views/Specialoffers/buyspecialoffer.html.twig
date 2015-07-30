@@ -1,0 +1,200 @@
+{% extends 'ClientMedicalBundle::layout.html.twig' %}
+
+{% block title %}{{'Medical Tourism Information'|trans}}{% endblock %}
+{% block metakeyword %} {% include 'ClientMedicalBundle:Default:websitemetasettings.html.twig'%} {% endblock %}
+{% block body %}
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
+
+<script type="text/javascript">
+function checkCounter()
+{
+	counter = $("#client_medicalbundle_specialoffer_sales_number_of_coupon").val();	
+	if(parseInt(counter) < 11)
+	{
+		var total_amt = ($("#total_coupon_price").val() * parseInt(counter));
+		$("#coupon_sale_price").html(total_amt);
+		$("#final_total_coupon_price").val(total_amt);
+	}
+	else if(counter == '')
+	{
+		$("#client_medicalbundle_specialoffer_sales_number_of_coupon").val(1);
+	}
+	else
+	{
+		var ssContent = '<div class="container thank_for_rating"><h3>{{"Maximum 10 coupons per one purchase"|trans}}</h3></div>';
+		$.colorbox({html:ssContent,width: '40%',
+						height: '25%',
+						maxWidth: '943px',
+						maxHeight: '443px'});		
+	}
+}
+
+function couponCounter(ssString)
+{
+	if(ssString == "increment")
+	{
+		counter = parseInt($("#client_medicalbundle_specialoffer_sales_number_of_coupon").val());
+		snIncCount = counter + 1;
+		if(snIncCount < 11)
+		{
+			$("#client_medicalbundle_specialoffer_sales_number_of_coupon").val(snIncCount);
+			var total_amt = ($("#total_coupon_price").val() * snIncCount);
+			$("#coupon_sale_price").html(total_amt);
+			$("#final_total_coupon_price").val(total_amt);
+		}
+		else
+		{
+			var ssContent = '<div class="container thank_for_rating"><h3>{{"Maximum 10 coupons per one purchase"|trans}}</h3></div>';
+			$.colorbox({html:ssContent,width: '40%',
+						height: '25%',
+						maxWidth: '943px',
+						maxHeight: '443px'});
+		}
+	}
+	else
+	{
+		counter = parseInt($("#client_medicalbundle_specialoffer_sales_number_of_coupon").val());
+		if(counter != 1)
+		{
+			snDecCount = counter - 1;
+			$("#client_medicalbundle_specialoffer_sales_number_of_coupon").val(snDecCount);
+			var total_amt = ($("#total_coupon_price").val() * snDecCount);
+			$("#coupon_sale_price").html(total_amt);
+			$("#final_total_coupon_price").val(total_amt);
+		}
+	}
+}
+
+$(document).ready(function () {
+			$("#client_medicalbundle_specialoffer_sales_number_of_coupon").val(1);
+			var cboxMapOptions = {  
+						width: '95%',
+						height: '95%',
+						maxWidth: '943px',
+						maxHeight: '443px',
+					}
+					
+			$('.showmap').colorbox(cboxMapOptions);
+			$(window).resize(function(){
+			  $.colorbox.resize({
+				width: window.innerWidth > parseInt(cboxMapOptions.maxWidth) ? cboxMapOptions.maxWidth : cboxMapOptions.width,
+				height: window.innerHeight > parseInt(cboxMapOptions.maxHeight) ? cboxMapOptions.maxHeight : cboxMapOptions.height
+			  });
+			});
+			
+
+			});
+</script>
+{% include 'ClientMedicalBundle:Company:quicksearch.html.twig' %} 
+{% for flashMessage in app.session.flashbag.get('error') %}
+		<div class="alert alert-danger">
+			<button data-dismiss="alert" class="close" type="button">
+				<i class="icon-remove"></i>
+			</button>
+			<strong>
+				<i class="icon-remove"></i>				
+			</strong>
+			{{ flashMessage }}
+			<br>
+		</div>        
+	{% endfor %}
+<a class="btn btn-default simple back_link" href="{{ path('client_medical_special_offers') }}">&lt;&lt; {{'Back'|trans}}</a>
+<div class="row buy_page">
+	{% if asSpecialOffersData|length > 0%}
+		{% set asData = asSpecialOffersData[0][0] %}
+			  <div class="row">
+				<div class="col-xs-4 offer_img">
+					{% if asData['specialofferimages']|length > 0%}		  
+						{% set ssImageName = asData['specialofferimages'][asData['specialofferimages']|length - 1]['photo'] %}
+						{% if asset_exists('uploads/specialoffer/'~asData['id']~'/'~ssImageName) %}	
+							<img src="{{ asset('uploads/specialoffer/'~asData['id']~'/'~ssImageName) }}" />
+						{% else %}
+							<img src="{{ asset('client/images/no_image.png') }}" alt="No Image"  />
+						{% endif %}
+					{% else %}
+							<img src="{{ asset('client/images/no_image.png') }}" alt="No Image" />
+					{% endif %}									
+				</div>
+				<div class="col-xs-8">
+				  <h3><b>{{ asData['title'] }}</b>
+				  <span class="address"><a class="nav_location_icon showmap" href="{{ path('client_medical_showmap', {'address': asData['company']['address'],'company_name': asData['company']['name'] })}}"></a>&nbsp;{{ asData['company']['address'] }}</span></h3>
+				</div>
+			  </div>			  
+			  <form method="post" id="paypal_form" action="{{ path('client_medical_buy_special_offers',{'id':asData['id']}) }}" onSubmit="return allnumeric()">
+			  <div class="row">
+				<div class="col-xs-4 form-inline">					
+					<!--<form class="form-inline" role="form">-->
+						
+						<div class="form-group">
+							<label for="exampleInputEmail1" style="display: block;">{{'How many coupons you need'|trans}} ? </label>
+							{{ '(10 coupons max per sale)'|trans }}
+							</br>							
+							<a class="left less" href="javascript:void(0);" onClick="couponCounter('decrement')">-</a>
+							<!--<input type="email" class="form-control" id="exampleInputEmail2" placeholder="">-->
+							{{ form_widget(form.number_of_coupon, { 'attr': {'class': 'form-control','onkeyUp':"checkCounter()"} }) }}
+							<a class="right plus" href="javascript:void(0);" onClick="couponCounter('increment')">+</a>
+						</div>
+					<!--</form>-->
+				</div>
+
+				<div class="col-xs-4 form">
+					<div class="secondform">
+						<div class="form-group">
+							<label for="exampleInputEmail1">{{'Please provide name'|trans}}</label>
+							{{ form_widget(form.name, { 'attr': {'class': 'form-control'} }) }}
+						</div>
+						<div class="form-group">
+							<label for="exampleInputEmail1">{{'Please provide email address'|trans}} <span class="text-muted">{{'We will send your coupon after checkout'|trans}}</span></label>
+							{{ form_widget(form.email, { 'attr': {'class': 'form-control'} }) }}
+						</div>
+						<div class="form-group">
+							<label for="exampleInputEmail1">{{'Phone number'|trans}}<span class="text-muted">{{'For communication if necessary'|trans}}</span></label>
+							{{ form_widget(form.phone, { 'attr': {'class': 'form-control'} }) }}
+							<span id="error" style="color: Red; display: none">* {{'Input only digits'|trans}}</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-4 buy_pricee_wrap">
+				<div class="buy_pricee"><b>&euro;<span id="coupon_sale_price">{{ asData['sales_price'] }}</span></b>
+				<input type="hidden" value="{{ asData['sales_price'] }}" id="total_coupon_price" name="total_coupon_price">				
+				<input type="hidden" value="{{ asData['sales_price'] }}" id="final_total_coupon_price" name="final_total_coupon_price">	
+				</div>
+				<input type="submit" value="{{'Take it'|trans}}" class="btn btn-default bluebtn">
+				</div>
+			  </div>			 
+			  </form>
+	{% endif %}
+</div>
+<script type="text/javascript">
+   function allnumeric()  
+   {  
+	  snIncCount = parseInt($("#client_medicalbundle_specialoffer_sales_number_of_coupon").val());	
+	  if(snIncCount > 10)
+	  {
+		var ssContent = '<div class="container thank_for_rating"><h3>{{"Maximum 10 coupons per one purchase"|trans}}</h3></div>';
+		$.colorbox({html:ssContent,width: '40%',
+						height: '25%',
+						maxWidth: '943px',
+						maxHeight: '443px'});
+		return false;
+	  }		
+	  
+	  var inputtxt = $("#client_medicalbundle_specialoffer_sales_phone").val();
+      var numbers = /^[0-9]+$/;  
+      if(inputtxt.match(numbers))  
+      {        
+		return true;  
+      }  
+      else  
+      {  
+		var ssContent = '<div class="container thank_for_rating"><h3>{{"Phone number must be numeric characters only"|trans}}</h3></div>';
+		$.colorbox({html:ssContent,width: '50%',
+						height: '25%',
+						maxWidth: '943px',
+						maxHeight: '443px'});		
+		return false;  
+      }  
+   }
+
+</script>
+{% endblock %}

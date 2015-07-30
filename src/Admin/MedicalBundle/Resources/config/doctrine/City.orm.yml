@@ -1,0 +1,18 @@
+Admin\MedicalBundle\Entity\City:
+    type: entity
+    table: city
+    repositoryClass: Admin\MedicalBundle\Entity\CityRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        name:
+            type: string
+            nullable: true
+    manyToMany:
+        banners:
+            targetEntity: AdvertiseBanner
+            mappedBy: cities
+    lifecycleCallbacks: {  }

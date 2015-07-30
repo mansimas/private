@@ -1,0 +1,74 @@
+{% extends 'ClientMedicalBundle::layout.html.twig' %}
+
+{% block title %}{{'Communication'|trans}}{% endblock %}
+
+{% block body %}
+<script type="text/javascript">	
+function getQuotedetail(route, ssUpdateDiv, snCompanyId)
+{
+	$("#loader").show("fast"); 
+	$.ajax({
+				type: 'get',
+				url : route,				
+				success: function(result)
+						{
+							
+							$("#"+ssUpdateDiv).html(result);
+							/*$("#save_to_list_div_id_"+snId).hide();
+							$("#saved_div_id_"+snId).show();*/
+							$("#loader").hide("fast");
+							$("[id^='li_user_quote_']").removeClass();							
+							$("#li_user_quote_"+snCompanyId).addClass("active");							
+							$("#unread_message_count_"+snCompanyId).remove();
+						}
+			});
+}
+</script>
+<div class="container client_message_page">
+<div class="row client_message_hed_contn">
+  <div class="col-sm-3 left_menu">
+		{% if asCompanyDetail|length > 0 %}
+			<h4>{{'Clinics that received your quote'|trans}}</h4>
+			<ul>
+				{% for asCompany in asCompanyDetail %}
+					{% if asCompany.id == app.request.get('company_id') %}
+						{% set ssClass = "active"%}
+					{% else %}
+						{% set ssClass = '' %}
+					{% endif %}
+					
+					<li id="li_user_quote_{{ asCompany.id }}" class="{{ ssClass }}">
+					<a href="javascript:void(0)" onClick="getQuotedetail('{{ path('client_communication', {'quote_id': quote_id, 'company_id': asCompany.id})}}', 'quote_communication_details_div', {{ asCompany.id }})">{{ asCompany.name }}
+					
+					{% if asCompany.cnt_unread_meesage > 0 %}
+						<span id="unread_message_count_{{ asCompany.id }}"><b>{{ asCompany.cnt_unread_meesage }}</b></span>
+					{% endif %}
+					
+					{% if asCompany.company_offered == 'Yes' %} <i>!</i> {% endif %}
+					</a>
+					</li>					
+				{% endfor %}
+				</ul>
+			{% endif %}
+			<!--<li><a href="#" class="active">James Macel <b>2</b><i>!</i></a></li>-->
+  </div>
+  <div class="col-sm-9 right_contant">
+	<div id="loader" style="display:none"></div>
+		<div id="quote_communication_details_div">
+			{% include "ClientMedicalBundle:Communication:communication.html.twig" %}			
+		</div>      
+	</div>
+</div>
+</div>
+
+<script type="text/javascript">
+function hideshowreplyformdiv(ssDiv)
+{
+	$("#add_offer_div_"+ssDiv).toggle('slow');
+	//$("#"+ssDiv+"_link").toggle('slow');
+	//$("#"+ssDiv+"_submit").toggle('slow');	
+	$("#add_offer_message_content_"+ssDiv).toggle('slow');
+	$("#add_offer_show_link_"+ssDiv).toggle('slow');
+}
+</script>
+{% endblock %}

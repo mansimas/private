@@ -1,0 +1,95 @@
+Admin\MedicalBundle\Entity\Category:
+    type: entity
+    table: category
+    gedmo:
+      translation:        
+        entity: Admin\MedicalBundle\Entity\Categorytranslation
+    repositoryClass: Admin\MedicalBundle\Entity\CategoryRepository
+    fields:
+        id:
+            id: true
+            type: integer
+            #unsigned: false
+            #nullable: false
+            generator:
+                strategy: IDENTITY
+        parent_id:
+            type:  integer
+            nullable: true
+        root_id:
+            type:  integer
+            nullable: true
+        photo:
+            type: text
+            length: null
+            nullable: true
+        name:
+            type: string
+            length: 255
+            fixed: false
+            nullable: true
+            gedmo:
+                - translatable
+        url:
+            type: string
+            length: '100'
+            nullable: true
+            gedmo:
+                - translatable
+        metadescription:
+            type: text
+            length: null
+            nullable: true
+            gedmo:
+                - translatable
+        description:
+            type: text
+            length: null
+            nullable: true
+            gedmo:
+                - translatable
+        lvl:
+            type: integer
+            length: 10
+            nullable: true
+        status:
+            type: string
+            length: 8
+            options:        
+              default: 'InActive'        
+        created_at:
+            type: date
+            nullable: true
+        updated_at:
+            type: date		
+            nullable: true
+    manyToMany:      
+      news:
+        targetEntity: News
+        mappedBy: categories
+      userquotedetails:
+        targetEntity: UserQuoteDetail
+        mappedBy: categories
+      #companies:
+        #targetEntity: Company
+        #mappedBy: categories
+    oneToMany:
+        category:
+            targetEntity: CompanyCategory
+            mappedBy: categories
+        root:
+            targetEntity: CompanyCategory
+            mappedBy: roots
+        category:
+            targetEntity: AdvertisementBannerCategory
+            mappedBy: categories
+        root:
+            targetEntity: AdvertisementBannerCategory
+            mappedBy: roots
+        translations:
+            targetEntity: Categorytranslation
+            mappedBy: object
+            cascade: ["all"]
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAtValue ]
+        preUpdate: [ setUpdatedAtValue ]

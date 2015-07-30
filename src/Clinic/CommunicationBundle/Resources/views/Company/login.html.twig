@@ -1,0 +1,46 @@
+{% extends 'ClinicCommunicationBundle::layout.html.twig' %}
+
+{% block title %}{{'Prisijungimas gydymo įstaigoms'}}{% endblock %}
+
+{% block body %}
+<div class="main-content login_page">
+  <div class="page-content">
+    <div class="row">
+      <div class="col-xs-11 col-sm-4 login_box">
+        <div class="position-relative">
+			<h3 style="text-align:center;">{{ 'Prisijungimas gydymo įstaigoms' }}</h3>
+        </div>
+        <!-- /.page-header -->
+        <div class="row-fluid">
+          <div class="span12">
+            <!-- PAGE CONTENT BEGINS -->
+            <form id="login-form" action="{{ path('clinic_medical_login_check') }}" method="POST" class="form-group">
+              {% if error %}
+				<div class="alert alert-error">{{ error.message|trans }}</div>			  
+			  {% endif %}
+              <div class="control-group">
+                  <label class="control-label" for="form-field-1">{{'Vartotojo vardas'}}</label>
+                  <div class="controls">
+                      <input type="text" class="form-control" id="login-username" placeholder="{{ 'vartotojo vardas'}}" name="_username">
+                  </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="form-field-2">{{'Slaptažodis'|trans}}</label>
+                <input type="password" class="form-control" id="login-password" placeholder="{{ 'slaptažodis' }}" name="_password">
+              </div>
+              <div class="form-inline">
+                <input class="btn btn-success" type="submit" name="Login" value="{{'Prisijungti'}}" tabindex="1" title="{{'Prisijungti'}}">
+                <a class="text-success" href="{{ path('clinic_medical_forgotpassword') }}">{{'Pamiršote slaptažodį'}}?</a>
+              </div>
+            </form>
+          </div>
+          <!-- /.span -->
+        </div>
+        <!-- /.row-fluid -->
+      </div>
+    </div>
+  </div>
+  <!-- /.page-content -->
+</div>
+<!-- /.main-content -->
+{% endblock %}

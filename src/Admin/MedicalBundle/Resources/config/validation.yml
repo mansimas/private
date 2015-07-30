@@ -1,0 +1,38 @@
+Admin\MedicalBundle\Entity\Company:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: username
+            message: The username already exist.
+#    properties:
+#        email:
+#            - Email: ~
+Admin\MedicalBundle\Entity\News:
+    properties:
+        photo:
+            - File:
+                mimeTypes: ["image/jpeg", "image/png", "image/gif", "image/bmp"]
+                mimeTypesMessage: Please upload a file with .jpg,.png,.bmp and .gif
+Admin\MedicalBundle\Entity\Insurance:
+    properties:
+        photo:
+            - File:
+                mimeTypes: ["image/jpeg", "image/png", "image/gif", "image/bmp"]
+                mimeTypesMessage: Please upload a file with .jpg,.png,.bmp and .gif
+Admin\MedicalBundle\Entity\AdvertiseBanner:
+    properties:
+        photo:
+            - File:
+                mimeTypes: ["image/jpeg", "image/png", "image/gif", "image/bmp"]
+                mimeTypesMessage: Please upload a file with .jpg,.png,.bmp and .gif
+Admin\MedicalBundle\Entity\PaymentOption:
+    properties:
+        photo:
+            - File:
+                mimeTypes: ["image/jpeg", "image/png", "image/gif", "image/bmp"]
+                mimeTypesMessage: Please upload a file with .jpg,.png,.bmp and .gif
+Admin\MedicalBundle\Entity\Doctor:
+    properties:
+        photo:
+            - File:
+                mimeTypes: ["image/jpeg", "image/png", "image/gif", "image/bmp"]
+                mimeTypesMessage: Please upload a file with .jpg,.png,.bmp and .gif

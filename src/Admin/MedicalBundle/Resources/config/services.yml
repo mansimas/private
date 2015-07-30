@@ -1,0 +1,13 @@
+parameters:
+#    admin_medical.example.class: Admin\MedicalBundle\Example
+#    admin_medical.twig.asset_exists_extension.class: Admin\MedicalBundle\Twig\Extension\AssetsExistsExtension
+
+services:
+#    admin_medical.twig.asset_exists_extension:
+#        class: '%admin_medical.twig.asset_exists_extension.class%'
+#        arguments: ['@kernel']
+#        tags:
+#          - { name: twig.extension }
+#    admin_medical.example:
+#        class: %admin_medical.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

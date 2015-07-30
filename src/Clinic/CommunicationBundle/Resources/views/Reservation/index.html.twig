@@ -1,0 +1,97 @@
+{% extends 'ClinicCommunicationBundle::layout.html.twig' %}
+
+{% block title %}Rezervacija{% endblock %}
+
+{% block body %}
+
+<div class="row client_message_hed_row">
+  <div class="col-sm-3">&nbsp;</div>
+  <div class="col-sm-9 client_message_btns">
+		<a href="{{ path('clinic_communication_homepage') }}" class="btn btn-default whitebtn col-md-3">Aktyvios užklausos</a>
+		<a  href="{{ path('clinic_medical_reservation') }}" class="btn btn-default bluebtn col-md-3">Rezervacijos</a>
+  </div>
+</div>
+
+<div class="main-content">	
+	<div class="page-content">
+		<div class="row-fluid">
+			<div class="span12">
+				<!-- PAGE CONTENT BEGINS -->							
+				<div class="row-fluid">
+					<h3 class="header smaller lighter blue">Rezevacijų sąrašas</h3>
+					{% include "AdminMedicalBundle::messages.html.twig" %}
+					
+					<table id="sample-table-2" class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>	
+								<!--<th class="center">
+									<label>
+										<input type="checkbox" class="ace" />
+										<span class="lbl"></span>
+									</label>
+								</th>-->
+								<th></th>
+								<th>Nr.</th>
+								<th>Data</th>								
+								<th>Klientas</th>
+								<th>Pasiūlymas</th>
+								<th>Patvirtinimo data</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% if asReservationData | length > 0 %}
+							{% for entity in asReservationData %}							
+							{% if entity.checked_by_company == "No" %}
+								{% set ssClass = "row_red" %}
+							{% else%}
+								{% set ssClass = "" %}
+							{% endif %}							
+							<tr class="{{ ssClass }}">
+								<td>{{entity.checked_by_company}}</td>
+								<td><a href="{{ path('clinic_medical_reservation_detail',{'quote_id': entity.quote_id, 'company_id': entity.company_id})}}">{{ entity.reservation_id }}</a></td>
+								<td>{{ entity.reservation_date|date('Y-m-d') }}</td>								
+								<td>{{ entity.firstname~" "~entity.lastname }}</td>
+								<td>{{ entity.service_description }}</td>
+								<td>{{ entity.reservation_date|date('Y-m-d') }}</td>
+							</tr>
+							{% endfor %}
+							{% endif %}
+						</tbody>
+					</table>
+					<!-- </form> -->
+				</div>
+				
+			</div><!-- /.span -->
+		</div><!-- /.row-fluid -->
+	</div><!-- /.page-content -->
+
+</div><!-- /.main-content -->
+<script type="text/javascript">
+	jQuery(function($) {
+		$('#sample-table-2').dataTable({                
+                "aaSorting": [[ 0, "asc" ], [ 2, "desc" ]],                
+                "bAutoWidth": true,
+                "aoColumnDefs": [{ 
+                    "bSearchable": false, 
+                    "bVisible": false, 
+                    "aTargets": [ 0 ]
+                }],
+				"oLanguage": { "sSearch": "Ieškoti", "sLengthMenu": "Rodyti _MENU_ įrašų", "sInfo": "rodoma nuo _START_ iki _END_ iš _TOTAL_ įrašų"}
+            });
+	
+		$('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+		function tooltip_placement(context, source) {
+			var $source = $(source);
+			var $parent = $source.closest('table')
+			var off1 = $parent.offset();
+			var w1 = $parent.width();
+	
+			var off2 = $source.offset();
+			var w2 = $source.width();
+	
+			if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
+			return 'left';
+		}
+	})
+</script>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% set ssClass = ((ssRoute == 'client_medical_homepage') ? " home_menu" : "") %}
+<div class="masthead{{ ssClass }}"> 
+  <a class="menu_toggle_button">{{'Menu'|trans}}
+    <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button"><span class="sr-only">{{'Toggle navigation'|trans}}</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+    </a>
+	<div id="all_category_li">	
+    <ul class="nav nav-justified">	
+	{% set i = 0 %}
+	{% for key,category in asData %}		
+		<li id="li_category_{{ category.id }}" class="">
+			{% set snKey = key + 1 %}			
+			{% if snKey == asData|length %}
+				<a href="{{ path('client_medical_special_offers')}}">
+			{% else %}
+				<a href="{{ path('client_medical_company', {'category_ids':category.id})}}">
+			{% endif %}
+			
+				{% if asset_exists('uploads/category/'~category.photo) %}
+					<img src="{{ asset('uploads/category/'~category.photo) }}" />
+				{% else %}
+					<img src="{{ asset('client/images/no_image.png') }}" alt="No Image"/>
+				{% endif %}
+				<span>{{ category.name }}</span>
+			</a>
+		</li>
+		{% set i = i + 1 %}
+	{% endfor %}
+    </ul>
+	</div>
+ </div>

@@ -1,0 +1,72 @@
+{% block javascripts %}
+    <script src="{{ asset('js/jquery-1.9.1.js') }}"></script>
+    
+    <!-- For tabing concept below js are used -->
+    <script src="{{ asset('js/combine.js') }}"></script>            
+    <script src="{{ asset('js/jquery-ui.js') }}"></script>
+    
+    <!-- for image upload in company profile-->
+    <script src="{{ asset('js/dropzone.js') }}"></script>
+    
+    <!-- common js -->
+    <script src="{{ asset('js/common.js') }}"></script>   
+    
+	<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='{{ asset('admin/js/jquery-2.0.3.min.js') }}'>"+"<"+"/script>");
+		</script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+
+		<script type="text/javascript">
+			if("ontouchend" in document) document.write("<script src='{{ asset('admin/js/jquery.mobile.custom.min.js') }}'>"+"<"+"/script>");
+		</script>
+		<script src="{{ asset('admin/js/bootstrap.min.js') }}"></script>
+
+		<!-- page specific plugin scripts -->
+
+		<script src="{{ asset('admin/js/jquery.dataTables.min.js') }}"></script>
+		<script src="{{ asset('admin/js/jquery.dataTables.bootstrap.js') }}"></script>
+
+		<!-- ace scripts -->
+
+		<script src="{{ asset('admin/js/ace-elements.min.js') }}"></script>
+		<script src="{{ asset('admin/js/ace.min.js') }}"></script>
+
+		<!-- inline scripts related to this page -->
+		
+		
+		
+			<script type="text/javascript">
+			window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
+		</script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+
+
+		<!-- page specific plugin scripts -->
+
+		<!--[if lte IE 8]>
+		  <script src="assets/js/excanvas.min.js"></script>
+		<![endif]-->
+
+<script src="{{ asset('admin/js/date-time/bootstrap-datepicker.min.js') }}"></script>
+<script src="{{ asset('admin/js/date-time/bootstrap-timepicker.min.js') }}"></script>	
+<script src="{{ asset('admin/js/chosen.jquery.min.js') }}"></script>
+<script src="{{ asset('admin/js/bootbox.min.js') }}"></script>
+{% endblock %}

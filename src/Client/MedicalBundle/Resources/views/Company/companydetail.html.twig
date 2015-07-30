@@ -1,0 +1,480 @@
+{% extends 'ClientMedicalBundle::layout.html.twig' %}
+
+{% block metakeyword %}
+	{% if asCompanyDetail|length > 0 and asCompanyDetail[0][0]['keyword'] != '' %}
+		{% set ssMetaKeyword = asCompanyDetail[0][0]['keyword']|striptags %}
+	{% else %}
+		{% set ssMetaKeyword = '' %}
+	{% endif %}
+	
+	{% if asCompanyDetail|length > 0 and asCompanyDetail[0][0]['description'] != '' %}
+		{% set ssMetaDescription = asCompanyDetail[0][0]['description']|striptags %}
+	{% else %}
+		{% set ssMetaDescription = '' %}
+	{% endif %}	
+	<meta name="keywords" content="{{ ssMetaKeyword }}">
+	<meta name="description" content="{{ ssMetaDescription }}">
+{% endblock %}
+
+{% block title %}
+	{% if asCompanyDetail|length > 0 and asCompanyDetail[0][0]['name'] != ''%}
+		{{asCompanyDetail[0][0]['name']}}{{' | '}}{{'Medical Tourism Information - medical.lt'|trans}}
+	{%else%}
+		{{'Medical Tourism Information'|trans}}
+	{%endif%}
+{% endblock %}
+{% set snCompanyId = app.request.get('id') %}
+{% block body %}
+
+<script src="{{ asset('admin/js/jquery.min.js') }}"></script>
+<script type="text/javascript">
+$.noConflict();
+</script>
+<script src="{{ asset('client/js/amazingslider.js') }}"></script>
+<script src="{{ asset('client/js/initslider-1.js') }}"></script>
+<script type="text/javascript" src="http://vk.com/js/api/share.js?90" charset="windows-1251"></script>
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>	
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<div id="fb-root"></div>
+<script type="text/javascript">
+  (function() {
+	var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+	po.src = 'https://apis.google.com/js/platform.js';
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+<script type="text/javascript">
+function getInsurance(ssVal)
+{	
+	$("#loader").show("fast"); 
+	$.ajax({
+				type: 'post',
+				url : '{{ path("client_medical_company_insurances") }}',
+				data:"country_id="+ssVal+"&company_id={{ snCompanyId }}",
+				success: function(result)
+						{
+							$("#insurance_listing_div").html(result);
+							$("#loader").hide("fast");
+						}
+			})
+}			
+</script>
+{% include 'ClientMedicalBundle:Company:quicksearch.html.twig' %}
+  <div class="row thumbsslider_contant comp_details_thumbs">
+
+	  <div class="two_colls thumbsslider">
+  		<div class="row">
+        	<a class="btn btn-default whitebtn back_link" href="{{ path('client_medical_company') }}">&lt;&lt; {{'Back to list'|trans}}</a>
+            <div class="social_links">
+				<div class="fb-like" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div>
+				<!-- Place this tag where you want the share button to render. -->
+				<div class="g-plus" data-action="share" data-annotation="bubble" data-height="20"></div>
+				<!-- Put this script tag to the <head> of your page -->
+				<div class="vk_wrap"><script type="text/javascript">
+				<!--
+				document.write(VK.Share.button(false,{type: "round", text: "Share", eng: 1}));
+				--></script></div>
+				<a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a>
+				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            	<!--<a class="social_icon_1">300 {{'Like'|trans}}</a>
+                <a class="social_icon_2">150+</a>
+                <a class="social_icon_3">46K</a> -->
+			</div>
+			<div class="clr"></div>
+        </div>
+      	<div class="slider">
+		{% if asCompanyDetail|length > 0 %}
+		{# for asCompanyData in asCompanyDetail[0] #}
+		{% set asCompanyData =  asCompanyDetail[0][0] %}
+				{% if asCompanyData.companyimages|length > 0 or asCompanyData.companyvideos|length > 0%}
+				<div style="margin:0px auto;max-width:513px;">
+				<!-- Insert to your webpage where you want to display the slider -->
+				<div id="amazingslider-1" style="display:block;position:relative;margin:0px auto 122px;">
+					<ul class="amazingslider-slides" style="display:none;">
+						{% if asCompanyData.companyvideos|length > 0 %}
+							{% for asVideoData in asCompanyData.companyvideos %}
+								<li>
+									<!--<img src="images/P0XtU-PshsM.jpg" alt="Deewana By Ali Azmat & Zamad Baig | Music Icons" />-->
+
+									{% set foo = asVideoData.url|split('?') %}
+									{% if foo|length > 0 %}
+										{% set footest = foo[0]|split('/') %}
+									{% else %}
+										{% set footest = asVideoData.url|split('/') %}
+									{% endif %}
+									{% set index = footest|length - 1 %}
+									{% set vCode = footest[index] %}
+									<img src='http://img.youtube.com/vi/{{ vCode}}/0.jpg' />
+									<video preload="none" src="{{ asVideoData.url }}" ></video>
+								</li>
+							{% endfor %}
+						{% endif %}
+						{% if asCompanyData.companyimages|length > 0 %}
+							{% for asImagesData in asCompanyData.companyimages %}
+								{% if asset_exists('uploads/company/'~asCompanyData.id~'/'~asImagesData.photo) %}
+									<li>
+									<a href="{{ asset('uploads/company/'~asCompanyData.id~'/'~asImagesData.photo) }}" class="html5lightbox">
+									<img src="{{ asset('uploads/company/'~asCompanyData.id~'/'~asImagesData.photo) }}" />
+									</a>
+									</li>
+								{% else %}
+									<li><img src="{{ asset('client/images/no_image_big.png') }}" alt="No Image" /></li>
+								{% endif %}
+							{% endfor %}
+						{% endif %}
+					</ul>
+					{% if asCompanyData.companyvideos|length > 0 %}
+					<ul class="amazingslider-thumbnails" style="display:none;">
+						{% for asVideoData in asCompanyData.companyvideos %}
+							<li>
+							<!--<img src="images/P0XtU-PshsM.jpg" alt="Deewana By Ali Azmat & Zamad Baig | Music Icons" />-->
+							{% set foo = asVideoData.url|split('?') %}
+									{% if foo|length > 0 %}
+										{% set footest = foo[0]|split('/') %}
+									{% else %}
+										{% set footest = asVideoData.url|split('/') %}
+									{% endif %}
+									{% set index = footest|length - 1 %}
+									{% set vCode = footest[index] %}
+									<img src='http://img.youtube.com/vi/{{ vCode}}/0.jpg' />
+							<video preload="none" src="{{ asVideoData.url }}" ></video></li>
+						{% endfor %}
+					</ul>
+					{% endif %}
+					{% if asCompanyData.companyimages|length > 0 %}
+					<ul class="amazingslider-thumbnails" style="display:none;">
+						{% for asImagesData in asCompanyData.companyimages %}
+						{% if asset_exists('uploads/company/'~asCompanyData.id~'/'~asImagesData.photo) %}
+							<li><img src="{{ asset('uploads/company/'~asCompanyData.id~'/'~asImagesData.photo) }}" /></li>
+						{% else %}
+							<li><img src="{{ asset('client/images/no_image.png') }}" /></li>
+						{% endif %}
+						{% endfor %}
+					</ul>
+					{% endif %}
+				</div>
+				<!-- End of body section HTML codes -->
+				</div>
+		{% else %}
+			<div class="two_colls thumbsslider">
+				<div class="row" style="margin:0px auto;max-width:513px;"><img src="{{ asset('client/images/no_image_big.png') }}" alt="No Image" />
+					<!-- Insert to your webpage where you want to display the slider -->
+					<!-- End of body section HTML codes -->
+				</div>
+			</div>
+		{% endif %}
+		</div>
+      </div>
+      <div class="two_colls comapny_contant" style="margin-top: 30px;">
+        <h3>{{ asCompanyData.name }}</h3>
+		<div class="rating_wrar">
+			<div class="definition_list">
+        	<div class="row">
+            	<div class="title">{{'Rating'|trans}}</div>
+				<div class="ratting_stars">
+					{% set data = '%.2f' | format(asCompanyDetail[0].total_avg) %}
+					{% include 'ClientMedicalBundle:Default:ratingstar.html.twig' %}
+				</div>
+				{#{% set ssExcellent = 'Excellent'|trans %}#}
+				{#{% set ssBad = 'Bad'|trans %}				#}
+				{#{% set ssStatus = data > 5 ? ssExcellent : ssBad %}#}
+				<div class="ratting_res">
+				<div class="rats">
+				{% set asNum = data|split('.') %}
+				{% if asNum[1] == 00 %}
+					{{ '%.0f' | format(asCompanyDetail[0].total_avg) }} of 10
+                    {#({{ ssStatus }})#}
+				{% else %}
+					{{ data }} of 10
+                    {#({{ ssStatus }})#}
+				{% endif %}
+				</div>
+				{% if data == 0 %}
+				{#<a class="notestrecord ajax show_all pull-right" href="{{ path('client_medical_rating', {'id':app.request.get('id'), 'from_tab':0} )}}" class="contantlink">{{'Show all'|trans}}</a>#}
+				{% else %}
+				{#<a class="ajax show_all pull-right" href="{{ path('client_medical_rating', {'id':app.request.get('id'), 'from_tab':0} )}}" class="contantlink">{{'Show all'|trans}}</a>#}
+				{% endif %}
+				</div>
+				<!--<a  class="ajax" href="{{ path('client_medical_add_rating', {'id': asCompanyData.id})}}" class="contantlink">Show all</a>-->
+            </div>
+        	<div class="row">
+            	<div class="title">{{'Languages'|trans}}</div>
+				{% if asCompanyData.languagess|length > 0 %}
+                <div class="select_language">
+					{% for asLang in asCompanyData.languagess %}
+						<div class="lang">
+						<div class="sub_lang">
+						{% if asset_exists('uploads/flag/'~asLang.flag) %}
+							<img src="{{ asset('uploads/flag/'~asLang.flag) }}" />
+						{% else %}
+							<img src="{{ asset('client/images/no_image_big.png') }}" alt="No Image" height="20px" width="30px" />
+						{% endif %}
+						</div>
+						<span>{{ asLang.name|trans }}</span>
+						</div>
+					{% endfor %}
+					<div class="clearfix"></div>
+				</div>
+				{% endif %}
+            </div>
+            <div class="row">
+                <script>
+                    jQuery('.badge_M').hover(function() {
+                        jQuery('.badge_text_M').show();
+                    });
+
+                    jQuery('.badge_M').mouseleave(function() {
+                        jQuery('.badge_text_M').hide();
+                    });
+
+                    jQuery('.badge_C').hover(function() {
+                        jQuery('.badge_text_C').show();
+                    });
+
+                    jQuery('.badge_C').mouseleave(function() {
+                        jQuery('.badge_text_C').hide();
+                    });
+
+                    jQuery('.badge_H').hover(function() {
+                        jQuery('.badge_text_H').show();
+                    });
+
+                    jQuery('.badge_H').mouseleave(function() {
+                        jQuery('.badge_text_H').hide();
+                    });
+
+                    jQuery('.badge_I').hover(function() {
+                        jQuery('.badge_text_I').show();
+                    });
+
+                    jQuery('.badge_I').mouseleave(function() {
+                        jQuery('.badge_text_I').hide();
+                    });
+                </script>
+                <div class="rightpart" id="badges">
+					{% set  asBadgesOption = asCompanyData.badges|split(',') %}
+					{% for badge in asBadgesOption %}
+						{% if badge == 'M' %}
+							<a class="round_circle badge_M"><img src="{{ asset('client/images/A.png') }}" alt="Asociation" height="42px" width="42px" /></a><div class="badge_text_M">{{ asCompanyData.badge_text_M }}</div>
+						{% endif %}
+						{% if badge == 'C' %}
+							<a class="round_circle badge_C"><img src="{{ asset('client/images/C.png') }}" alt="Certificate" height="42px" width="42px" /></a><div class="badge_text_C">{{ asCompanyData.badge_text_C }}</div>
+						{% endif %}
+						{% if badge == 'I' %}
+							<a class="round_circle badge_I"><img src="{{ asset('client/images/I.png') }}" alt="International" height="42px" width="42px" /></a><div class="badge_text_I">{{ asCompanyData.badge_text_I }}</div>
+						{% endif %}
+                        {% if badge == 'H' %}
+                            <a class="round_circle badge_H"><img src="{{ asset('client/images/H.png') }}" alt="Health" height="42px" width="42px" /></a><div class="badge_text_H">{{ asCompanyData.badge_text_H }}</div>
+                        {% endif %}
+					{% endfor %}
+                </div>
+
+				<div class="leftpart">
+                <div class="row">
+                    <div class="title">{{'Company code'|trans}}</div>
+                    <div class="disc">{{ asCompanyData.company_code }}</div>
+                </div>
+                <div class="row">
+                    <div class="title">{{'VAT code'|trans}}</div>
+                    <div class="disc">{{ asCompanyData.vat_code }}</div>
+                </div>
+                <div class="row">
+                    <div class="title">{{'Licence number'|trans}}</div>
+                    <div class="disc">{{ asCompanyData.licence_number }}</div>
+                </div>
+                <div class="row">
+                    <div class="title">{{'Address'|trans}}</div>
+                    <div class="address disc">
+						{% set ssCountry = 'Lithuania'|trans %}
+						{% if asCompanyData.address|length > 50 %}
+						{% set data = asCompanyData.address|striptags %}
+							{{ data|slice(0,50)}} ...
+						{% else %}
+							{{ asCompanyData.address|striptags~", "~ssCountry }}
+						{% endif %}
+						<a class="show_map showmap" href="{{ path('client_medical_showmap', {'address': asCompanyData.address,'company_name': asCompanyData.name })}}">({{'Show on map'|trans}})</a>
+					</div>
+                    <!--<div class="title">&nbsp;</div>
+                    <div class="disc">Lithuania  <a href="#" class="contantlink">(show on map)</a></div>-->
+                </div>
+                </div>
+            </div>
+			</div>
+            <div class="payment_div">
+				<span>{{'We accept'|trans}}</span>
+
+				<a class="cashpay" href="#"></a>
+				<span>EUR </span>
+                <div class="cardpay">
+					{% if asCompanyData.paymentoptions|length > 0%}
+						{% for payment in asCompanyData.paymentoptions %}
+						<div class="lang">
+						<div class="sub_lang">
+						{% if asset_exists('uploads/payment_option/'~payment.photo) %}
+							<img src="{{ asset('uploads/payment_option/'~payment.photo) }}" />
+						{% else %}
+							<img src="{{ asset('client/images/no_image_big.png') }}" alt="No Image" height="20px" width="30px" />
+						{% endif %}
+						</div>
+						</div>
+						{% endfor %}
+					{% endif %}
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="row">
+				<div class="take_buttan">
+					<a  class="ajax btn btn-default bluebtn" href="{{ path('client_medical_sendquotepopup', {'id':app.request.get('id')} )}}">{{'Get a quote'|trans}}</a>
+					{% set asCompanyIds = app.session.get('company_ids') %}
+					{% if app.request.get('id') in asCompanyIds %}
+						<a id="saved_div_id_{{ app.request.get('id') }}" class="btn btn-default saved save_to_list in_th" href="javascript:void(0);">{{'Added to quote list'|trans}}</a>
+					{% else %}
+						<a  id="save_to_list_div_id_{{ app.request.get('id') }}" class="btn btn-default bluebtn" onClick="savecompany('{{ app.request.get('id') }}','{{ path('client_medical_save_user_company')}}');" href="javascript:void(0)">{{'Add to quote list'|trans}}</a>
+						<a style="display:none" id="saved_div_id_{{ app.request.get('id') }}" class="btn btn-default saved save_to_list in_th" href="javascript:void(0);">{{'Added to quote list'|trans}}</a>
+					{% endif %}
+
+                </div>
+            </div>
+
+        </div>
+
+      </div>
+  </div>
+   <div class="row">
+      <div class="span6 company_list">
+        <div class="tabbable">
+          <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" id="myTab4">
+            <li class="active"> <a data-toggle="tab" href="#home4">{{'Specials'|trans}}</a> </li>
+            <li> <a data-toggle="tab" href="#prices" id="service_li">{{'Service'|trans}}</a> </li>
+			<li> <a data-toggle="tab" href="#doctors">{{'Prices'|trans}}</a> </li>
+            <li> <a data-toggle="tab" href="#experience">{{'Experience'|trans}}</a> </li>
+			<li> <a data-toggle="tab" href="#service">{{'Doctors'|trans}}</a> </li>
+			{#Do not change. Yes, href's are mixed up, but that's how it is supposed to be for now.#}
+			{#<li class="active"> <a data-toggle="tab" href="#home4">{{'Specials'|trans}}</a> </li>#}
+            {#<li> <a data-toggle="tab" href="#service" id="service_li">{{'Service'|trans}}</a> </li>#}
+			{#<li> <a data-toggle="tab" href="#prices">{{'Prices'|trans}}</a> </li>#}
+            {#<li> <a data-toggle="tab" href="#experience">{{'Experience'|trans}}</a> </li>#}
+			{#<li> <a data-toggle="tab" href="#doctors">{{'Doctors'|trans}}</a> </li>#}
+          </ul>
+          <div class="tab-content">
+              <div id="home4" class="tab-pane in active">
+                  {% include 'ClientMedicalBundle:Company:companyspecialoffer.html.twig' %}
+              </div>
+              <div id="service" class="tab-pane">
+                  {% if asCompanyData['service']|length > 0 %}
+                      {{ asCompanyData['service'][0]['description']|raw}}
+                  {% else %}
+                      {{ 'No detail'|trans}}
+                  {% endif %}
+              </div>
+              <div id="doctors" class="tab-pane" style="position:relative;">
+                  {% include 'ClientMedicalBundle:Company:companydoctors.html.twig' %}
+              </div>
+
+              <div id="experience" class="tab-pane">
+                  {#<a class="ajax show_all pull-right" href="{{ path('client_medical_rating', {'id':app.request.get('id')} )}}" class="contantlink">{{'Show all'|trans}}</a>#}
+                  {{ render(controller('ClientMedicalBundle:Rating:index', {'id':app.request.get('id'), 'from_tab':1} )) }}
+                  {#{% if asCompanyData['experience']|length > 0%}#}
+                      {#{{ asCompanyData['experience'][0]['description']|raw}}#}
+                  {#{% else %}#}
+                      {#{{ 'No detail'|trans}}#}
+                  {#{% endif %}#}
+              </div>
+              <div id="prices" class="tab-pane">
+                  <p>{% if asCompanyData['prices']|length > 0%}
+                          {{ asCompanyData['prices'][0]['description']|raw}}
+                      {% else %}
+                          {{ 'No detail'|trans }}
+                      {% endif %}</p>
+              </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="insurance_companies">
+	      <h3>{{'Insurance companies we work with'|trans}}</h3>
+          <br/>
+          {#<form class="label_with_select">#}
+     	     {#<!--label>Choose your country</label-->#}
+				{#{{ form_widget(form.countries) }}        	 #}
+          {#</form>	#}
+		  <div id="insurance_listing_div">
+			{% include 'ClientMedicalBundle:Company:insurancelisting.html.twig' %}
+		  </div>
+      </div>
+    </div>
+	{# endfor #}
+	{% endif %}
+<script type="text/javascript">
+$(document).ready(function () {
+			var cboximgOptions = {
+						maxWidth: '95%',
+						maxHeight: '95%',
+						rel:'group1',
+					}
+
+			$(".group1").colorbox(cboximgOptions);
+			$(window).resize(function(){
+			  $.colorbox.resize({
+				width: window.innerWidth > parseInt(cboximgOptions.maxWidth) ? cboximgOptions.maxWidth : cboximgOptions.width,
+				height: window.innerHeight > parseInt(cboximgOptions.maxHeight) ? cboximgOptions.maxHeight : cboximgOptions.height
+			  });
+			});
+
+
+			var cboxnorecordOptions = {
+						width: '95%',
+						maxWidth: '960px',
+					}
+
+			$('.notestrecord').colorbox(cboxnorecordOptions);
+			$(window).resize(function(){
+			  $.colorbox.resize({
+				width: window.innerWidth > parseInt(cboxnorecordOptions.maxWidth) ? cboxnorecordOptions.maxWidth : cboxnorecordOptions.width
+			  });
+			});
+
+			var cboxOptions = {
+						width: '95%',
+						height: '95%',
+						maxWidth: '960px',
+						maxHeight: '960px',
+					}
+
+			$('.ajax').colorbox(cboxOptions);
+			$(window).resize(function(){
+			  $.colorbox.resize({
+				width: window.innerWidth > parseInt(cboxOptions.maxWidth) ? cboxOptions.maxWidth : cboxOptions.width,
+				height: window.innerHeight > parseInt(cboxOptions.maxHeight) ? cboxOptions.maxHeight : cboxOptions.height
+			  });
+			});
+
+			var cboxMapOptions = {
+						width: '95%',
+						height: '95%',
+						maxWidth: '943px',
+						maxHeight: '443px',
+					}
+
+			$('.showmap').colorbox(cboxMapOptions);
+			$(window).resize(function(){
+			  $.colorbox.resize({
+				width: window.innerWidth > parseInt(cboxMapOptions.maxWidth) ? cboxMapOptions.maxWidth : cboxMapOptions.width,
+				height: window.innerHeight > parseInt(cboxMapOptions.maxHeight) ? cboxMapOptions.maxHeight : cboxMapOptions.height
+			  });
+			});
+
+			});
+<!-- For map-->
+{% if asCompanyData.specialoffers is defined and asCompanyData.specialoffers|length == 0 %}
+$("#service_li").trigger('click');
+{% endif %}
+</script>
+  {% endblock %}

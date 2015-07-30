@@ -1,0 +1,40 @@
+Admin\MedicalBundle\Entity\Prices:
+    type: entity
+    table: prices
+    gedmo:
+      translation:        
+        entity: Admin\MedicalBundle\Entity\Pricestranslation
+    repositoryClass: Admin\MedicalBundle\Entity\PricesRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        description:
+            type: text
+            nullable: true
+            gedmo:
+                - translatable
+        created_at:
+            type: datetime
+            nullable: true
+        updated_at:
+            type: datetime		
+            nullable: true
+    oneToMany:
+        translations:
+            targetEntity: Pricestranslation
+            mappedBy: object
+            cascade: ["all"]
+    manyToOne:
+      company:
+        targetEntity: Company
+        inversedBy: prices
+        joinColumn:
+          name: company_id
+          referencedColumnName: id
+          onDelete: CASCADE
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAtValue ]
+        preUpdate: [ setUpdatedAtValue ]

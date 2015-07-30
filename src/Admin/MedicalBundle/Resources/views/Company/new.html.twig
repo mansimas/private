@@ -1,0 +1,356 @@
+{% extends 'AdminMedicalBundle::layout.html.twig' %}
+
+{% block title %}Company profile{% endblock %}
+{% set snConpanyId = app.request.get('id') != '' ? app.request.get('id'): '' %}
+{% set snSpecailId = app.request.get('special_id') != '' ? app.request.get('special_id'): '' %}
+
+{% block body %}
+	<script type="text/javascript">		
+		$(document).ready(function () {		
+			$(".form-horizontal").submit(function(){			
+				window.onbeforeunload = '';			
+			});		
+			window.onbeforeunload = function(e) 
+			{
+				return 'Are you sure you want to leave this page?  You will lose any unsaved data.';		
+			}
+		});
+	</script>
+    {% block javascripts %}		
+		<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
+		<script src="{{ asset('js/map.js') }}"></script>
+        <script type="text/javascript">
+		<!-- For map-->	
+		function verifyUserRating(snId)
+		{
+			if (confirm('Are you sure you want to verify user?')) {			
+			$.ajax({
+				type: 'POST',
+				url : '{{ path("medical_company_verify_user") }}',
+				data: "id="+snId+"&id_company={{ snConpanyId }}",
+				success: function(result){						
+						$("#rating_listing").html(result);
+					}
+			})
+			}
+		}
+			
+        google.maps.event.addDomListener(window, 'load', getAddressMapInitialize);
+		
+        Dropzone.options.myAwesomeDropzone = {
+            maxFiles: {{ max_upload_company_image}},
+            paramName: "file", // The name that will be used to transfer the file
+            maxFilesize: 1, // MB
+            dictDefaultMessage:"Upload photo",
+            clickable: true,
+			//previewTemplate: '<div class="testeste"><img src="http://localhost/medical/web/uploads/company/38/534500846e916.png" height=100 width=100></div>',
+            accept: function(file, done) 
+            { 
+				if($("#image_count").val() >= {{ max_upload_company_image}})
+				{
+					$("#medical_save_button").addClass("moreactive");
+					done("You can not upload more than {{ max_upload_company_image}} image.");					
+				}
+                else if (file.type == "image/jpeg" || file.type == "image/png" || file.type == "image/gif" || file.type == "image/jpg")
+                { 
+					$("#medical_save_button").addClass("active");
+					
+					ssImgCount = (parseInt($("#image_count").val()) + 1);
+					$("#image_count").val(ssImgCount);					
+					if(ssImgCount > 5)
+					{
+						$("#medical_save_button").addClass("moreactive");
+					}
+					done();
+                }
+                else 
+                { 
+                  done("You upload only jpeg/png/gif formate images.");
+                }    
+            },
+            init: function () {
+                {% if snConpanyId != ""%}
+                          myCompanyDropzone = this;
+                          $.get('{{ path("medical_company_imageupload", {"id":snConpanyId}) }}', function(data) 
+						  {						  
+							$("#image_count").val(data.length);
+							$.each(data, function(key,value){
+							var mockFile = { name: value.name, size: value.size };                 
+							myCompanyDropzone.options.addedfile.call(myCompanyDropzone, mockFile); 
+							myCompanyDropzone.options.thumbnail.call(myCompanyDropzone, mockFile, "{{ upload_photo_url }}uploads/company/{{ snConpanyId }}/"+value.name);
+							$("#medical_save_button").addClass("active");
+							if(data.length >= 6){
+								$("#medical_save_button").addClass("moreactive");}
+                          }
+						  
+						  );
+                          /*var mockFile = { name: "5332a007df066.png", size: 12345, type: 'image/png' };
+                          this.addFile.call(this, mockFile);
+                          this.options.thumbnail.call(this, mockFile, "http://localhost/medicalmanagement/web/uploads/gallery/5332a007df066.png");*/
+                      });
+                      {% endif %}
+                  
+                  this.on("removedfile", function(file) {
+                      {% if snConpanyId != ""%}					  
+					  snCount = (parseInt($("#image_count").val()) - 1);
+					  if(snCount <= 5)
+						$("#medical_save_button").removeClass("moreactive");
+					  $("#image_count").val(snCount);
+                      $.ajax({
+                            type: 'POST',
+                            url: '{{ path("medical_company_removeimage") }}',
+                            data: "name="+ file.name+"&comp_id="+{{ snConpanyId }},
+                            dataType: 'html'
+                            }); 
+                       {% else %}
+                       $.ajax({
+                            type: 'POST',
+                            url: '{{ path("medical_company_removeimage") }}',
+                            data: "name="+ file.name,
+                            dataType: 'html'
+                            }); 
+                       {% endif %}
+                    });
+                  }            
+        };
+        Dropzone.options.mySpecialAwesomeDropzone = {
+            maxFiles: {{ max_upload_company_image}},
+            paramName: "file", // The name that will be used to transfer the file
+            maxFilesize: 1, // MB
+            dictDefaultMessage:"Upload photo",
+            clickable: true,
+			//previewTemplate: '<div class="testeste"><img src="http://localhost/medical/web/uploads/company/38/534500846e916.png" height=100 width=100></div>',
+            accept: function(file, done) 
+            { 
+				if($("#special_image_count").val() >= {{ max_upload_company_image}})
+				{
+					$("#medical_special_save_button").addClass("moreactive");
+					done("You can not upload more than {{ max_upload_company_image}} image.");					
+				}
+                else if (file.type == "image/jpeg" || file.type == "image/png" || file.type == "image/gif" || file.type == "image/jpg")
+                { 
+					$("#medical_special_save_button").addClass("active");
+					
+					ssImgCount = (parseInt($("#special_image_count").val()) + 1);
+					$("#special_image_count").val(ssImgCount);					
+					if(ssImgCount > 5)
+					{
+						$("#medical_special_save_button").addClass("moreactive");
+					}
+					done();
+                }
+                else 
+                { 
+                  done("You upload only jpeg/png/gif formate images.");
+                }    
+            },
+            init: function () {
+                {% if snSpecailId != ""%}
+                          mySpecialDropzone = this;
+                          $.get('{{ path("medical_company_specialoffer_imageupload", {"id":snSpecailId}) }}', function(data) 
+						  {						  
+							$("#special_image_count").val(data.length);
+							$.each(data, function(key,value){
+							var mockFile = { name: value.name, size: value.size };                 
+							mySpecialDropzone.options.addedfile.call(mySpecialDropzone, mockFile); 
+							mySpecialDropzone.options.thumbnail.call(mySpecialDropzone, mockFile, "{{ upload_photo_url }}uploads/specialoffer/{{ snSpecailId }}/"+value.name);
+							$("#medical_special_save_button").addClass("active");
+							if(data.length >= 6){
+								$("#medical_special_save_button").addClass("moreactive");}
+                          }
+						  
+						  );
+                          /*var mockFile = { name: "5332a007df066.png", size: 12345, type: 'image/png' };
+                          this.addFile.call(this, mockFile);
+                          this.options.thumbnail.call(this, mockFile, "http://localhost/medicalmanagement/web/uploads/gallery/5332a007df066.png");*/
+                      });
+                      {% endif %}
+                  
+                  this.on("removedfile", function(file) {
+                      {% if snSpecailId != ""%}					  
+					  snCount = (parseInt($("#special_image_count").val()) - 1);
+					  if(snCount <= 5)
+						$("#medical_special_save_button").removeClass("moreactive");
+					  $("#special_image_count").val(snCount);
+                      $.ajax({
+                            type: 'POST',
+                            url: '{{ path("medical_company_specialoffer_removeimage") }}',
+                            data: "name="+ file.name+"&special_id="+{{ snSpecailId }},
+                            dataType: 'html'
+                            }); 
+                       {% else %}
+                       $.ajax({
+                            type: 'POST',
+                            url: '{{ path("medical_company_specialoffer_removeimage") }}',
+                            data: "name="+ file.name,
+                            dataType: 'html'
+                            }); 
+                       {% endif %}
+                    });
+                  }            
+        };
+        </script>
+    {% endblock %} 
+<div class="main-content">
+	<div class="breadcrumbs" id="breadcrumbs">
+		<script type="text/javascript">
+			try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+		</script>
+
+		<ul class="breadcrumb">
+			<li>
+				<i class="icon-home home-icon"></i>
+				<a href="#">Home</a>
+
+				<span class="divider">
+					<i class="icon-angle-right arrow-icon"></i>
+				</span>
+			</li>
+			
+			<li>
+				<a href="{{ path('medical_company')}}">Companies</a>
+
+				<span class="divider">
+					<i class="icon-angle-right arrow-icon"></i>
+				</span>
+			</li>
+			
+			{% if snConpanyId != ''%}
+				<li class="active">edit</li>
+			{% else %}
+				<li class="active">add</li>
+			{% endif%}
+		</ul><!-- .breadcrumb -->
+
+		<div class="nav-search" id="nav-search">
+			<form class="form-search">
+				<span class="input-icon">
+					<input type="text" placeholder="Search ..." class="input-small nav-search-input" id="nav-search-input" autocomplete="off" />
+					<i class="icon-search nav-search-icon"></i>
+				</span>
+			</form>
+		</div><!-- #nav-search -->
+	</div>
+	<div class="span6 widget-container-span ui-sortable">
+		<div class="widget-box">
+			<div class="widget-header">
+				<h5 class="smaller"></h5>
+				<div class="widget-toolbar no-border">
+					<ul id="myTab" class="nav nav-tabs">
+					{% if snConpanyId != '' %}
+						{% set ssSpecialOffer = "specila_offers" %}
+						{% set ssRatings = "ratings" %}						
+						{% set ssService = "service" %}
+						{% set ssExperience = "experience" %}							
+						{% set ssPrices = "prices" %}
+						{% set ssTab = "tab" %}
+					{% else %}
+						{% set ssSpecialOffer = "" %}
+						{% set ssRatings = "" %}						
+						{% set ssService = "" %}
+						{% set ssExperience = "" %}						
+						{% set ssPrices = "" %}
+						{% set ssTab = "" %}
+					{% endif %}
+						<li class="active">
+							<a href="#company_profile" data-toggle="tab">Company profile</a>
+						</li>
+						<li class="">
+							<a id="specials" href="#{{ ssSpecialOffer }}" data-toggle="{{ ssTab }}">Special offers</a>
+						</li>
+						<li class="">
+							<a id="rate" href="#{{ ssRatings }}" data-toggle="{{ ssTab }}">Ratings</a>
+						</li>						
+						<li class="">
+							<a href="#{{ ssService }}" data-toggle="{{ ssTab }}">Services</a>
+						</li>
+						<li class="">
+							<a href="#{{ ssExperience }}" data-toggle="{{ ssTab }}">Experience</a>
+						</li>						
+						<li class="">
+							<a href="#{{ ssPrices }}" data-toggle="{{ ssTab }}">Prices</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="widget-body">
+				<div class="padding-6">
+					<div class="tab-content">
+						<div class="tab-pane active" id="company_profile">
+							{% include 'AdminMedicalBundle:Company:companyprofile.html.twig' %}
+						</div>
+						<div class="tab-pane" id="specila_offers">
+							{% include 'AdminMedicalBundle:Company:specialoffer.html.twig' %}
+						</div>
+						<div class="tab-pane" id="ratings">
+							{% include 'AdminMedicalBundle:Company:rating.html.twig' %}
+						</div>						
+						<div class="tab-pane" id="service">
+							{% include 'AdminMedicalBundle:Company:service.html.twig' %}    
+						</div>						
+						<div class="tab-pane" id="experience">
+							{% include 'AdminMedicalBundle:Company:experience.html.twig' %}
+						</div>						
+						<div class="tab-pane" id="prices">
+							{% include 'AdminMedicalBundle:Company:prices.html.twig' %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>								
+	<div class="ace-settings-container" id="ace-settings-container">
+		<div class="btn btn-app btn-mini btn-warning ace-settings-btn" id="ace-settings-btn">
+			<i class="icon-cog bigger-150"></i>
+		</div>
+		<div class="ace-settings-box" id="ace-settings-box">
+			<div>
+				<div class="pull-left">
+					<select id="skin-colorpicker" class="hide">
+						<option data-skin="default" value="#438EB9">#438EB9</option>
+						<option data-skin="skin-1" value="#222A2D">#222A2D</option>
+						<option data-skin="skin-2" value="#C6487E">#C6487E</option>
+						<option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
+					</select>
+				</div>
+				<span>&nbsp; Choose Skin</span>
+			</div>
+			<div>
+				<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar" />
+				<label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
+			</div>
+			<div>
+				<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar" />
+				<label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
+			</div>
+			<div>
+				<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs" />
+				<label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
+			</div>
+			<div>
+				<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" />
+				<label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
+			</div>
+		</div>
+	</div><!-- /#ace-settings-container -->
+</div><!-- /.main-content -->
+<script type="text/javascript">
+		 <!-- For map-->	
+			$( document ).ready(function() 
+			{				
+				{% if app.request.get('ssBooleanFlag') != '' and app.request.get('ssBooleanFlag') == 1 %}
+					$("#rate").trigger('click');
+				{% endif %}
+				{% if app.request.get('ssBooleanFlag') != '' and app.request.get('ssBooleanFlag') == 2 %}
+					$("#specials").trigger('click');
+				{% endif %}
+				{% if app.request.get('rate_id') != '' %}					
+					$("#rate").trigger('click');
+				{% endif %}
+				{% if app.request.get('special_id') != '' %}					
+					$("#specials").trigger('click');
+				{% endif %}
+			});
+</script>			
+{% endblock %}  
+        

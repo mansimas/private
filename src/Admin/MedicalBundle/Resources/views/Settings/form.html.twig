@@ -1,0 +1,43 @@
+{% if asLanguagesData|length > 0 %}
+{% for translationsFields in asLanguagesData %}
+	{% set locale = translationsFields.code %}
+	<li {% if app.request.locale == locale %}class="active"{% endif %}>
+		<a href="javascript:void(0)" data-toggle="tab" data-target=".a2lix_translationsFields-{{ locale }}">
+			{{ translationsFields.name }}			
+			{% if asset_exists('uploads/flag/'~translationsFields.flag) %}
+				<img src="{{ asset('uploads/flag/'~translationsFields.flag) }}"  height="22px" width="32px"/>
+			{% else %}
+				<img src="{{ asset('client/images/no_image.png') }}" alt="No Image"  height="22px" width="32px"/>
+			{% endif %}				
+		</a>
+	</li>
+{% endfor %}
+{% else %}
+	{% for i,translationsFields in asLocalesData %}
+	{% set locale = translationsFields %}
+	<li {% if app.request.locale == locale %}class="active"{% endif %}>
+		<a href="javascript:void(0)" data-toggle="tab" data-target=".a2lix_translationsFields-{{ locale }}">
+			{% if locale == "lt"%}
+				{{ "Lithuanian" }}
+				<img src="{{ asset('images/lithuania.png') }}" />
+			{% endif%}
+			{% if locale == "en"%}
+				{{ "English" }}
+				<img src="{{ asset('images/english.jpg') }}" />
+			{% endif%}
+			{% if locale == "de"%}
+				{{ "German" }}
+				<img src="{{ asset('images/german.png') }}" />
+			{% endif%}
+			{% if locale == "ru"%}
+				{{ "Russian" }}
+				<img src="{{ asset('images/russian.png') }}" />
+			{% endif%}
+			
+		</a>
+	</li>
+	{% endfor %}
+{% endif %}
+
+
+     

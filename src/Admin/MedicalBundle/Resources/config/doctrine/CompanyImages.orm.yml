@@ -1,0 +1,22 @@
+Admin\MedicalBundle\Entity\CompanyImages:
+    type: entity
+    table: company_images
+    repositoryClass: Admin\MedicalBundle\Entity\CompanyImagesRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        photo:
+            type: text
+            length: null
+    manyToOne:
+      company:
+        targetEntity: Company
+        inversedBy: companyimages
+        joinColumn:
+          name: company_id
+          referencedColumnName: id
+          onDelete: CASCADE
+    lifecycleCallbacks: {  }

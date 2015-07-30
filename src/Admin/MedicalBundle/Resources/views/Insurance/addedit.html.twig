@@ -1,0 +1,171 @@
+{% extends 'AdminMedicalBundle::layout.html.twig' %}
+
+{% block title %}Insurance addedit{% endblock %}
+{% set snInsuranceId = app.request.get('id') %}
+{% block body %} 
+
+<div class="main-content">
+	<div class="breadcrumbs" id="breadcrumbs">
+		<script type="text/javascript">
+			try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+		</script>
+
+		<ul class="breadcrumb">
+			<li>
+				<i class="icon-home home-icon"></i>
+				<a href="#">Home</a>
+
+				<span class="divider">
+					<i class="icon-angle-right arrow-icon"></i>
+				</span>
+			</li>
+
+			<li>
+				<a href="{{ path('medical_insurance')}}">Insurances</a>
+
+				<span class="divider">
+					<i class="icon-angle-right arrow-icon"></i>
+				</span>
+			</li>
+			{% if snInsuranceId != ''%}
+				<li class="active">edit</li>
+			{% else %}
+				<li class="active">add</li>
+			{% endif%}
+		</ul><!-- .breadcrumb -->
+
+		<div class="nav-search" id="nav-search">
+			<form class="form-search">
+				<span class="input-icon">
+					<input type="text" placeholder="Search ..." class="input-small nav-search-input" id="nav-search-input" autocomplete="off" />
+					<i class="icon-search nav-search-icon"></i>
+				</span>
+			</form>
+		</div><!-- #nav-search -->
+	</div>
+
+	<div class="page-content">
+		<div class="page-header position-relative">
+			<h1>
+				Insurance
+				<small>
+					<i class="icon-double-angle-right"></i>
+					{% if snInsuranceId != ''%}
+						edit
+					{% else %}
+						add
+					{% endif%}
+				</small>
+			</h1>
+		</div><!-- /.page-header -->
+
+		<div class="row-fluid">
+			<div class="span12">
+				<!-- PAGE CONTENT BEGINS -->
+				<form class="form-horizontal" action="{{ path('medical_insurance_addedit', {'id': snInsuranceId }) }}" method="post" enctype="multipart/form-data">			   
+				<!--<form class="form-horizontal">-->
+					<div class="control-group">
+						<label class="control-label" for="form-field-1">
+						</label>
+
+						<div class="controls">										
+							{% if snInsuranceId != ''%}
+								{% if asset_exists('uploads/insurance/'~oInsurance.photo) %}
+									<img src="{{ asset('uploads/insurance/'~oInsurance.photo) }}"  height="80px" width="150px"/>
+								{% else %}
+									<img src="{{ asset('client/images/no_image.png') }}" alt="No Image"  height="80px" width="150px"/>
+								{% endif %}
+							{% endif %}
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label" for="form-field-2">{{ form_label(form.photo) }}</label>
+
+						<div class="controls">
+							{{ form_widget(form.photo)}}
+							{% if form_errors(form.photo) %}
+							<div class="chng_err_msg">
+								{{ form_errors(form.photo) }}
+							</div>
+							{% endif %}
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="form-field-1">{{ form_label(form.translations) }}</label>
+
+						<div class="controls">										
+							{{form_widget(form.translations)}}										
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label" for="form-field-2">{{ form_label(form.countries) }}</label>
+
+						<div class="controls">
+							{{ form_widget(form.countries) }}										
+						</div>
+					</div>
+					
+					<div class="form-actions">															
+							<input style="width:83px;height:42px;" class="btn btn-info" type="submit" name="Save" value="Save" tabindex="1" title="Save">
+						&nbsp; &nbsp; &nbsp;
+						<div class="btn">															
+							<a href="{{ path('medical_insurance')}}" title="Cancel" tabindex="1">Cancel</a>
+						</div>
+					</div>
+				</form>
+			</div><!-- /.span -->
+		</div><!-- /.row-fluid -->
+	</div><!-- /.page-content -->
+
+	<div class="ace-settings-container" id="ace-settings-container">
+		<div class="btn btn-app btn-mini btn-warning ace-settings-btn" id="ace-settings-btn">
+			<i class="icon-cog bigger-150"></i>
+		</div>
+
+		<div class="ace-settings-box" id="ace-settings-box">
+			<div>
+				<div class="pull-left">
+					<select id="skin-colorpicker" class="hide">
+						<option data-skin="default" value="#438EB9">#438EB9</option>
+						<option data-skin="skin-1" value="#222A2D">#222A2D</option>
+						<option data-skin="skin-2" value="#C6487E">#C6487E</option>
+						<option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
+					</select>
+				</div>
+				<span>&nbsp; Choose Skin</span>
+			</div>
+
+			<div>
+				<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar" />
+				<label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
+			</div>
+
+			<div>
+				<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar" />
+				<label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
+			</div>
+
+			<div>
+				<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs" />
+				<label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
+			</div>
+
+			<div>
+				<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" />
+				<label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
+			</div>
+		</div>
+	</div><!-- /#ace-settings-container -->
+</div><!-- /.main-content -->
+<script type="text/javascript">	
+$(".chosen-select").chosen(); 
+	$('#chosen-multiple-style').on('click', function(e){
+		var target = $(e.target);
+		var which = parseInt($.trim(target.text()));
+		if(which == 2) $('#admin_medicalbundle_insurance_countries').addClass('tag-input-style');
+		 else $('#admin_medicalbundle_insurance_countries').removeClass('tag-input-style');
+	});
+</script>
+ {% endblock %}

@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>medical</title>
+<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+<style>
+  body { font-family: DejaVu Sans, sans-serif; }
+</style>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-55572047-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+</head>
+<body style="padding:0; margin:0; sans-serif; color:#030000;font-family:dejavu sans, sans-serif;">
+<div style="margin:0 auto; width:1024px;" >
+  <table width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+      <td>
+	  <img src="{{ upload_photo_url }}images/pdf_images/header_img.jpg" align="Header Image" />
+	  </td>
+    </tr>
+  </table>
+  <table style=" margin-top:52px;"  width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+      <td style="font-size:22px; color:#676767; text-transform:uppercase; float:left;">INVOICE | SĄSKAITA FAKTŪRA</td>      
+	  <td style="font-size:22px; color:#676767; text-transform:uppercase; float:right;">Nr. {{ snInvoiceNumber }}</td>
+    </tr>
+  </table>
+  <table style=" margin-top:52px;">
+    <tr>
+      <td style="color:#030000; font-size:22px; width:600px;"><div> COMPANY</div>
+        <table>
+          <tr>
+            <td style="font-weight:bold;">UAB “Marketologai”</td>
+          </tr>
+          <tr>
+            <td>Code: 302643941</td>
+          </tr>
+          <tr>
+            <td>Kapsų 28, Klaipėda Lietuva LT-91269</td>
+          </tr>          
+          <tr>
+            <td>+37067047671</td>
+          </tr>
+          <tr>
+            <td style="text-transform:lowercase;">info@medical.lt</td>
+          </tr>
+        </table>
+	 </td> 
+	<td style="color:#030000; font-size:22px; text-transform:uppercase; width:400px; vertical-align:top;">
+	  {% if asSpecialOfferData|length > 0 %}
+	  <table>
+          <tr>
+            <td style="color:#030000;">Client</td>
+          </tr>
+          <tr>
+            <td>
+				<span style="width:200px;">Name:</span> <span style="color:#676767;text-transform:none;">{{name}}</span>
+			</td>
+          </tr>
+		  <tr>
+			<td>
+				<span style="width:200px;">Email:</span> <span style="color:#676767;text-transform:lowercase;">{{email}}</span>
+			</td>
+		  </tr>
+		  <tr>
+			<td>
+				<span style="width:200px;">Phone number:</span> <span style="color:#676767;">{{phone}}</span>
+			</td>
+		  </tr>
+        </table>
+		{% endif %}
+		</td>
+    </tr>
+  </table>
+  <table cellpadding="10" cellspacing="0" width="100%" style="font-size:20px; border-collapse:collapse; margin-top:100px;">
+    <tr>
+      <th style="border:solid 1px #000; background:#e9e7e8;width:60px"> No.</th>
+      <th style=" border:solid 1px #000; background:#e9e7e8;">SERVICE</th>
+      <th style=" border:solid 1px #000; background:#e9e7e8;"> PRICE
+        (Eur.)</th>
+      <th style=" border:solid 1px #000; background:#e9e7e8;"> VAT
+        (21%)</th>
+	  <th style=" border:solid 1px #000; background:#e9e7e8;"> Quantity </th>
+      <th style=" border:solid 1px #000; background:#e9e7e8;">Total price
+        (Eur.)</th>
+    </tr>
+    <tr>
+      <td style=" border:solid 1px #000; text-align:center;">1</td>
+      <td style=" border:solid 1px #000; font-size:17px;">{{ asSpecialOfferData[0]['translations'][2]['content'] }}</td>
+      <td style=" border:solid 1px #000; text-align:center;">
+		{% set withoutvatprice = (asSpecialOfferData[0]['sales_price']*100)/121 %}
+		{% set vat_price = asSpecialOfferData[0]['sales_price'] - withoutvatprice %}		
+		{{ '%.2f' | format(withoutvatprice) }}
+	  </td>
+      <td style=" border:solid 1px #000; text-align:center;">		
+		{{ '%.2f' | format(vat_price) }}
+	  </td>
+	  <td style=" border:solid 1px #000; text-align:center;">{{ coupon }}</td>
+      <td style=" border:solid 1px #000; text-align:center;">		
+		{% set total_price = asSpecialOfferData[0]['sales_price'] * coupon %}
+		{{ total_price }}
+	  </td>
+    </tr>    
+  </table>
+  
+  <table style="margin-top:150px auto auto;background-color:#0073b4;text-align:center;color:#fff;padding:0px;" width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+      <td align="left"><img src="{{ upload_photo_url }}images/pdf_images/footer_logo.jpg" alt="Footer Logo" style="float:left;" /></td>
+      <td style=" color: #fff;font-family: 'Roboto';font-size: 22px;font-weight: bold;padding: 10px 0;">These services were booked through www.medical.lt<br />
+        Therefore the Client has a right for a FREE (30 min.) lawyer consultation<br />
+        in case if any disputes with medical service provider arise.</td>
+    </tr>
+  </table>
+  <table style="color:#030000; font-size:22px; font-weight:bold; margin-top:90px;">
+    <tr>
+      <td>Disclaimer</td>
+    </tr>
+  </table>
+  <table style="color:#030000; font-size:22px; margin-top:15px; margin-bottom:44px;text-align:justify;color:#898989;font-weight:100;">
+    <tr>
+      <td>Phasellus porta. Fusce suscipit varius mi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla dui. Fusce feugiat malesuada odio. Morbi nunc odio, gravida at, cursus nec, luctus a, lorem. Maecenas tristique orci ac sem. Duis ultricies pharetra magna. Donec accumsan malesuada orci. Donec sit amet eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Mauris fermentum dictum magna. Sed laoreet aliquam leo. Ut tellus dolor, dapibus eget, elementum vel, cursus eleifend, elit. Aenean auctor wisi et urna. Aliquam erat volutpat. Duis ac turpis. Integer rutrum ante eu lacus.
+        Quisque nulla. Vestibulum libero nisl, porta vel, scelerisque eget, malesuada.</td>
+    </tr>
+  </table>
+  <table style="color:#696969;font-size:20px;font-family:Arial, Helvetica, sans-serif; width:100%;">
+    <tr>
+      <td>2013 Medical.lt All rights reserved.</td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>

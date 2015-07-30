@@ -1,0 +1,40 @@
+Admin\MedicalBundle\Entity\Experience:
+    type: entity
+    table: experience
+    gedmo:
+      translation:        
+        entity: Admin\MedicalBundle\Entity\Experiencetranslation
+    repositoryClass: Admin\MedicalBundle\Entity\ExperienceRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        description:
+            type: text
+            nullable: true
+            gedmo:
+                - translatable
+        created_at:
+            type: datetime
+            nullable: true
+        updated_at:
+            type: datetime		
+            nullable: true
+    oneToMany:
+        translations:
+            targetEntity: Experiencetranslation
+            mappedBy: object
+            cascade: ["all"]
+    manyToOne:
+      company:
+        targetEntity: Company
+        inversedBy: experience
+        joinColumn:
+          name: company_id
+          referencedColumnName: id
+          onDelete: CASCADE
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAtValue ]
+        preUpdate: [ setUpdatedAtValue ]

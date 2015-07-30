@@ -1,0 +1,11 @@
+parameters:
+#    client_medical.example.class: Client\MedicalBundle\Example
+
+services:
+    client_medical.language.kernel_request_listener:
+        class: Client\MedicalBundle\EventListener\LanguageListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: setLocaleForUnauthenticatedUser }
+#    client_medical.example:
+#        class: %client_medical.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

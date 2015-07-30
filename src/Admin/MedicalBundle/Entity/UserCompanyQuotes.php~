@@ -1,0 +1,12 @@
+<?php
+
+namespace Admin\MedicalBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * UserCompanyQuotes
+ */
+class UserCompanyQuotes
+{
+}

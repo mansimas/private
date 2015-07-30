@@ -1,0 +1,101 @@
+Admin\MedicalBundle\Entity\AdvertiseBanner:
+    type: entity
+    table: advertise_banner
+    repositoryClass: Admin\MedicalBundle\Entity\AdvertiseBannerRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        unique_id:
+            type: string
+            length: '255'
+            nullable: true
+        client:
+            type: string
+            length: '255'
+            nullable: true
+        notes:
+            type: text            
+            nullable: true
+        status:
+            type: string
+            length: '255'
+            nullable: true
+        lang:
+            type: string
+            length: '255'
+            nullable: true
+        name:
+            type: string
+            length: '255'
+            nullable: true
+        position:
+            type: string
+            length: '255'
+            nullable: true
+        start_date:
+            type: date            
+            nullable: true
+        end_date:
+            type: date            
+            nullable: true
+        total_shows:
+            type: integer            
+            nullable: true
+        current_shows:
+            type: integer
+            options:
+                default: 0
+        photo_height:
+            type: string
+            length: '4'
+            nullable: true
+        photo_width:
+            type: integer
+            length: '4'
+            nullable: true
+        url:
+            type: string
+            length: '255'
+            nullable: true
+        flash_file:
+            type: text            
+            nullable: true
+        script_detail:
+            type: text            
+            nullable: true        
+        photo:
+            type: text
+            length: null
+        new_window:
+            type: boolean
+            nullable: true
+        created_at:
+            type: datetime
+            nullable: true
+        updated_at:
+            type: datetime		
+            nullable: true
+    oneToMany:
+        banners:
+            targetEntity: AdvertisementBannerCategory
+            mappedBy: banner
+    manyToMany:
+      cities:
+        targetEntity: City
+        inversedBy: banners
+        joinTable:
+          name:  banner_city
+          joinColumns:
+            banner_id:
+              referencedColumnName: id
+              onDelete: CASCADE
+          inverseJoinColumns:
+            city_id:
+              referencedColumnName: id
+              onDelete: CASCADE
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAtValue ]
+        preUpdate: [ setUpdatedAtValue ]

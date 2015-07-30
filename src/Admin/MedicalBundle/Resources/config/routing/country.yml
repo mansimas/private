@@ -1,0 +1,30 @@
+medical_country:
+    pattern:  /
+    defaults: { _controller: "AdminMedicalBundle:Country:index" }
+
+medical_country_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "AdminMedicalBundle:Country:show" }
+
+medical_country_new:
+    pattern:  /new
+    defaults: { _controller: "AdminMedicalBundle:Country:new" }
+
+medical_country_create:
+    pattern:  /create
+    defaults: { _controller: "AdminMedicalBundle:Country:create" }
+    requirements: { _method: post }
+
+medical_country_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "AdminMedicalBundle:Country:edit" }
+
+medical_country_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "AdminMedicalBundle:Country:update" }
+    requirements: { _method: post|put }
+
+medical_country_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "AdminMedicalBundle:Country:delete" }
+    requirements: { _method: post|delete }

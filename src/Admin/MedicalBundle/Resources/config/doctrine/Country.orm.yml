@@ -1,0 +1,35 @@
+Admin\MedicalBundle\Entity\Country:
+    type: entity
+    table: country
+    repositoryClass: Admin\MedicalBundle\Entity\CountryRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        name:
+            type: string
+            length: '100'
+    manyToMany:
+        insurances:
+            targetEntity: Insurance
+            mappedBy: countries
+    oneToMany:
+        ratings:
+            targetEntity: Ratings
+            mappedBy: countries
+            cascade: ["persist"]
+        companies:
+            targetEntity: Company
+            mappedBy: countries
+            cascade: ["persist"]
+        user_quote_details:
+            targetEntity: UserQuoteDetail
+            mappedBy: countries
+            cascade: ["persist"]
+        usercompanyquotes:
+            targetEntity: UserCompanyQuotes
+            mappedBy: countries
+            cascade: ["persist"]		
+    lifecycleCallbacks: {  }

@@ -1,0 +1,8 @@
+/app
+/bin
+/vendor
+composer.phar
+.idea/
+composer.json
+composer.lock
+README.md~

@@ -1,0 +1,182 @@
+<script type="text/javascript">
+$(document).ready(function () 
+{
+	var cboxNoOptions = {  
+			width: '95%',				
+			maxWidth: '960px',
+			iframe:true
+	}
+	$('.norecord').colorbox(cboxNoOptions);
+	$(window).resize(function(){
+	  $.colorbox.resize({
+		width: window.innerWidth > parseInt(cboxNoOptions.maxWidth) ? cboxNoOptions.maxWidth : cboxNoOptions.width,		
+	  });
+	});
+	
+var cboxOptions = {  
+				width: '95%',
+				height: '95%',
+				maxWidth: '960px',
+				maxHeight: '960px',
+				iframe:true
+			}
+
+	$('.ajax').colorbox(cboxOptions);
+
+	$(window).resize(function(){
+	  $.colorbox.resize({
+		width: window.innerWidth > parseInt(cboxOptions.maxWidth) ? cboxOptions.maxWidth : cboxOptions.width,
+		height: window.innerHeight > parseInt(cboxOptions.maxHeight) ? cboxOptions.maxHeight : cboxOptions.height
+	  });
+	});
+	
+var cboxMapOptions = {  
+				width: '95%',
+				height: '95%',
+				maxWidth: '943px',
+				maxHeight: '443px',
+			}
+			
+	$('.showmap').colorbox(cboxMapOptions);
+	$(window).resize(function(){
+	  $.colorbox.resize({
+		width: window.innerWidth > parseInt(cboxMapOptions.maxWidth) ? cboxMapOptions.maxWidth : cboxMapOptions.width,
+		height: window.innerHeight > parseInt(cboxMapOptions.maxHeight) ? cboxMapOptions.maxHeight : cboxMapOptions.height
+	  });
+	});
+	
+});
+</script>
+<div class="companylists">	
+      <!-- <div class="row advertising_banner"><img src="advertising_banner.png" alt="Advertising banner" /></div>-->	  
+	  {% set centerBannerId = '' %}
+      {% if pagination.getTotalItemCount  > 0%}	  
+      {% for asDatas in pagination %}
+		{% if asDatas.position is defined %}
+			{% set centerBannerId =  asDatas.id %}
+			{% if asDatas.flash_file != '' %}			
+				<object width="60" height="468" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10,0,32,18" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" type="application/x-shockwave-flash">
+					<param name="wmode" value="opaque">
+					<param name="quality" value="high">
+					<param name="src" value="{{ asDatas.flash_file }}">
+					<embed width="991" height="338" src="{{ asDatas.flash_file }}" quality="high" wmode="opaque" type="application/x-shockwave-flash">
+				</object>				
+			{% elseif asDatas.script_detail != ''%}
+			{{ asDatas.script_detail|raw }}
+			{% else %}
+				{% set ssSpecial = ((asDatas.new_window == 1) ? 'target=_blank' : '' ) %}
+				{% set ssURL = ((asDatas.url != '') ? asDatas.url : '#' ) %}				
+				{% set ssBannerUpdateUrl =  path('client_medical_banner_update_count') %}				
+				<a href="{{ ssURL }}" {{ ssSpecial }}>
+				{% if asset_exists('uploads/advertisebanner/'~asDatas.photo) %}
+					<img src="{{ asset('uploads/advertisebanner/'~asDatas.photo) }}" alt="" height="100" width="560" />
+				{% else %}
+					<img src="{{ asset('client/images/no_image.png') }}" alt="No Image" height="100" width="560"/>
+				{% endif %}
+				</a>
+			{% endif %}
+	 {% else %}
+	 
+	  {% set asData = asDatas[0] %}	  
+      <div class="row companylists_row">
+        <div class="col-md-4 offer_img">			
+		 {% set asCompanyName = em.getRepository("AdminMedicalBundle:Company").Slug(asData.name) %}
+		{% if asData.companyimages|length > 0%}		  
+			  {% set ssImageName = asData['companyimages'][asData.companyimages|length - 1]['photo'] %}
+			 
+			  {% if asset_exists('uploads/company/'~asData.id~'/'~ssImageName) %}				
+				<a href="{{ path('client_medical_company_detail', {'id':asData.id,'name':asCompanyName})}}"><img src="{{ asset('uploads/company/'~asData.id~'/'~ssImageName) }}" alt="No Image" /></a>
+			  {% else %}
+				{% set ssImageName = 'no_image.png' %}
+				<a href="{{ path('client_medical_company_detail', {'id':asData.id,'name':asCompanyName})}}"><img src="{{ asset('client/images/'~ssImageName) }}" alt="No Image" /></a>
+			  {% endif %}
+        {% else %}
+			{% set ssImageName = 'no_image.png' %}
+			<a href="{{ path('client_medical_company_detail', {'id':asData.id,'name':asCompanyName})}}"><img src="{{ asset('client/images/'~ssImageName) }}" alt="No Image" /></a>
+        {% endif %} 
+         
+		{% if asData.languagess|length > 0 %}
+			<div class="languages">
+				<div class="we_speak">{{'We speak'|trans}}</div>
+				{% for asLang in asData.languagess %}
+					<div class="lang">
+					<div class="sub_lang">
+					{% if asset_exists('uploads/flag/'~asLang.flag) %}
+						<img src="{{ asset('uploads/flag/'~asLang.flag) }}" />	
+					{% else %}
+						<img src="{{ asset('client/images/no_image_big.png') }}" alt="No Image" height="20px" width="30px" />
+					{% endif %}						
+					</div>
+					
+					</div>
+				{% endfor %}
+			</div>
+		{% endif %}				
+		
+        </div>
+        <div class="col-md-8">
+        <div class="row special_offer_wraper">
+          <div class="col-xs-12 col-sm-6 col-lg-8">
+            <h3><a href="{{ path('client_medical_company_detail', { 'id': asData.id,'name':asCompanyName }) }}"><em>{{ asData.name }}</em></a><span>
+			<a class="nav_location_icon showmap" href="{{ path('client_medical_showmap', {'address': asData.address,'company_name': asData.name })}}"></a>			
+			{{ asData.address }}{{ ", " }}{{'Lithuania'|trans}}
+			</span></h3>
+          </div>
+        </div>
+          <div class="row offer_detils">
+		  
+			{% if asData.category|length > 0%}
+				{% for key,category in asData.category %}
+					<span class="comp_cat_subcat_list">						
+					{{ category.roots.name }}
+					</span>
+				{% endfor %}
+			{% endif %}		  
+		  </div>
+		  <div class="row">
+            <div class="col-xs-6 col-lg-4 special_offers_ratting">  
+				{% if asDatas.total_rating_count == 1 or asDatas.total_rating_count == 0 or asDatas.total_rating_count == '' %}
+					{% set ssReviewText = 'review'|trans %}
+				{% else %}
+					{% set ssReviewText = 'reviews'|trans %}
+				{% endif %}	
+				{% if asDatas.total_rating_count == 0 or asDatas.total_rating_count == '' %}
+					<a class="norecord" href="{{ path('client_medical_rating', {'id': asData.id} )}}">
+					<p>{{'Rating'|trans}}<b>{#{{ '%.2f' | format(asDatas.total_avg) }}#} {{ "n/a"|trans }}</b></p>
+					</a>
+					<span>
+					<a class="norecord" href="{{ path('client_medical_rating', {'id': asData.id} )}}">
+					{% set ssText = "n/a"|trans %}
+					({{ ssText~" "~ssReviewText}})
+					</a>
+					</span>
+				{% else %}
+					<a class="ajax" href="{{ path('client_medical_rating', {'id': asData.id} )}}" >
+					<p>{{'Rating'|trans}}<b>{{ '%.2f' | format(asDatas.total_avg) }}</b></p>
+					</a>
+					<span>
+					<a class="ajax" href="{{ path('client_medical_rating', {'id': asData.id} )}}" >
+					({{ asDatas.total_rating_count~" "~ssReviewText}})
+					</a>
+					</span>
+			{% endif %}
+        </div>
+			{% set asCompanyIds = app.session.get('company_ids') %}			
+			{% if asData.id in asCompanyIds %}
+				<a id="saved_div_id_{{ asData.id }}" class="saved save_to_list" href="javascript:void(0);">{{'In the list'|trans}}</a>
+			{% else %}			
+				<a id="save_to_list_div_id_{{ asData.id }}" class="save_to_list" onClick="savecompany('{{ asData.id }}','{{ path('client_medical_save_user_company')}}');" href="javascript:void(0)">{{'Add to list'|trans}}</a>
+				<a style="display:none" id="saved_div_id_{{ asData.id }}" class="saved save_to_list in_th" href="javascript:void(0);">{{'In the list'|trans}}</a>
+			{% endif %}
+		  <div class="clearfix"></div>
+		  </div>
+        </div>
+      </div>
+	  {% endif %}
+      {% endfor %}	  
+	  {{ knp_pagination_render(pagination) }}      
+	  {% else %}
+	{{ 'No record found'|trans }}	
+	{% endif %}	
+	<input type="hidden" id="center_banner_id" name="center_banner_id" value="{{ centerBannerId }}"/>
+</div>

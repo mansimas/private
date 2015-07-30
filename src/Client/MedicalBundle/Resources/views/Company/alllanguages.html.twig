@@ -1,0 +1,8 @@
+<div class="select_language">
+    {% for entity in asAllLanguagesData %}
+		<a href="{{ path('client_medical_language', { 'locale': entity.code }) }}">
+			<img src="{{ asset('uploads/flag/'~entity.flag) }}"  height="22px" width="32px"/>
+			<span style="display:none;">{{ entity.name|trans }}</span>
+		</a>
+    {% endfor %}
+</div>

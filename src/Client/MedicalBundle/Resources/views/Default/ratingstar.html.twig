@@ -1,0 +1,74 @@
+{% if data == 0 %}
+	<div></div>
+	<div></div>
+	<div></div>
+	<div></div>
+	<div></div>
+{% endif %}
+{% if data > 0  and data < 2 %}
+	{% if data >= 0.5 and data <= 1.5 %}
+		<div class="halfstar"></div>
+	{% elseif data > 1.5%}							
+		<div class="active"></div>
+	{% else %}
+		<div></div>
+	{% endif %}
+	<div></div>
+	<div></div>
+	<div></div>
+	<div></div>
+{% endif %}					
+{% if data >= 2  and data < 4 %}
+	<div class="active"></div>
+	{% if data >= 2.5 and data <= 3.5 %}
+		<div class="halfstar"></div>
+	{% elseif data > 3.5%}							
+		<div class="active"></div>
+	{% else %}
+		<div></div>
+	{% endif %}
+	<div></div>
+	<div></div>
+	<div></div>
+{% endif %}
+{% if data >= 4  and data < 6 %}
+	<div class="active"></div>
+	<div class="active"></div>
+	{% if data >= 4.5 and data <= 5.5 %}
+		<div class="halfstar"></div>
+	{% elseif data > 5.5%}							
+		<div class="active"></div>
+	{% else %}
+		<div></div>
+	{% endif %}
+	
+	<div></div>
+	<div></div>
+{% endif %}
+{% if data >= 6  and data < 8 %}
+	<div class="active"></div>
+	<div class="active"></div>
+	<div class="active"></div>
+	{% if data >= 6.5 and data <= 7.5 %}
+		<div class="halfstar"></div>
+	{% elseif data > 7.5%}							
+		<div class="active"></div>
+	{% else %}
+		<div></div>
+	{% endif %}
+	
+	<div></div>
+{% endif %}
+{% if data >= 8  and data <= 10 %}
+	<div class="active"></div>
+	<div class="active"></div>
+	<div class="active"></div>
+	<div class="active"></div>
+	{% if data >= 8.5 and data <= 9.5 %}
+		<div class="halfstar"></div>
+	{% elseif data > 9.5%}							
+		<div class="active"></div>
+	{% else %}
+		<div></div>	
+	{% endif %}
+{% endif %}

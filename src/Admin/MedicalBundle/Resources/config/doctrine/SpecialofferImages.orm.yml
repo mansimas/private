@@ -1,0 +1,22 @@
+Admin\MedicalBundle\Entity\SpecialofferImages:
+    type: entity
+    table: specialoffer_images
+    repositoryClass: Admin\MedicalBundle\Entity\SpecialofferImagesRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        photo:
+            type: text
+            length: null
+    manyToOne:
+      specialoffers:
+        targetEntity: SpecialOffers
+        inversedBy: specialofferimages
+        joinColumn:
+          name: specialoffer_id
+          referencedColumnName: id
+          onDelete: CASCADE
+    lifecycleCallbacks: {  }

@@ -1,0 +1,33 @@
+Admin\MedicalBundle\Entity\CompanyCategory:
+    type: entity
+    table: company_category
+    repositoryClass: Admin\MedicalBundle\Entity\CompanyCategoryRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO       
+    manyToOne:
+      company:
+        targetEntity: Company
+        inversedBy: category
+        joinColumn:
+          name: company_id
+          referencedColumnName: id
+          onDelete: CASCADE
+      categories:
+        targetEntity: Category
+        inversedBy: category
+        joinColumn:
+          name: category_id
+          referencedColumnName: id
+          onDelete: CASCADE
+      roots:
+        targetEntity: Category
+        inversedBy: root
+        joinColumn:
+          name: root_id
+          referencedColumnName: id
+          onDelete: CASCADE 
+    lifecycleCallbacks: {  }

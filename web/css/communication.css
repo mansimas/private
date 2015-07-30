@@ -1,0 +1,406 @@
+/*  client_message page html */
+.client_message_hed_row {
+	padding: 10px 0 5px;
+}
+.client_message_btns b {
+	background-color:#FF0000;
+	border-radius: 50%;
+	display: inline-block;
+	margin: auto 5px;
+	width: 23px;
+}
+.signin_box {
+	float: right;
+	line-height: 35px;
+	margin:auto;
+}
+.signin_box li {
+	display: inline-block;
+	line-height: 16px;
+}
+.signin_box li + li {
+	margin-left: 5px;
+	padding-left: 5px;
+	border-left: 1px solid #428BCA;
+}
+.signin_box li a {
+	font-weight:bold;
+}
+.client_message_hed_row {
+	border-bottom: 1px solid #b7b7b7;
+}
+.client_message_hed_contn {
+}
+.client_message_hed_contn .left_menu h4 {
+	font-weight:700;
+	font-size:18px;
+}
+.client_message_hed_contn .left_menu ul {
+	padding:0px;
+}
+.client_message_hed_contn .left_menu ul li {
+	list-style:none;
+}
+.client_message_hed_contn .left_menu ul li a {
+	line-height:35px;
+	padding:0px 6px;
+	display:block;
+	font-size:15px;
+	color:#000;
+}
+.client_message_hed_contn .left_menu ul li a:hover, .client_message_hed_contn .left_menu ul li.active a {
+	background-color:#ebebeb;
+	border-radius: 5px 0 0 5px;
+	text-decoration: none;
+}
+.client_message_hed_contn .left_menu ul li a b {
+	background-color:#FF0000;
+	border-radius: 50%;
+	display: inline-block;
+	margin: auto 5px;
+	width: 23px;
+	color:#fff;
+	text-align:center;
+	line-height:23px;
+}
+.client_message_hed_contn .left_menu ul li a i {
+	background-color:#0073B4;
+	border-radius: 50%;
+	display: inline-block;
+	width: 23px;
+	color:#fff;
+	font-style:normal;
+	text-align:center;
+	line-height:23px;
+}
+.client_message_hed_contn .right_contant .uniqueid {
+	font-size:16px;
+	color:#312e2e;
+	margin: 20px auto 25px;
+}
+.client_message_hed_contn .right_contant .boxs {
+	border-radius:5px;
+	padding:20px 15px;
+	margin-bottom:20px;
+	color:#312e2e;
+}
+.client_message_hed_contn .right_contant .boxs.whitebox {
+	border:1px solid #b7b7b7;
+}
+.client_message_hed_contn .right_contant .boxs.graybox {
+	background-color:#ebebeb;
+}
+.client_message_hed_contn .right_contant .boxs h5 {
+	font-size: 16px;
+	font-weight: bold;
+}
+.client_message_hed_contn .right_contant .boxs h5 span {
+	font-size: 12px;
+	font-weight: normal;
+	line-height: 16px;
+	display:block;
+}
+.client_message_hed_contn .right_contant .boxs p {
+	font-size:16px;
+}
+.client_message_hed_contn .right_contant .boxs .btn.btn-default {
+	display: inline-block;
+	font-size: 16px !important;
+	font-weight: normal;
+	line-height: 32px !important;
+	padding-bottom: 0 !important;
+	padding-top: 0 !important;
+	height:32px;
+}
+
+.client_message_hed_contn .right_contant .boxs textarea {
+	border: 1px solid #B7B7B7;
+	border-radius: 3px;
+	resize: none;
+	width:100%;
+	height:110px;
+	margin:10px auto;
+}
+
+.client_message_hed_contn .right_contant .boxs .addoffer {
+	font-size:16px;
+}
+.vertical_form label, .vertical_form input {
+	display: block;
+	width: 100%;
+	color:#898989;
+}
+.row.vertical_form label {
+	color: #000000;
+	font-size: 18px;
+	font-weight: bold;
+	margin:20px auto 10px;
+}
+.row.vertical_form label span {
+	color: #0073b4;
+}
+.client_message_hed_contn .right_contant .boxs .btn.btn-default.whitebtn {
+	background-color:#898989;
+	color:#fff;
+	margin:10px 10px auto 0px;
+}
+.client_message_hed_contn .right_contant .boxs .btn.btn-default.whitebtn:hover {text-decoration:underline;
+}
+/* End of client_message page html */
+
+
+.btn {
+	border:none !important;
+	box-shadow:none !important;
+	text-shadow: 0 0 0 !important;
+}
+.btn.btn-default.whitebtn {
+	background-color:#EBEBEB;
+	color:#0073b4;
+}
+.btn.btn-default.whitebtn:hover {
+font-weight: normal;text-decoration:underline;
+}
+.btn-default.bluebtn {
+	background-color:#0073b4;
+	color:#fff;
+	font-size:18px;
+}
+.btn-default.bluebtn:hover {
+font-weight: normal;text-decoration:underline;color:#fff;}
+
+.showall_wrap .btn-default.bluebtn {
+	background-color:#0073b4 !important;
+	color:#fff;
+}
+.showall_wrap .btn-default.bluebtn:hover {
+	text-decoration:underline;color:#fff;}
+
+/* .date-picker {
+	background-image: url(../images/calander.png);
+	background-position: 10px center;
+	background-repeat: no-repeat;
+	display: inline-block;
+	padding-left:28px !important;
+} */
+.twentyfourhrs_page .thumbnail {
+	margin-right: 15px;
+	background-color: #F5F5F5;
+	border: 1px solid #F0F0F0;
+	border-radius: 5px;
+	padding: 0 15px 15px;
+}
+.twentyfourhrs_page .col-md-6 + .col-md-6 .thumbnail {
+	margin-left: 15px;
+	margin-right: auto;
+}
+tr.row_red td {
+	background-color: #FFE6E6 !important;
+}
+.dataTables_filter input {
+	height: auto;
+	margin: auto;
+}
+#sample-table-2_filter > label {
+	text-align: right;
+	display: block;
+}
+.reservation_page .pagination {
+	margin: auto;
+}
+.reservation_page .dataTables_info {
+	line-height: 30px;
+}
+.clinicheader .user_login {
+	text-align: right;
+	float:right;
+}
+.clinicheader .user_login h2 {
+	color:#428BCA;
+	display: inline-block;
+	margin: auto !important;
+	vertical-align:middle;
+	font-size:14px;
+}
+.clinicheader .user_login a {
+	font-weight: bold;
+}
+.admin_back_btn {
+	margin:5px auto;
+}
+.ok_icon_list {
+	margin:auto;
+	list-style:none;
+}
+dl {
+	margin-bottom: 10px;
+}
+dt {
+	font-weight: normal;
+}
+.changpass input{ height:auto;}
+
+
+.formbox {
+	border: 1px solid #CCCCCC;
+	padding: 10px;
+}
+.admin_quote_page .client_message_hed_contn .right_contant .boxs {
+	margin-left: auto;
+}
+.admin_quote_page .client_message_hed_contn .left_menu {
+	max-width: none;
+}
+.save_cancel_button {
+	display: inline;
+}
+div.save_cancel_button input.save_button {
+	background-color: rgba(0, 0, 0, 0);
+	background-image: url(../images/save_icon.png);
+	background-repeat: no-repeat;
+	border: medium none !important;
+	height: 16px;
+	padding: 0 !important;
+	text-indent: -9999px;
+	width: 16px;
+}
+.save_cancel_button .cancel_button {
+	background-image: url(../images/back_icon.png);
+	background-repeat: no-repeat;
+	display: inline-block;
+	height: 16px;
+	text-indent: -9999px;
+	width: 16px;
+	margin:auto 16px;
+}
+
+.edit_communication.icon-edit {
+	color: #000000;
+	font-size: 13px;
+	margin-left:16px;
+}
+.edit_communication.icon-edit:hover {
+	text-decoration:none;
+}
+.showall_wrap {
+  margin-bottom: 10px;
+}
+.clininc.reservation_page dt {
+	font-weight:normal !important;
+}
+.clininc.reservation_page h4 {
+	font-size: 16px;
+	font-weight: bold;
+}
+#loader {background:url(../client/images/loading.gif) no-repeat center rgba(0, 0, 0, 0.27);background-size: 80px;cursor:none;height: 100%;left: 0;position: fixed;top: 0;vertical-align: middle;width: 100%;z-index:150;}
+
+
+
+.client_message_hed_contn .right_contant .clinic_commu input {
+  height: 20px;
+}
+
+
+
+ @media (min-width:768px) {
+ .client_message_hed_contn .left_menu {
+border-right: 1px solid #b7b7b7;
+min-height: 826px;
+}
+ .client_message_hed_contn .right_contant {
+}
+ .client_message_hed_contn .right_contant .boxs {
+margin-left:35px;
+}
+ .client_message_hed_contn .row.vertical_form .col-sm-4 + .col-sm-4 {
+margin-left:20px;
+}
+ .client_message_hed_contn .right_contant .boxs h5 span {
+display: inline-block;
+float: right;
+}
+ .client_message_btns .btn {
+margin: auto 5px;
+}
+ .client_message_hed_contn .right_contant .uniqueid {
+text-align: right;
+}
+}
+ @media (min-width:1000px) {
+ .client_message_hed_contn .right_contant {/*width: 805px;*/
+}
+ .client_message_hed_contn .left_menu {
+border-right: 1px solid #b7b7b7;
+min-height: 826px;/*max-width: 195px*/;
+}
+ div.box .row_1 img {
+height: 133px;
+width: 223px;
+margin:auto;
+display:block;
+}
+.twentyfourhrs_page .thumbnail {
+min-height: 385px;
+}
+}
+@media (max-width:640px) {
+ .client_message_page .signin_box {
+float: none !important;
+text-align: center;
+padding:0px;
+}
+ .client_message_hed_contn .right_contant .boxs .btn.btn-default {
+white-space: normal;
+}
+ .client_message_hed_contn .right_contant .boxs .btn.btn-default {
+display: block !important;
+margin-bottom: 10px;
+}
+ .client_message_btns .btn {
+margin-bottom:10px;
+}
+}
+.client_message_hed_contn .right_contant .boxs .accept_wrap .btn.btn-default {margin: auto;}
+.row-fluid .span6.formbox {min-height: 286px;}
+.btn.btn-success.btn-large.no_hover:hover {background-color:#87b87f!important;}
+.btn.btn-danger.btn-large.no_hover:hover {background-color:#d15b47!important;}
+.btn.btn-warning.btn-large.no_hover:hover {background-color:#ffb752!important;}
+
+h2.btn.btn-large.no_hover {
+margin-left: 58px;
+margin-top: 12px;
+}
+.showall_wrap .btn.btn-default:hover {
+  cursor: default;
+  text-decoration: none;
+}
+div.box .row_1 img {
+  max-height: 133px;
+}
+.specialoffer_detail h2.btn {
+  cursor: default;
+}
+.offer_ends {color: red;float: right!important;font-weight: bold!important;margin-right: 0px;font-size: 16px!important;margin-top: 18px;}
+.err_msg {color: red; margin-top: -10px;}
+.chng_err_msg {color: red;}
+.chng_err_msg ul, .chng_err_msg li {list-style: none;margin: 0px;color: #aa0000;}
+
+.bootstrap-timepicker-hour, .bootstrap-timepicker-minute, .bootstrap-timepicker-second {
+  padding: 4px 6px !important;
+  width: 34px !important;
+}
+.communication_timepicker.input-append.bootstrap-timepicker {
+  position: relative;
+}
+.communication_timepicker.input-append.bootstrap-timepicker > input {
+  padding-left: 30px!important;
+}
+.communication_timepicker.input-append.bootstrap-timepicker .add-on {
+  background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+  border: medium none;
+  left: 5px;
+  position: absolute;
+  top: 10px;
+  z-index: 999;
+} 
+h2.btn.btn-success.btn-large.no_hover:hover {background-color:#5cb85c !important;text-decoration:none;}

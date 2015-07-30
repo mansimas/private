@@ -1,0 +1,114 @@
+<div class="row uniqueid">Unique ID&nbsp;&nbsp;{{ objQuotes.UniqueId }}</div>
+<div class="row">
+{% if asCommunicationDetail|length > 0 %}
+		{% set snServicePrice = '' %}
+		{% for asComData in asCommunicationDetail %}
+			{% if asComData[0]['user_type'] == 'company' and snServicePrice == '' %}
+				{% set snServicePrice = asComData[0]['service_price'] %}
+			{% endif %}
+		{% if loop.first and asComData[0]['user_type'] == 'user' %}
+			<div class="boxs whitebox">
+				<h5>{{ objQuotes.firstname~" "~objQuotes.lastname}} <span>{{ asComData[0]['created_at']|date('M d, Y,  H:i') }}</span></h5>
+				<p>--- <a href="javascript:void(0)" onClick="hideshowreplyformdiv({{ asComData[0]['id'] }})">Quote</a> form was sen by <strong>{{ objQuotes.firstname~" "~objQuotes.lastname}}</strong> to {{ asComData['name'] }} clinic ----</p>
+					<div id="add_offer_show_link_{{ asComData[0]['id'] }}" style="display:none">
+						<div class="row vertical_form">
+							{{ objQuotes.healthProblem }}
+						</div>
+					</div>
+			</div>
+		{% elseif asComData[0]['user_type'] == 'user' %}
+			<div class="row">
+				<div class="boxs whitebox">
+					<form action="{{ path('medical_communication_message_addedit',{'id':asComData[0]['id'], 'quote_id':snQuotesId}) }}" method="post">
+					<h5>{{ objQuotes.firstname~" "~objQuotes.lastname}}
+					<span>
+					{{ asComData[0]['created_at']|date('M d, Y,  H:i') }}					
+					<div class="save_cancel_button" id="edit_button_{{ asComData[0]['id'] }}" style="display:none">
+						<a class="cancel_button" onClick="showform({{ asComData[0]['id'] }}, 'cancel')" href="javascript:void(0);">Cancel</a>
+						<input class="save_button" type="submit" value="Save">
+					</div>
+					<div id="edit_message_link_{{ asComData[0]['id'] }}" style="display:inline-block">
+						<a class="edit_communication icon-edit" onClick="showform({{ asComData[0]['id'] }})" href="javascript:void(0);"></a>
+					</div>										
+					</span>
+					</h5>					
+					<p>
+						{% if asComData[0]['edited_by_admin'] == 'Yes' %}
+							 <i class="icon-user"></i> -- Message edited by administrator. {{ asComData[0]['reply_message_content'] }}
+						{% elseif asComData[0]['reservation_type'] == 'twenty_four' %}							
+							<b>24h</b> -- <a href="{{ path('medical_reservation_detail',{'quote_id': objQuotes.id,'company_id':asComData['id']})}}"> Client has made 24h reservation at {{ asComData['name'] }} clinic. Service fee {{ snServicePrice }} Eur. 24h reservation </a>
+						{% elseif asComData[0]['reservation_type'] == 'paid' %}						
+							{% set asQuoteAllData = em.getRepository("AdminMedicalBundle:UserCompanyQuotes").getQuoteAllDetail(objQuotes.id, asComData['id']) %}
+							{% set snReservationFee = '' %}
+							{% if asQuoteAllData[0]['company']|length > 0 %}
+								{% set snReservationFee = em.getRepository("AdminMedicalBundle:Company").calculateReservationFee(asQuoteAllData[0]['company'], asQuoteAllData[0]['userquotedetails']['usercompanycommunication'][0]['service_price'])%}
+							{% endif %}
+							<b><i class="icon-ok"></i></b> -- <a href="{{ path('medical_reservation_detail',{'quote_id': objQuotes.id,'company_id':asComData['id']})}}"> Client has made reservation at {{ asComData['name'] }} clinic. Service fee {{ snServicePrice }} Eur. Reservation fee {{ snReservationFee }} </a>
+						{% else %}
+							{{ asComData[0]['reply_message_content'] }}
+						{% endif %}
+					</p>
+					<div id="edit_message_{{ asComData[0]['id'] }}" style="display:none">
+<textarea required="required" name="clinic_communicationbundle_user_company_communication[reply_message_content]">{{ asComData[0]['reply_message_content'] }}</textarea>						
+					</div>
+				</div>
+				</form>				
+			</div>
+		{# elseif loop.last and asComData[0]['user_type'] == 'company' #}
+		{% elseif asComData[0]['user_type'] == 'company' %}
+		<div class="row">
+			<div class="boxs graybox">
+				<form action="{{ path('medical_communication_message_addedit',{'id':asComData[0]['id'], 'quote_id':snQuotesId}) }}" method="post">
+				<h5>{{ asComData['name'] }} Clinic 
+				<span>
+					{{ asComData[0]['created_at']|date('M d, Y,  H:i') }}
+					<div class="save_cancel_button" id="edit_button_{{ asComData[0]['id'] }}" style="display:none">
+							<a class="cancel_button" onClick="showform({{ asComData[0]['id'] }}, 'cancel')" href="javascript:void(0);">Cancel</a>
+							<input class="save_button" type="submit" value="Save">						
+					</div>
+					
+					<div id="edit_message_link_{{ asComData[0]['id'] }}" style="display:inline-block">
+						<a class="edit_communication icon-edit" onClick="showform({{ asComData[0]['id'] }})" href="javascript:void(0);"></a>
+					</div>
+				
+				</span></h5>
+				{% if asComData[0]['company_offered_unique'] == 'Yes' %}
+				<div class="showall_wrap" id="add_offer_show_link_{{ asComData[0]['id'] }}">
+				<a href="javascript:void(0)" onClick="hideshowreplyformdiv({{ asComData[0]['id'] }})">Show offer</a>				
+				<div class="btn btn-default bluebtn input-sm">
+				<i>--- Clinic offered {{ asComData[0]['service_description'] }} for {{ asComData[0]['service_price'] }} Eur. ---</i>
+				</div>
+				</div>
+				<!--<form action="#" method="post" class="form-horizontal"> -->
+					<div id="add_offer_div_{{ asComData[0]['id'] }}" style="display:none">
+						{% include "AdminMedicalBundle:Quotes:offerform.html.twig" %}
+					</div>
+				<!--</form>-->
+				{% endif %}
+				<div id="add_offer_message_content_{{ asComData[0]['id'] }}">
+					<p>
+						{% if asComData[0]['edited_by_admin'] == 'Yes' %}
+							<i class="icon-user"></i> -- Message edited by administrator. {{ asComData[0]['reply_message_content'] }}
+						{% else %}
+							{{ asComData[0]['reply_message_content'] }}
+						{% endif %}
+					</p>
+				</div>				
+				<div id="edit_message_{{ asComData[0]['id'] }}" style="display:none">
+					<textarea required="required" name="clinic_communicationbundle_user_company_communication[reply_message_content]">{{ asComData[0]['reply_message_content'] }}</textarea>
+				</div>
+				</form>	
+			</div>			
+		</div>
+		{% else %}
+			<div class="row">
+				<div class="boxs graybox">
+					<h5>{{ asComData['name'] }} Clinic <span>{{ asComData[0]['created_at']|date('M d, Y,  H:i') }}</span></h5>
+					<p>{{ asComData[0]['reply_message_content'] }}</p>
+				</div>				
+			</div>
+		{% endif %}
+		
+		{% endfor %}
+{% endif %}
+</div>

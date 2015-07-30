@@ -1,0 +1,27 @@
+Admin\MedicalBundle\Entity\Admin:
+    type: entity
+    table: admin
+    repositoryClass: Admin\MedicalBundle\Entity\AdminRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        name:
+            type: string
+            length: '255'
+        login:
+            type: string
+            length: '30'
+        email:
+            type: string
+            length: '100'
+        password:
+            type: string
+            length: '255'
+        userType:
+            type: string
+            length: 255
+            column: user_type
+    lifecycleCallbacks: {  }

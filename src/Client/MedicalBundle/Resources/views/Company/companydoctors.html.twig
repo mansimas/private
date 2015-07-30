@@ -1,0 +1,40 @@
+<div id="company_listing_loader" style="display:none"></div>
+{% if pagination.getTotalItemCount  > 0%}	
+	{% for doctor in pagination%}
+		<div class="companyrow clearfix">
+			<div class="company_img">
+				{% set asDoctorName = em.getRepository("AdminMedicalBundle:Company").Slug(doctor.firstname) %}
+				<a href="{{ path('client_medical_doctor_detail',{'id':doctor.id,'name':asDoctorName}) }}">
+				{% if doctor['photo'] != ''%}
+					{% if asset_exists('uploads/doctor/'~doctor['photo']) %}
+						<img src="{{ asset('uploads/doctor/'~doctor['photo']) }}" width="156px"/>
+					{% else %}
+						<img src="{{ asset('client/images/no_image.png') }}" alt="No Image" width="156px"/>
+					{% endif %}
+				{% else%}
+					<img src="{{ asset('client/images/no_image.png') }}" alt="No Image" width="156px"/>
+				{% endif%}
+				</a>
+			</div>
+			<div class="company_title">
+				<a href="{{ path('client_medical_doctor_detail',{'id':doctor.id,'name':asDoctorName}) }}">
+					<h3>{{ doctor['firstname']~" "~doctor['lastname'] }}<div class="clearfix"></div></h3>
+				</a>
+				{% if doctor['description'] != '' %}
+                    {% if doctor['description']|length > 115 %}
+                        {% set data = doctor['description']|striptags|raw %}
+                        <p>{{ data|slice(0,114)}}</p>
+                        <a href="{{ path('client_medical_doctor_detail',{'id':doctor.id,'name':asDoctorName}) }}" class="more_info" target="_blank">{{'Read more...'|trans}}</a>
+                    {% else %}
+                        <p>{{ doctor['description']|raw }}</p>
+                    {% endif %}
+                {% endif %}
+			</div>
+		</div>
+	{% endfor%}
+	<div style="padding-top:10px;">
+		{{ knp_pagination_render(pagination) }} 
+	</div>
+	{% else %}
+		{{ 'No detail'|trans}}				
+{% endif %}

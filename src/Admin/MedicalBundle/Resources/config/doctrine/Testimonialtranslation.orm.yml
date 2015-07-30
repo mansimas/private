@@ -1,0 +1,33 @@
+Admin\MedicalBundle\Entity\Testimonialtranslation:
+    type: entity
+    table: testimonialtranslation
+    repositoryClass: Admin\MedicalBundle\Entity\TestimonialtranslationRepository
+    uniqueConstraints:
+        lookup_unique_idx:
+          columns: locale,object_id,field
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        locale:
+            type: string
+            length: null
+            nullable: true
+        field:
+            type: string
+            length: null
+            nullable: true
+        content:
+            type: text
+            nullable: true
+    manyToOne:
+        object:
+            targetEntity: Testimonial
+            inversedBy: translations
+            joinColumn:
+                name: object_id
+                referencedColumnName: id
+                onDelete: CASCADE
+    lifecycleCallbacks: {  }

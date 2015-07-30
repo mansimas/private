@@ -1,0 +1,174 @@
+{% extends 'AdminMedicalBundle::layout.html.twig' %}
+
+{% block title %}Reservation{% endblock %}
+
+{% block body %}
+
+<div class="main-content">
+	<div class="breadcrumbs" id="breadcrumbs">
+		<script type="text/javascript">
+			try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+		</script>
+
+		<ul class="breadcrumb">
+			<li>
+				<i class="icon-home home-icon"></i>
+				<a href="#">Home</a>
+
+				<span class="divider">
+					<i class="icon-angle-right arrow-icon"></i>
+				</span>
+			</li>
+			<li class="active">Reservation</li>
+		</ul><!-- .breadcrumb -->
+
+		<div class="nav-search" id="nav-search">
+			<form class="form-search">
+				<span class="input-icon">
+					<input type="text" placeholder="Search ..." class="input-small nav-search-input" id="nav-search-input" autocomplete="off" />
+					<i class="icon-search nav-search-icon"></i>
+				</span>
+			</form>
+		</div><!-- #nav-search -->
+	</div>
+
+	<div class="page-content">
+		<div class="row-fluid">
+			<div class="span12">
+				<!-- PAGE CONTENT BEGINS -->							
+				<div class="row-fluid">
+					<h3 class="header smaller lighter blue">Reservation list</h3>
+					{% include "AdminMedicalBundle::messages.html.twig" %}
+					
+					<!-- <form action="{{ path('medical_news_delete') }}" method="post">
+					<div class="main_btn">
+					<a href="{{ path('medical_news_addedit') }}" class="btn btn-mini btn-success add_btn">ADD</a>
+					<input name="delete" type="submit" title="Delete" value="Delete" class="btn btn-danger" onClick="return confirmation('delete');">
+					<input name="publish" type="submit" title="Delete" value="Publish" class="btn btn-primary" onClick="return confirmation('published');">
+					<input name="unpublish" type="submit" title="Delete" value="Unpublish" class="btn" onClick="return confirmation('unpublished');">
+					<div class="clr"></div>
+					</div> -->
+					
+					<table id="sample-table-2" class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>	
+								<!--<th class="center">
+									<label>
+										<input type="checkbox" class="ace" />
+										<span class="lbl"></span>
+									</label>
+								</th>-->
+								<th></th>
+								<th>ID</th>								
+								<th>Date</th>								
+								<th>Status</th>
+								<th>Client</th>
+								<th>Clinic</th>
+								<th>Amount(Eur).</th>								
+								
+							</tr>
+						</thead>
+						<tbody>
+							{% if asReservationData | length > 0 %}
+							{% for entity in asReservationData %}							
+							{% if entity.checked_by_admin == "No" %}
+								{% set ssClass = "row_red" %}
+							{% else%}
+								{% set ssClass = "" %}
+							{% endif %}							
+							<tr class="{{ ssClass }}">
+								<td>{{entity.checked_by_admin}}</td>								
+								<td><a href="{{ path('medical_reservation_detail',{'quote_id': entity.quote_id, 'company_id': entity.company_id})}}">{{ entity.reservation_id }}</a></td>
+								<td>{{ entity.reservation_date|date('Y-m-d') }}</td>
+								<td>
+								{% set reservationdate = entity.reservation_date|date('Y-m-d')~" "~entity.reservation_time|date('H:i')%}
+								{% if entity.paypal_payment_status == 1 or entity.res_quote_status == 'paid' %}
+									{{ "Paid" }}
+								{% elseif ( (entity.unconfirmed_twenty_four_or_final_reservation_date != '' and "now"|date('Y-m-d H:i:s') >  entity.unconfirmed_twenty_four_or_final_reservation_date|date('Y-m-d H:i:s'))) or ("now"|date('Y-m-d H:i') > reservationdate) %}
+									{{ "Cancelled" }}
+								{% else %}
+									{{ "24h" }}
+								{% endif %}
+								</td>
+								<td>{{ entity.firstname~" "~entity.lastname }}</td>
+								<td>{{ entity.name }}</td>
+								<td>{{ entity.service_price }}</td>
+							</tr>
+							{% endfor %}
+							{% endif %}
+						</tbody>
+					</table>
+					<!-- </form> -->
+				</div>
+				
+			</div><!-- /.span -->
+		</div><!-- /.row-fluid -->
+	</div><!-- /.page-content -->
+
+	<div class="ace-settings-container" id="ace-settings-container">
+		<div class="btn btn-app btn-mini btn-warning ace-settings-btn" id="ace-settings-btn">
+			<i class="icon-cog bigger-150"></i>
+		</div>
+
+		<div class="ace-settings-box" id="ace-settings-box">
+			<div>
+				<div class="pull-left">
+					<select id="skin-colorpicker" class="hide">
+						<option data-skin="default" value="#438EB9">#438EB9</option>
+						<option data-skin="skin-1" value="#222A2D">#222A2D</option>
+						<option data-skin="skin-2" value="#C6487E">#C6487E</option>
+						<option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
+					</select>
+				</div>
+				<span>&nbsp; Choose Skin</span>
+			</div>
+
+			<div>
+				<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar" />
+				<label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
+			</div>
+
+			<div>
+				<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar" />
+				<label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
+			</div>
+
+			<div>
+				<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs" />
+				<label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
+			</div>
+
+			<div>
+				<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" />
+				<label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
+			</div>
+		</div>
+	</div><!-- /#ace-settings-container -->
+</div><!-- /.main-content -->
+<script type="text/javascript">
+	jQuery(function($) {
+		$('#sample-table-2').dataTable({                
+                "aaSorting": [[ 0, "asc" ], [ 2, "desc" ]],                
+                "bAutoWidth": true,
+                "aoColumnDefs": [{ 
+                    "bSearchable": false, 
+                    "bVisible": false, 
+                    "aTargets": [ 0 ]
+                }]
+            });
+		$('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+		function tooltip_placement(context, source) {
+			var $source = $(source);
+			var $parent = $source.closest('table')
+			var off1 = $parent.offset();
+			var w1 = $parent.width();
+	
+			var off2 = $source.offset();
+			var w2 = $source.width();
+	
+			if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
+			return 'left';
+		}
+	})
+</script>
+{% endblock %}

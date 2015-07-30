@@ -1,0 +1,33 @@
+Admin\MedicalBundle\Entity\Insurancetranslation:
+    type: entity
+    table: insurancetranslation
+    repositoryClass: Medical\HospitalBundle\Entity\InsuranceTranslationRepository
+    uniqueConstraints:
+        lookup_unique_idx:
+          columns: locale,object_id,field
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        locale:
+            type: string
+            length: null
+            nullable: true
+        field:
+            type: string
+            length: null
+            nullable: true
+        content:
+            type: text
+            nullable: true
+    manyToOne:
+        object:
+            targetEntity: Insurance
+            inversedBy: translations
+            joinColumn:
+                name: object_id
+                referencedColumnName: id
+                onDelete: CASCADE        
+    lifecycleCallbacks: {  }

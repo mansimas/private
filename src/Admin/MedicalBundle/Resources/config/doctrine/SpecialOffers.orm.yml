@@ -1,0 +1,114 @@
+Admin\MedicalBundle\Entity\SpecialOffers:
+    type: entity
+    table: specialoffers
+    gedmo:
+      translation:        
+        entity: Admin\MedicalBundle\Entity\Specialofferstranslation
+    repositoryClass: Admin\MedicalBundle\Entity\SpecialOffersRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        photo:
+            type: text
+            length: null
+            nullable: true			
+        unique_id:
+            type: string
+            length: '255'
+            nullable: true
+        status:
+            type: string
+            length: '100'
+        start_date:
+            type: date
+            nullable: true
+        start_time:
+            type: time
+            nullable: true
+        end_date:
+            type: date
+            nullable: true
+        end_time:
+            type: time
+            nullable: true
+        sales_price:
+            type: integer
+            nullable: true
+        coupon_valid_date:
+            type: datetime
+            nullable: true
+        responsible_person:
+            type: string
+            nullable: true
+        contract_num:
+            type: integer
+            nullable: true
+        client_fee:
+            type: integer
+            nullable: true
+        client_fee_percentage:
+            type: integer
+            nullable: true
+        other_info:
+            type: text
+            nullable: true
+        regular_price:
+            type: integer
+            nullable: true
+        checked_by_admin:
+            type: string
+            length: 3
+            nullable: true
+        title:
+            type: string            
+            nullable: true
+            gedmo:
+                - translatable
+        introduction:
+            type: text            
+            nullable: true
+            gedmo:
+                - translatable
+        description:
+            type: text
+            length: null
+            nullable: true
+            gedmo:
+                - translatable
+        sale_date:
+            type: datetime
+            nullable: true			
+        created_at:
+            type: datetime
+            nullable: true
+        updated_at:
+            type: datetime		
+            nullable: true
+    manyToOne:
+      company:
+        targetEntity: Company
+        inversedBy: specialoffers
+        joinColumn:
+          name: company_id
+          referencedColumnName: id
+          onDelete: CASCADE         
+    oneToMany:
+        translations:
+            targetEntity: Specialofferstranslation
+            mappedBy: object
+            cascade: ["all"]        
+        specialoffersales:
+            targetEntity: SpecialofferSales
+            mappedBy: specialoffers        
+        couponcodes:
+            targetEntity: SpecialCouponCodes
+            mappedBy: specialoffers
+        specialofferimages:
+            targetEntity: SpecialofferImages
+            mappedBy: specialoffers
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAtValue ]
+        preUpdate: [ setUpdatedAtValue ]

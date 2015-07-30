@@ -1,0 +1,4 @@
+{% if asMetaData|length > 0%}
+	<meta name="keywords" content="{{ asMetaData[0]['url']|striptags }}">
+	<meta name="description" content="{{ asMetaData[0]['description']|striptags }}">
+{% endif %}

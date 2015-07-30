@@ -1,0 +1,32 @@
+Admin\MedicalBundle\Entity\Specialofferstranslation:
+    type: entity
+    table: specialofferstranslation
+    repositoryClass: Admin\MedicalBundle\Entity\SpecialofferstranslationRepository
+    uniqueConstraints:
+        lookup_unique_idx:
+          columns: locale,object_id,field
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        locale:
+            type: string
+            length: null
+        field:
+            type: string
+            length: null
+            nullable: true
+        content:
+            type: text
+            nullable: true
+    manyToOne:
+        object:
+            targetEntity: SpecialOffers
+            inversedBy: translations
+            joinColumn:
+                name: object_id
+                referencedColumnName: id
+                onDelete: CASCADE
+    lifecycleCallbacks: {  }

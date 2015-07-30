@@ -1,0 +1,19 @@
+<header class="row">
+    <div class="col-md-3 logo">
+      <a href="{{ path('client_medical_homepage') }}"><h1>{{'Medical Tourism Information Center'|trans}}</h1></a>
+    </div>
+    <div class="col-md-6">
+        {% if app.session.get('quote_id') != '' %}
+            <div class="my_clinics desktop_btn pull-right">
+                <a href="{{ path('client_communication',{'quote_id': app.session.get('quote_id'),
+                    'company_id':app.session.get('comp_id')}) }}"
+                   class="btn btn-lg btn-primary">{{ 'Received offers'|trans }}</a>
+            </div>
+        {% endif %}
+        <h2>{{'MEDICAL TOURISM'|trans}} <br> {{'INFORMATION CENTER in LITHUANIA'|trans}}</h2>
+    </div>
+    <div class="col-md-3 language">
+        {{ render(controller('ClientMedicalBundle:Company:alllanguages')) }}
+        {{ render(controller('ClientMedicalBundle:Company:savedcompany')) }}
+    </div>
+</header>

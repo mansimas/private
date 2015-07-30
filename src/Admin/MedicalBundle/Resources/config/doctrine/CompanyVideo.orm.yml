@@ -1,0 +1,22 @@
+Admin\MedicalBundle\Entity\CompanyVideo:
+    type: entity
+    table: company_videos
+    repositoryClass: Admin\MedicalBundle\Entity\CompanyVideoRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        url:
+            type: string
+            length: '255'
+    manyToOne:
+      company:
+        targetEntity: Company
+        inversedBy: companyvideos
+        joinColumn:
+          name: company_id
+          referencedColumnName: id
+          onDelete: CASCADE
+    lifecycleCallbacks: {  }

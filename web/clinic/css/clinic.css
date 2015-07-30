@@ -1,0 +1,198 @@
+.login_page .col-md-3.logo {
+  float: none;
+  margin: auto;
+}
+header .col-md-3.logo {
+	width:34%;
+	max-width:263px;
+}
+header .col-md-3.logo h1 {
+	background:url(../images/logo.png) no-repeat;
+	display:block;
+	height:64px;
+	overflow:hidden;
+	text-indent:-999px;
+	width:100%;
+	max-width:263px;
+	margin:0px;
+}
+header .col-md-3.logo h1 a {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+header .col-md-3 {
+	width:20%;
+}
+header .col-md-6 {
+	width:44%;
+	padding-left:10px;
+}
+header .col-md-6 h2 {
+	color:#0073B4;
+	font-size:21px;
+	margin-top:34px;
+}
+header .col-md-6 h2 b {
+	color:#696969;
+}
+.col-md-3.language {
+	text-align:right;
+	float:right;
+}
+header .col-md-3 div.select_language {
+	display:inline-block;
+	text-align:center;
+}
+header .col-md-3 div.select_language a {
+	width:32px;
+	height:22px;
+	display:inline-block;
+	background-repeat:no-repeat;
+	margin:auto 5px;
+}
+header .col-md-3 .select_language a.lang-ger {
+	background-image:url(../images/lang_ger.png);
+}
+header .col-md-3 .select_language a.lang-ltu {
+	background-image:url(../images/lang_ltu.png);
+}
+header .col-md-3 .select_language a.lang-ru {
+	background-image:url(../images/lang_ru.png);
+}
+header .col-md-3 .select_language a.lang-uk {
+	background-image:url(../images/lang_uk.png);
+}
+header .col-md-3 .btn-primary.saved_clinics {
+	background-color:#0070bc;
+	font-size:14px;
+	font-weight:bold;
+}
+.nav-justified li a span {
+	display:block;
+	min-height:40px;
+}
+.footer_tumbs {
+	background:#ebebeb;
+	padding:10px 0;
+	margin-top: 50px;
+	border-radius: 4px;
+}
+.footer_tumbs .footer_thumb {
+	display: inline-block;
+}
+.footer_tumbs .footer_thumb .thumbs_two, .footer_tumbs .footer_thumb .thumbs_three {
+	border-left:1px solid #fff;
+}
+.footer_tumbs .footer_thumb.thumbs_two a {
+	display: block;
+	font-family: arial;
+	font-size: 16px;
+	font-weight:normal;
+}
+.footer_tumbs .footer_thumb.thumbs_one {
+	width:48%;
+	float:left;
+}
+.footer_tumbs .footer_thumb.thumbs_one .thumbs_one_col {
+	display: inline-block;
+	margin:auto 18px;
+}
+.footer_tumbs .footer_thumb.thumbs_one .thumbs_one_col a {
+	display: block;
+	color:#000;
+	font-size:16px;
+}
+.footer_tumbs .footer_thumb.thumbs_one .thumbs_one_col img {
+	padding: 5px;
+}
+.footer_tumbs .footer_thumb.thumbs_two {
+	border-color: #FFFFFF;
+	border-style: none solid;
+	border-width: 1px;
+	float: left;
+	font-weight: bold;
+	padding: 21px 28px;
+	width: 20%;
+}
+.footer_tumbs .footer_thumb.thumbs_three {
+	float: left;
+	padding: 10px 30px;
+	width: 35%;
+	max-width:326px;
+}
+.footer_tumbs .footer_thumb.thumbs_three p {
+	min-width:100%;
+	color:#000;
+}
+.footer_top_border {
+	background-color: #D7D7D7;
+	border-radius: 4px;
+	display: block;
+	height: 10px;
+	margin-top: -10px;
+	margin-bottom: 14px;
+}
+.footer {
+	margin-top: 22px;
+	padding-bottom: 0;
+	padding-top: 0;
+}
+
+
+.login_page .login_box {
+	background-color: #F2F2F2;
+	border: 1px solid #BCBCBC;
+	float: none;
+	margin: auto;
+	padding: 10px;
+}
+.login_page .login_box h3 {
+	margin: 20px auto;
+}
+.login_page .login_box select, .login_page .login_box textarea, .login_page .login_box input {
+	height:auto;
+}
+.login_page .login_box label {
+	font-weight: normal;
+}
+
+
+
+
+.date-picker {
+    background-image: url("../images/calander.png");
+    background-position: 10px center;
+    background-repeat: no-repeat;
+    display: inline-block;
+    padding-left: 28px !important;
+}
+.client_message_hed_contn .right_contant .boxs input {
+	border: 1px solid #B7B7B7;
+	resize: none;
+	padding: 15px 10px;
+	height:auto;
+	line-height:normal;
+}
+.client_message_hed_contn .right_contant .boxs input.date-picker {
+	padding: 15px 0px;
+}
+.communication_timepicker.input-append.bootstrap-timepicker .add-on {
+background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+border: medium none;
+left: 0px;
+position: absolute;
+width: 100%;
+text-align: left;
+top: 0px;
+padding: 0;
+height: 100%;
+z-index: 999;
+}
+.communication_timepicker.input-append.bootstrap-timepicker .add-on i {
+margin-top: 19px;
+margin-left: 10px;
+}
+.client_message_hed_contn .right_contant .boxs input.bootstrap-timepicker-hour, .client_message_hed_contn .right_contant .boxs input.bootstrap-timepicker-minute {
+display: inline-block;
+}

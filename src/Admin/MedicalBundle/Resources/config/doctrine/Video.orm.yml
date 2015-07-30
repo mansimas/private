@@ -1,0 +1,39 @@
+Admin\MedicalBundle\Entity\Video:
+    type: entity
+    table: video
+    gedmo:
+      translation:        
+        entity: Admin\MedicalBundle\Entity\Videotranslation
+    repositoryClass: Admin\MedicalBundle\Entity\VideoRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        youtube_url:
+            type: text
+            length: null
+            nullable: true
+            gedmo:
+                - translatable
+        status:
+            type: string
+            length: 8
+            options:        
+              default: 'InActive'
+        created_at:
+            type: datetime
+            nullable: true
+        updated_at:
+            type: datetime		
+            nullable: true
+    oneToMany:
+        translations:
+            targetEntity: Videotranslation
+            mappedBy: object
+            cascade: ["all"]
+
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAtValue ]
+        preUpdate: [ setUpdatedAtValue ]

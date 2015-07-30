@@ -1,0 +1,184 @@
+{% extends 'AdminMedicalBundle::layout.html.twig' %}
+{% block title %}Category{% endblock %}
+{% block body -%}
+
+<div class="main-content">
+	<div class="breadcrumbs" id="breadcrumbs">
+		<script type="text/javascript">
+			try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+		</script>
+
+		<ul class="breadcrumb">
+			<li>
+				<i class="icon-home home-icon"></i>
+				<a href="#">Home</a>
+
+				<span class="divider">
+					<i class="icon-angle-right arrow-icon"></i>
+				</span>
+			</li>
+			
+			<li class="active">Categories</li>
+		</ul><!-- .breadcrumb -->
+
+		<div class="nav-search" id="nav-search">
+			<form class="form-search">
+				<span class="input-icon">
+					<input type="text" placeholder="Search ..." class="input-small nav-search-input" id="nav-search-input" autocomplete="off" />
+					<i class="icon-search nav-search-icon"></i>
+				</span>
+			</form>
+		</div><!-- #nav-search -->
+	</div>
+
+	<div class="page-content">
+		<div class="row-fluid category">
+			<div class="span12">
+				<!-- PAGE CONTENT BEGINS -->							
+				<div class="row-fluid" id="cat_list">
+					<h3 class="header smaller lighter blue">Category list</h3>
+					{% include "AdminMedicalBundle::messages.html.twig" %}
+					
+					<form action="{{ path('medical_category_delete') }}" method="post" onsubmit="return confirmation();">
+					<div class="main_btn">
+					<a href="{{ path('medical_category_new') }}" class="btn btn-mini btn-success add_btn">ADD</a>
+					
+					{% if app.user and app.user.userType == 'admin' %}
+						<input type="submit" title="Delete" value="Delete" class="btn btn-mini btn-danger delete_btn">					
+					{% endif %}
+					
+					<div class="clr"></div>
+					</div>					
+					<!--<table id="sample-table-2" class="table table-striped table-bordered table-hover">-->
+						<thead>
+							
+							<div class="main_header">
+							
+							{% if app.user and app.user.userType == 'admin' %}
+							<div class="center">
+								<label>
+									<input type="checkbox" class="lbl_heading_check" />
+									<span class="lbl"></span>
+								</label>
+							</div>
+							{% endif %}
+							
+							<div class="header_name pull-left">Name</div>
+							<div class="header_blank pull-right"></div>	
+							<div class="clr"></div>
+							</div>
+								
+						</thead>
+						<tbody>
+							<div class="tree_cat_list">
+						    {# {{ entities|raw }} #}
+							{% for key,val in entities %}
+							{% set asData = key|split('~~') %}
+							{% if app.user and app.user.userType == 'admin' %}
+							<ul>
+							<li>
+							<input type="checkbox" class="lbl_cat_check_box" value={{ asData[0] }} name="chk_delete[]"/>
+							{% else %}
+							<ul>
+								<li>
+							{% endif %}
+									<div class="name_cat_final">{{ val }}</div>
+									<div class="clr"></div>
+									<div class="hidden-phone visible-desktop action-buttons">
+									{% if asData[1] == 1 %}									
+									{% set ssStatus = ((asData[2] == 'Active') ? "InActive" : "Active") %}									
+									<a href="{{ path('medical_category',{ 'status':ssStatus, 'id':asData[0] })}}" class="green">
+									{{ ssStatus }}
+									</a>
+									{% endif %}
+									<a href="{{ path('medical_category_edit',{ 'id': asData[0] })}}" class="green">
+									<i class="icon-pencil bigger-130"></i>
+									</a>					
+									</div>
+								</li>
+							</ul>
+							{% endfor %}							
+							</div>
+						</tbody>
+					</form>
+					<!--</table>-->
+				</div>
+			
+			</div><!-- /.span -->
+		</div><!-- /.row-fluid -->
+	</div><!-- /.page-content -->
+
+	<div class="ace-settings-container" id="ace-settings-container">
+		<div class="btn btn-app btn-mini btn-warning ace-settings-btn" id="ace-settings-btn">
+			<i class="icon-cog bigger-150"></i>
+		</div>
+
+		<div class="ace-settings-box" id="ace-settings-box">
+			<div>
+				<div class="pull-left">
+					<select id="skin-colorpicker" class="hide">
+						<option data-skin="default" value="#438EB9">#438EB9</option>
+						<option data-skin="skin-1" value="#222A2D">#222A2D</option>
+						<option data-skin="skin-2" value="#C6487E">#C6487E</option>
+						<option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
+					</select>
+				</div>
+				<span>&nbsp; Choose Skin</span>
+			</div>
+
+			<div>
+				<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar" />
+				<label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
+			</div>
+
+			<div>
+				<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar" />
+				<label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
+			</div>
+
+			<div>
+				<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs" />
+				<label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
+			</div>
+
+			<div>
+				<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" />
+				<label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
+			</div>
+		</div>
+	</div><!-- /#ace-settings-container -->
+</div><!-- /.main-content -->
+<script type="text/javascript">
+	jQuery(function($) {		
+		$('#sample-table-2').dataTable({
+		"aoColumns": [
+		  { "bSortable": false },
+		  null,null,null,null,null,null,null,
+		  { "bSortable": false }
+		] });		
+		$('.lbl_heading_check').on('click' , function(){			
+			var that = this;
+			console.log(that);
+			$('.tree_cat_list').find('.lbl_cat_check_box')
+			.each(function(){
+				this.checked = that.checked;
+				console.log(this.checked);
+				$(this).closest('li').toggleClass('selected');
+			});				
+		});	
+		$('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+		function tooltip_placement(context, source) {
+			var $source = $(source);
+			var $parent = $source.closest('table')
+			var off1 = $parent.offset();
+			var w1 = $parent.width();
+	
+			var off2 = $source.offset();
+			var w2 = $source.width();
+	
+			if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
+			return 'left';
+		}
+	})
+</script>
+{% endblock %}

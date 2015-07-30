@@ -1,0 +1,8 @@
+<a href="{{ path('client_medical_user_company') }}" class="btn btn-lg btn-primary saved_clinics">{{'My saved clinics'|trans}} 
+(<div id="save_clinic_count">{{ snCount }}</div>)
+</a>
+{% if app.session.get('quote_id') != '' %}
+	<div class="my_clinics mobile_btn">
+		<a href="{{ path('client_communication',{'quote_id': app.session.get('quote_id'),'company_id':app.session.get('comp_id')}) }}" class="btn btn-lg btn-primary">{{ 'Received offers'|trans }}</a>
+	</div>
+{% endif %}

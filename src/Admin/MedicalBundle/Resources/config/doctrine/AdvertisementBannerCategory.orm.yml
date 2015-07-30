@@ -1,0 +1,33 @@
+Admin\MedicalBundle\Entity\AdvertisementBannerCategory:
+    type: entity
+    table: banner_category
+    repositoryClass: Admin\MedicalBundle\Entity\AdvertisementBannerCategoryRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    manyToOne:
+      banner:
+        targetEntity: AdvertiseBanner
+        inversedBy: banners
+        joinColumn:
+          name: banner_id
+          referencedColumnName: id
+          onDelete: CASCADE
+      categories:
+        targetEntity: Category
+        inversedBy: category
+        joinColumn:
+          name: category_id
+          referencedColumnName: id
+          onDelete: CASCADE
+      roots:
+        targetEntity: Category
+        inversedBy: root
+        joinColumn:
+          name: root_id
+          referencedColumnName: id
+          onDelete: CASCADE
+    lifecycleCallbacks: {  }

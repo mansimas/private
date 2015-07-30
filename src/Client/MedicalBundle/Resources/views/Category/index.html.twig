@@ -1,0 +1,48 @@
+{% extends 'ClientMedicalBundle::layout.html.twig' %}
+{% block title %}{{'Medical Category Listing'|trans}}{% endblock %}
+{% block metakeyword %}
+{% include 'ClientMedicalBundle:Default:websitemetasettings.html.twig'%}
+{% endblock %}
+{% block body %}
+{% include 'ClientMedicalBundle:Company:quicksearch.html.twig' %}
+<div>
+	<div id="clients_sidebar" class="row">
+			{% set firstLtr = '' %}
+			{% set i = 0 %}
+			{% set ssFlag = false %}
+			{% if asCategoryData|length > 0 %}				
+				{% for key,asCategoryList in asCategoryData %}						
+							{% if firstLtr != asCategoryList['name']|first|upper %}
+								{% if ssFlag == true and key != 0 %}
+									</ul>
+									</div>
+										{% if i == 3 %}
+											<div class="clr"></div>
+										{% set i = 0 %}
+										{% endif %}
+								{% endif %}
+								<div class="category_list col-sm-4">
+								<h4>{{ asCategoryList['name']|first|upper  }}</h4>
+								{% set ssFlag = true %}
+								{% set i = i + 1 %}	
+								
+								<ul>
+								<li>
+								{% set asCategoryName = em.getRepository("AdminMedicalBundle:Company").Slug(asCategoryList.name) %}
+								<a href="{{ path('client_medical_category_detail',{'id':asCategoryList.id,'name':asCategoryName}) }}">{{ asCategoryList['name'] }}</a>
+								</li>
+							{% elseif firstLtr == asCategoryList['name']|first|upper %}
+								<li>
+									{% set asCategoryName = em.getRepository("AdminMedicalBundle:Company").Slug(asCategoryList.name) %}
+									<a href="{{ path('client_medical_category_detail',{'id':asCategoryList.id,'name':asCategoryName}) }}">{{ asCategoryList['name'] }}</a>
+								</li>
+							{% endif %}
+							
+						{% set firstLtr = asCategoryList['name']|first|upper %}
+				{% endfor %}
+			{% endif %}
+		</ul>
+	</div>	
+	<div class="clr"></div>
+</div>
+{% endblock %}

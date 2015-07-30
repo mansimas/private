@@ -1,0 +1,41 @@
+medical_category_new:
+    pattern:  /new
+    defaults: { _controller: "AdminMedicalBundle:Category:new" }	
+medical_category_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "AdminMedicalBundle:Category:show" }	
+medical_category_create:
+    pattern:  /create
+    defaults: { _controller: "AdminMedicalBundle:Category:create" }
+    requirements: { _method: post }	
+medical_category_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "AdminMedicalBundle:Category:edit" }
+medical_category_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "AdminMedicalBundle:Category:update" }
+    requirements: { _method: post|put }
+medical_category_delete:
+    pattern:  /delete
+    defaults: { _controller: "AdminMedicalBundle:Category:delete" }
+medical_category_fetch:
+    pattern:  /fetch
+    defaults: { _controller: "AdminMedicalBundle:Category:fetch" }
+medical_category_subfetch:
+    pattern:  /subfetch
+    defaults: { _controller: "AdminMedicalBundle:Category:subfetch" }
+medical_category_subcatfetch:
+    pattern:  /{sub_cat_id}/subcatfetch
+    defaults: { _controller: "AdminMedicalBundle:Category:subcatfetch" }
+medical_category_subsubfetch:
+    pattern:  /{sub_sub_id}/subsubfetch
+    defaults: { _controller: "AdminMedicalBundle:Category:subsubfetch" }
+medical_categoryid_fetch:
+    pattern:  /{sub_cat_id}/fetch
+    defaults: { _controller: "AdminMedicalBundle:Category:fetch" }
+medical_categoryid_subfetch:
+    pattern:  /{sub_sub_id}/subfetch
+    defaults: { _controller: "AdminMedicalBundle:Category:subfetch" }
+medical_category:
+    pattern:  /{id}/{status}
+    defaults: { _controller: "AdminMedicalBundle:Category:index", id:null, status:null }

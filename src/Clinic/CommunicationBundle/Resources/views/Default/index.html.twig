@@ -1,0 +1,101 @@
+{% extends 'ClinicCommunicationBundle::layout.html.twig' %}
+
+{% block title %}{{'Klientų užklausos'}}{% endblock %}
+
+{% block body %}
+<script type="text/javascript">	
+function getQuotedetail(route, ssUpdateDiv, snQuoteId)
+{
+	$("#loader").show("fast"); 
+	$.ajax({
+				type: 'get',
+				url : route,				
+				success: function(result)
+						{
+							$("#"+ssUpdateDiv).html(result);							
+							$("#loader").hide("fast");
+							$("[id^='li_user_quote_']").removeClass();							
+							$("#li_user_quote_"+snQuoteId).addClass("active");	
+							$("#unread_message_count_"+snQuoteId).remove();							
+						}
+			});
+}
+
+</script>
+<div class="container client_message_page">
+<div class="row client_message_hed_row">
+  <div class="col-sm-3">&nbsp;</div>
+  <div class="col-sm-9 client_message_btns">
+		<a href="{{ path('clinic_communication_homepage', {'quote_id':app.request.get('quote_id') }) }}" class="btn btn-default bluebtn col-md-3">{{'Aktyvios užklausos'}}</a>
+		<a  href="{{ path('clinic_medical_reservation') }}" class="btn btn-default whitebtn col-md-3">{{'Rezervacijos' }}</a>
+  </div>
+</div>
+<div class="row client_message_hed_contn">
+  <div class="col-sm-3 left_menu">
+		{% if asQuoteClientDetail|length > 0 %}
+			<h4>{{'Klientų užklausos'}}</h4>
+			<ul>
+				{% for key,asQuote in asQuoteClientDetail %}
+					{% if asQuote.user_quote_detail_id == app.request.get('quote_id') %}
+						{% set ssClass = "active"%}
+					{% elseif app.request.get('quote_id') == '' and key == 0 %}
+						{% set ssClass = "active"%}
+					{% else %}
+						{% set ssClass = '' %}
+					{% endif %}
+					<li id="li_user_quote_{{ asQuote.user_quote_detail_id }}" class="{{ ssClass }}"><a href="javascript:void(0)" onClick="getQuotedetail('{{ path('clinic_communication_homepage', {'quote_id': asQuote.user_quote_detail_id})}}', 'quote_communication_details_div', '{{ asQuote.user_quote_detail_id}}')">{{ asQuote.firstname~" "~asQuote.lastname }}
+					
+					{% if asQuote.cnt_unread_meesage > 0 %}
+						<span id="unread_message_count_{{ asQuote.user_quote_detail_id }}"><b>{{ asQuote.cnt_unread_meesage }}</b></span>
+					{% endif %}
+					
+					{% if asQuote.company_offered == 'Yes' %}
+					<i>!</i>
+					{% endif %}
+					
+					</a>
+					</li>
+				{% endfor %}
+				</ul>
+			{% endif %}			
+  </div>
+  {% if asQuoteClientDetail|length > 0 %}
+	<div class="col-sm-9 right_contant">
+	<div id="loader" style="display:none"></div>
+		<div id="quote_communication_details_div">
+			{% include "ClinicCommunicationBundle:Default:communication.html.twig" %}			
+		</div>      
+	</div>
+	{% endif %}
+</div>
+</div>
+
+<script type="text/javascript">	
+
+function hideshowreplyformdiv(snId)
+{	
+	if($('#add_offer_div_'+snId).css('display') == 'none'){
+		$("[id^='clinic_communicationbundle_user_company_communication_service_price']").attr('required', 'required');
+	}
+	if($('#add_offer_div_'+snId).css('display') == 'block'){
+		$("[id^='clinic_communicationbundle_user_company_communication_service_price']").removeAttr('required');
+	}
+	$("#add_offer_div_"+snId).toggle('slow');
+	$("#add_offer_link_"+snId).toggle('slow');
+	$("#add_offer_submit_"+snId).toggle('slow');
+	$("#add_offer_reply_send_div_"+snId).toggle('slow');
+	$("#add_offer_message_content_"+snId).toggle('slow');
+	$("#add_offer_show_link_"+snId).toggle('slow');
+	
+}
+
+$('.date-picker').datepicker({format: 'yyyy-mm-dd'});
+$('#clinic_communicationbundle_user_company_communication_reservation_time').timepicker({
+	minuteStep: 1,
+	showSeconds: false,
+	showMeridian: false
+})
+
+</script>
+
+{% endblock %}

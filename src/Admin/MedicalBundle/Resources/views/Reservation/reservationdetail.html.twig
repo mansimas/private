@@ -1,0 +1,208 @@
+{% extends 'AdminMedicalBundle::layout.html.twig' %}
+{% block title %}special detail{% endblock %}
+{% set snSpecialofferId = app.request.get('id') != '' ? app.request.get('id'): '' %}
+
+{% block body %}
+{% if asQuoteAllData|length > 0 %}
+{% set asData = asQuoteAllData[0] %}
+<div class="main-content">
+<div class="span6 widget-container-span ui-sortable">
+<a href="{{ path('medical_reservation')}}" class="btn admin_back_btn"><< Back to sales</a>
+<div class="widget-box">
+<div class="widget-body">
+<div class="padding-6">
+<div class="tab-content">
+<div class="tab-pane active" id="company_profile">
+<div class="page-content">
+<a href="{{ path('medical_specialoffers') }}"></a>
+<div class="row-fluid">
+<div class="span12 form-horizontal specialoffer_detail">
+<!--<form class="form-horizontal">-->
+
+<div class="row-fluid show-grid">
+	<div class="span6">
+
+<b>Client details</b>
+<dl class="dl-horizontal">
+  <dt>Unique ID</dt>
+  <dd><b>{{ asData.userquotedetails.unique_id }}</b></dd>
+</dl>
+<dl class="dl-horizontal">
+  <dt>Firstname</dt>
+  <dd>{{ asData.userquotedetails.firstname }}</dd>
+</dl>
+<dl class="dl-horizontal">
+  <dt>Middlename</dt>
+  <dd>{{ asData.userquotedetails.middlename }}</dD>
+</dl>
+<dl class="dl-horizontal">
+  <dt>Lastname</dt>
+  <dd>{{ asData.userquotedetails.lastname }}</dd>
+</dl>
+<dl class="dl-horizontal">
+  <dt>Email</dt>
+  <dd>{{ asData.userquotedetails.email }}</dd>
+</dl>
+<dl class="dl-horizontal">
+  <dt>Ph.number</dt>
+  <dd>{{ asData.userquotedetails.phone }}</dd>
+</dl>
+<dl class="dl-horizontal">
+  <dt>Country</dt>
+  <dd>{{ asData.userquotedetails.countries.name }}</dd>
+</dl>
+	</div>
+	<div class="span6">
+        {% if asData.userquotedetails.quote_status == 'paid' %} <b>Residential address</b>
+        <dl class="dl-horizontal">
+          <dt>Address</dt>
+          <dd> {{ asData.resi_address_one }} </dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>Address 2</dt>
+          <dd>{{ asData.resi_address_two }}</dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>City</dt>
+          <dd> {{ asData.resi_city }} </dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>State</dt>
+          <dd> {{ asData.resi_state }} </dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>ZIP</dt>
+          <dd> {{ asData.resi_zip }} </dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>Country</dt>
+          <dd> {{ asData.countries.name }} </dd>
+        </dl>
+        {% endif %}
+	</div>
+</div>
+	<div class="clearfix"></div>
+<hr />
+
+
+<div class="row-fluid show-grid">
+	<div class="span6">
+    <b>Tourism service interested in</b> {% set asOffers = asData.offers|split(',') %}
+    <ul class="ok_icon_list">
+                    {% set offers = "" %}
+                    {% for asOffer in asOffers %}
+                        {% if asOffer == 1 %}
+                        {% set offers = "Pick up at the airport" %}
+						 <li><i class="icon-ok"></i>&nbsp;{{ offers }}</li>
+                        {% endif %}
+                        {% if asOffer == 2 %}
+                        {% set offers = "All included transport and guide" %}
+						 <li><i class="icon-ok"></i>&nbsp;{{ offers }}</li>
+                        {% endif %}
+                        {% if asOffer == 3 %}
+                        {% set offers = "Guided tours" %}
+						 <li><i class="icon-ok"></i>&nbsp;{{ offers }}</li>
+                        {% endif %}                   
+                        {% endfor %}
+    </ul>
+	</div>
+	<div class="span6">
+	<b>Actual services requested</b>
+    <p>{{ asData.specific_wishes }}</p>
+    </div>
+	<div class="clearfix"></div>
+    </div>
+	<div class="clearfix"></div>
+<hr />
+
+
+
+<div class="row-fluid show-grid">
+	<div class="span6">
+ <b>Clinic detail</b>
+                    <dl class="dl-horizontal">
+                      <dt>Company</dt>
+                      <dd>{{ asData.company.name }}</dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+  <dt>Company code</dt>
+  <dd>{{ asData.company.company_code }}</dd>
+</dl>
+                    <dl class="dl-horizontal">
+  <dt>VAT code</dt>
+  <dd>{{ asData.company.vat_code }}</dd>
+</dl>
+                    <dl class="dl-horizontal">
+  <dt>Licence number</dt>
+  <dd>{{ asData.company.licence_number }}</dd>
+</dl>
+                    <dl class="dl-horizontal">
+  <dt>Address</dt>
+  <dd> {{ asData.company.address }} </dd>
+</dl>
+</div>
+	<div class="span6">
+        <b>Sales details</b>
+        <dl class="dl-horizontal">
+          <dt>Date</dt>
+          <dd> {{ asData.created_at|date('Y m d')~" "~asData.created_at|date('H:i') }} </dd>
+        </dl>
+        <dl class="dl-horizontal">
+          <dt>Total service offer</dt>
+          <dd> {{ asData.userquotedetails.usercompanycommunication[0].service_price }} Eur </dd>
+        </dl>
+        
+		{% set reservationdate = asData.reservation_date|date('Y-m-d')~" "~asData.reservation_time|date('H:i')%}
+		{# if asData.userquotedetails.quote_status == 'paid' #}
+		{# if asData.quote_status == 'paid' and asData.twenty_four_come_final == 'Yes' #}
+		{% if  asData.paypal_payment_status == 1 or asData.quote_status == 'paid' %}
+			<dl class="dl-horizontal">
+			  <dt>Reservation fee</dt>
+			  <dd> {{ snReservationFee }} Eur</dd>
+			</dl>
+            <h2 class="btn btn-success btn-large no_hover">RESERVATION PAID</h2>
+		{% elseif ( asData.unconfirmed_twenty_four_or_final_reservation_date|date('Y-m-d H:i:s') != '' and "now"|date('Y-m-d H:i:s') >  asData.unconfirmed_twenty_four_or_final_reservation_date|date('Y-m-d H:i:s')) or ("now"|date('Y-m-d H:i') > reservationdate) %}
+			<h2 class="btn btn-danger btn-large no_hover">Cancelled</h2>
+		{% else %}			
+			<h2 class="btn btn-warning btn-large no_hover">24h reservation</h2>
+        {% endif %}
+		</div>
+    </div>
+	<div class="clearfix"></div>
+	<hr />
+                    <b>Treatment details</b>
+                    <dl class="dl-horizontal">
+                    <dt>Treatment</dt>
+                    <dd> {{ asData.userquotedetails.usercompanycommunication[0].service_description }}
+                    </div>
+
+                    <dl class="dl-horizontal">
+  <dt>Brief service description</dt>
+  <dd> {{ asData.userquotedetails.usercompanycommunication[0].brief_service_description }} </dd>
+</dl>
+                    <dl class="dl-horizontal">
+  <dt>Responsible person</dt>
+  <dd> {{ asData.userquotedetails.usercompanycommunication[0].responsible_person_doctor }} </dd>
+</dl>
+                    <dl class="dl-horizontal">
+  <dt>Reservation date</dt>
+  <dd> {{ asData.userquotedetails.usercompanycommunication[0].reservation_date|date('Y m d')~" "~asData.userquotedetails.usercompanycommunication[0].reservation_time|date('H:i') }} </dd>
+</dl>
+                    </div>
+</div>
+<div class="clr"></div>
+</div>
+<!-- /.span -->
+</div>
+<!-- /.row-fluid -->
+</div>
+<!-- /.page-content -->
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,40 @@
+Admin\MedicalBundle\Entity\Service:
+    type: entity
+    table: service
+    gedmo:
+      translation:        
+        entity: Admin\MedicalBundle\Entity\Servicetranslation
+    repositoryClass: Admin\MedicalBundle\Entity\ServiceRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        description:
+            type: text
+            nullable: true
+            gedmo:
+                - translatable
+        created_at:
+            type: datetime
+            nullable: true
+        updated_at:
+            type: datetime		
+            nullable: true
+    oneToMany:
+        translations:
+            targetEntity: Servicetranslation
+            mappedBy: object
+            cascade: ["all"]
+    manyToOne:
+      company:
+        targetEntity: Company
+        inversedBy: service
+        joinColumn:
+          name: company_id
+          referencedColumnName: id
+          onDelete: CASCADE
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAtValue ]
+        preUpdate: [ setUpdatedAtValue ]

@@ -1,0 +1,359 @@
+{% extends 'AdminMedicalBundle::layout.html.twig' %}
+
+{% block title %}Language{% endblock %}
+
+{% block body %}
+
+<div class="main-content languages_page_form">
+	<div class="breadcrumbs" id="breadcrumbs">
+		<script type="text/javascript">
+			try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+		</script>
+
+		<ul class="breadcrumb">
+			<li>
+				<i class="icon-home home-icon"></i>
+				<a href="#">Home</a>
+
+				<span class="divider">
+					<i class="icon-angle-right arrow-icon"></i>
+				</span>
+			</li>
+			<li class="active">Languages</li>
+		</ul><!-- .breadcrumb -->
+
+		<div class="nav-search" id="nav-search">
+			<form class="form-search">
+				<span class="input-icon">
+					<input type="text" placeholder="Search ..." class="input-small nav-search-input" id="nav-search-input" autocomplete="off" />
+					<i class="icon-search nav-search-icon"></i>
+				</span>
+			</form>
+		</div><!-- #nav-search -->
+	</div>
+	<div class="hr dotted"></div>
+	<div class="row-fluid">
+		<h1>Languages</h1>
+		{% include "AdminMedicalBundle::messages.html.twig" %}		
+		<!--<form action="{{ path('medical_settings_languages_delete') }}" method="post" onsubmit="return confirmation();">-->
+		<div class="main_btn">
+		<a onclick="openForm();" href="#" class="btn btn-mini btn-success add_btn">ADD</a>
+		<!--<input name="delete" type="submit" title="Delete" value="Delete" class="btn btn-danger" onsubmit="return confirmation();">-->
+		<!--<input type="submit" title="Delete" value="Delete" class="btn btn-mini btn-danger delete_btn">-->
+		
+		<div class="clr"></div>
+		</div>
+	
+	
+
+	
+	
+
+			<div class="div_language_form form-horizontal span6" style="display:none">
+				<form method="post" enctype="multipart/form-data" action="{{ path('medical_settings_languages_addedit') }}">
+				<div class="widget-box">
+					<div class="widget-header">
+						<h4>Add Languages</h4>
+					</div>
+					<div class="widget-body">
+					<div class="control-group">
+						<div class="space-12"></div>
+						<label class="control-label" for="inputEmail">Name :</label>
+						<div class="controls">
+						    <input type="text" name="name" class="name">
+						</div>
+					</div>
+					<div class="space-4"></div>
+
+					<div class="control-group">
+						<label class="control-label" for="inputEmail">Code :</label>
+						<div class="controls">
+						    <input type="text" name="code" class="code">
+						</div>
+					</div>
+					<div class="space-4"></div>
+
+					<div class="control-group">
+						<label class="control-label" for="inputEmail">Flag :</label>
+						<div class="controls">
+						   <input type="file" name="flagUpload" class="flagUpload">
+						</div>
+					</div>
+					<div class="space-4"></div>
+
+					<div class="control-group">
+						<label class="control-label" for="inputEmail">&nbsp;</label>
+						<div class="controls">
+							<input style="width:83px;height:42px;" class="btn btn-info" type="submit" name="Save" value="Save" tabindex="1" title="Save">
+							<a class="btn" href="#" onClick="divToClose();" title="Cancel" tabindex="2">Cancel</a>
+						</div>
+					</div>
+					<div class="space-4"></div>
+					</div>
+					</div>
+				</form>
+			</div>
+			<div class="clearfix"></div>
+					
+			<table class="table table-striped table-bordered table-hover" id="sample-table-1">
+				<thead>
+					<tr>
+						
+						<th>Name</th>
+						<th style="width:50px;">Flag</th>
+						<th style="width:30px;"></th>
+						<th style="width:30px;">Code</th>
+						<th style="width:30px;">Edit</th>
+						{% if app.user and app.user.userType == 'admin' %}
+						<th style="width:30px;">Delete</th>
+						{% endif %}
+						<!--
+						
+						<th>Delete</th>-->
+						
+					</tr>
+				</thead>
+
+				<tbody>
+					{% if asLanguagesData | length > 0 %}
+					{% for entity in asLanguagesData %}
+					<tr>
+						<td>
+							{{ entity.name }}
+							<!--<span class="editable" id="name" data-type="text"  data-pk="{{ entity.id }}">{{ entity.name }}</span>-->
+
+
+
+			
+							
+							
+							<div class="div_language_form edit_language_form form-horizontal" id="div_langauge_form_{{ entity.id}}" style="display:none">
+								<form method="post" enctype="multipart/form-data" action="{{ path('medical_settings_languages_addedit', {'id': entity.id }) }}">
+									<div class="widget-box">
+										<div class="widget-header">
+											<h4>Edit Languages</h4>
+										</div>
+										<div class="widget-body">
+										<div class="control-group">
+											<div class="space-12"></div>
+											<label class="control-label" for="inputEmail">Name :</label>
+											<div class="controls">
+												<input type="text" name="name" class="name" value="{{ entity.name }}">
+											</div>
+										</div>
+										<div class="clearfix"></div>
+							
+										<div class="control-group">
+											<div class="space-12"></div>
+											<label class="control-label" for="inputEmail">Code :</label>
+											<div class="controls">
+												<input type="text" name="code" class="code" value="{{ entity.code }}">
+											</div>
+										</div>
+										<div class="clearfix space-10"></div>
+							
+										<div class="control-group">
+											<label class="control-label" for="inputEmail">Flag :</label>
+											<div class="controls">
+												{% if asset_exists('uploads/flag/'~entity.flag) %}
+												<img src="{{ asset('uploads/flag/'~entity.flag) }}"  height="40px" width="70px"/>
+												<input type="file" name="flagUpload" class="flagUpload">
+												
+											{% else %}
+												<img src="{{ asset('client/images/no_image.png') }}" alt="No Image"  height="40px" width="70px"/>
+												<input type="file" name="flagUpload" class="flagUpload">
+												
+											{% endif %}
+											</div>
+										</div>
+
+										<div class="control-group">
+											<div class="space-12"></div>
+											<label class="control-label" for="inputEmail"></label>
+											<div class="controls">
+												<input style="width:83px;height:42px;" class="btn btn-info" type="submit" name="Save" value="Save" tabindex="1" title="Save">
+												<a class="btn" href="#" onClick="divClose({{ entity.id}});" title="Cancel" tabindex="1">Cancel</a>
+											</div>
+										</div>
+										<div class="clearfix space-10"></div>
+
+								</form>
+							</div>
+						</td>
+						
+						<td style="width:50px;">
+							{% if asset_exists('uploads/flag/'~entity.flag) %}
+								<img src="{{ asset('uploads/flag/'~entity.flag) }}"  height="10px" width="30px"/>	
+							{% else %}
+								<img src="{{ asset('client/images/no_image.png') }}" alt="No Image"  height="40px" width="70px"/>
+							{% endif %}
+						</td>
+
+						<td style="width:30px;">
+							<a target="_blank" href={{language_url}}?config=app&domain=messages&locale={{entity.code}}>Translate</a>
+						</td>
+						
+
+						<td style="width:30px;">
+							{{entity.code}}
+						</td>
+						{% if entity.id  != 1 %}
+						
+						<td style="width:30px;" class="edtRcd_{{ entity.id }}">
+							<div class="hidden-phone visible-desktop action-buttons">										
+								<a class="green" onClick="test({{ entity.id}});" >
+									<i class="icon-pencil bigger-130"></i>
+								</a>
+							</div>
+						</td>
+						
+						{% if app.user and app.user.userType == 'admin' %}
+						<td style="width:30px;">
+							<div class="hidden-phone visible-desktop action-buttons">
+								
+								<a class="red" id="{{ entity.id}}" onClick="return confirm('Are you sure you want to delete this Language?');">
+									<i class="icon-trash bigger-130"></i>
+								</a>
+							</div>
+						</td>
+						{% endif %}
+						{% endif %}
+					</tr>
+					<tr>
+						
+					</tr>
+					{% endfor %}
+					{% endif %}
+				</tbody>
+			</table>
+		<!--</form>-->
+	</div>
+	<div class="ace-settings-container" id="ace-settings-container">
+		<div class="btn btn-app btn-mini btn-warning ace-settings-btn" id="ace-settings-btn">
+			<i class="icon-cog bigger-150"></i>
+		</div>
+
+		<div class="ace-settings-box" id="ace-settings-box">
+			<div>
+				<div class="pull-left">
+					<select id="skin-colorpicker" class="hide">
+						<option data-skin="default" value="#438EB9">#438EB9</option>
+						<option data-skin="skin-1" value="#222A2D">#222A2D</option>
+						<option data-skin="skin-2" value="#C6487E">#C6487E</option>
+						<option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
+					</select>
+				</div>
+				<span>&nbsp; Choose Skin</span>
+			</div>
+
+			<div>
+				<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar" />
+				<label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
+			</div>
+
+			<div>
+				<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar" />
+				<label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
+			</div>
+
+			<div>
+				<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs" />
+				<label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
+			</div>
+
+			<div>
+				<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" />
+				<label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
+			</div>
+		</div>
+	</div><!-- /#ace-settings-container -->
+</div><!-- /.main-content -->
+<script type="text/javascript">
+	function test(snId){
+		
+		//alert('Hiiii');
+		$("#div_langauge_form_"+snId).show();
+	}
+	
+	function divClose(cnId){
+		
+		//alert('Hiiii');
+		$("#div_langauge_form_"+cnId).hide();
+		
+	}
+	function openForm(){
+		
+		//alert('Hiiii');
+		$(".div_language_form").show();
+	}			
+	function divToClose(){
+		$(".div_language_form").hide();
+	}
+		
+	jQuery(function($) {
+		
+		
+		$('.red').click(function () {
+			var delId = $(this).attr('id');
+			//alert(delId);
+			$.ajax({
+                type: "POST",
+                data: "id=" + delId,
+                url: 'deletelanguage',
+                success: function(data){
+					location.reload(true);
+				}
+			})
+		});
+		$('.btnUpload').click(function () {
+			//flagPath = $("input[type=file]").val();
+			//console.log(flagPath);
+			
+		});
+	
+		/*$('#sample-table-2').dataTable({
+		"aoColumns": [
+		  { "bSortable": false },
+		  { "bSortable": false },
+			{ "bSortable": false },
+			{ "bSortable": false },
+		  { "bSortable": false }
+		] });
+		
+		$('#sample-table-3').dataTable({
+		"aoColumns": [
+		  { "bSortable": false },
+		  { "bSortable": false },
+			{ "bSortable": false },
+			{ "bSortable": false },
+			{ "bSortable": false },
+		  { "bSortable": false }
+		] });*/
+		
+		$('table th input:checkbox').on('click' , function(){
+			var that = this;
+			$(this).closest('table').find('tr > td:first-child input:checkbox')
+			.each(function(){
+				this.checked = that.checked;
+				$(this).closest('tr').toggleClass('selected');
+			});
+				
+		});
+	
+	
+		$('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+		function tooltip_placement(context, source) {
+			var $source = $(source);
+			var $parent = $source.closest('table')
+			var off1 = $parent.offset();
+			var w1 = $parent.width();
+	
+			var off2 = $source.offset();
+			var w2 = $source.width();
+	
+			if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
+			return 'left';
+		}
+	})
+</script>
+{% endblock %}

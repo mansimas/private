@@ -1,0 +1,63 @@
+Admin\MedicalBundle\Entity\Insurance:
+    type: entity
+    table: insurance
+    gedmo:
+      translation:
+        entity: Admin\MedicalBundle\Entity\Insurancetranslation
+    repositoryClass: Admin\MedicalBundle\Entity\InsuranceRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        name:
+            type: string
+            nullable: true
+            gedmo:
+                - translatable
+        url:
+            type: string
+            length: '100'
+            nullable: true
+            gedmo:
+                - translatable
+        description:
+            type: string            
+            nullable: true
+            gedmo:
+                - translatable
+        photo:
+            type: text
+            length: null
+        created_at:
+            type: datetime
+            nullable: true
+        updated_at:
+            type: datetime		
+            nullable: true
+    manyToMany:
+      countries:
+        targetEntity: Country
+        inversedBy: insurances
+        joinTable:
+          name:  insurance_country
+          joinColumns:
+            insurance_id:
+              referencedColumnName: id
+              onDelete: CASCADE
+          inverseJoinColumns:
+            country_id:
+              referencedColumnName: id
+              onDelete: CASCADE
+      companies:
+        targetEntity: Company
+        mappedBy: insurances
+    oneToMany:
+        translations:
+            targetEntity: Insurancetranslation
+            mappedBy: object
+            cascade: ["all"]        
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAtValue ]
+        preUpdate: [ setUpdatedAtValue ]

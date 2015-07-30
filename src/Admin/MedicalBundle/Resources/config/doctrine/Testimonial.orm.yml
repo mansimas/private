@@ -1,0 +1,25 @@
+Admin\MedicalBundle\Entity\Testimonial:
+    type: entity
+    table: testimonial
+    gedmo:
+      translation:        
+        entity: Admin\MedicalBundle\Entity\Testimonialtranslation
+    repositoryClass: Admin\MedicalBundle\Entity\TestimonialRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO        
+        url:
+            type: text
+            length: null
+            nullable: true
+            gedmo:
+                - translatable
+    oneToMany:
+        translations:
+            targetEntity: Testimonialtranslation
+            mappedBy: object
+            cascade: ["all"]
+    lifecycleCallbacks: {  }

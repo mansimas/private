@@ -1,0 +1,50 @@
+Admin\MedicalBundle\Entity\Organization:
+    type: entity
+    table: null
+    repositoryClass: Medical\HospitalBundle\Entity\OrganizationRepository
+    medical:
+      tree:
+        type: nested
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        title:
+            type: string
+            length: '100'
+        lft:
+            type: integer
+            medical:
+             - hospitalLeft
+        rgt:
+            type: integer
+            medical:
+             - hospitalRight
+        root:
+            type: integer
+            nullable: true
+            medical:
+             - hospitalRoot
+        lvl:
+            type: integer
+            medical:
+             - hospitalLevel
+    manyToOne:
+      parent:
+        targetEntity: Organization
+        inversedBy: children
+        joinColumn:
+          name: parent_id
+          referencedColumnName: id
+          onDelete: CASCADE
+        medical:
+          - hospitalParent
+    oneToMany:
+      children:
+        targetEntity: Organization
+        mappedBy: parent
+        orderBy:
+          lft: ASC
+    lifecycleCallbacks: {  }

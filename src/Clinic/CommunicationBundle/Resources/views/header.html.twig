@@ -1,0 +1,20 @@
+{% set ssClassName = '' %}
+{% if app.user is not defined %}
+{% set ssClassName = "login_page"%}
+{% endif %}
+<header class="row clinicheader {{ ssClassName }}">
+    <div class="col-md-3 logo">
+      <h1><a href="{{ path('clinic_communication_homepage') }}">{{'Medicininio turizmo informacijos'}}</a></h1>
+    </div>
+	{% if app.user.name is defined and app.user.name != ''%}
+	<div class="col-md-8 user_login">
+		  <h2><b>{{ app.user.name }}</b>
+		  </h2> | <a href="{{ path('clinic_medical_changepassword')}}" title="Keisti slaptažodį" tabindex="0">{{'Keisti slaptažodį'}}</a> |
+		  <a href="{{ path('clinic_medical_logout')}}" title="Atsijungti" tabindex="1">{{'Atsijungti'}}</a>
+	</div>
+	{% endif %}
+	
+	<!-- <div class="col-md-3 language">
+		
+    </div> -->
+</header>

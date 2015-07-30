@@ -1,0 +1,82 @@
+<div class="row uniqueid">{{'Unique ID'|trans}}&nbsp;&nbsp;{{ oQuoteDetail.UniqueId }}</div>
+<div class="row">
+{% if asCommunicationDetail|length > 0 %}	
+		{% for asComData in asCommunicationDetail %}
+		{% if loop.first and asComData[0]['user_type'] == 'user' %}
+			<div class="boxs whitebox">
+				<h5>{{ oQuoteDetail.firstname~" "~oQuoteDetail.lastname}} <span>{{ asComData[0]['created_at']|date('F d, Y,  H:i') }}</span></h5>
+				<p>--- <a href="javascript:void(0)" onClick="hideshowreplyformdiv({{asComData[0]['id'] }})">{{ 'Quote'|trans }}</a> {{'form was sen by'|trans}} <strong>{{ oQuoteDetail.firstname~" "~oQuoteDetail.lastname}}</strong> to {{ asComData['name'] }} {{'clinic'|trans}} ----</p>
+				<div id="add_offer_div_{{ asComData[0]['id']}}" style="display:none">
+					<div class="row vertical_form">
+						{{ oQuoteDetail.healthProblem }}
+					</div>
+				</div>
+			</div>
+		{% elseif asComData[0]['user_type'] == 'user' %}
+			<div class="row">
+				<div class="boxs whitebox">
+					<h5>{{ oQuoteDetail.firstname~" "~oQuoteDetail.lastname}}<span>{{ asComData[0]['created_at']|date('F d, Y,  H:i') }}</span></h5>
+					<p>{{ asComData[0]['reply_message_content'] }}</p>
+				</div>
+			</div>
+		{# elseif loop.last and asComData[0]['user_type'] == 'company' #}
+		{%elseif asComData[0]['user_type'] == 'company' %}
+		<div class="row">
+			<div class="boxs graybox">
+				<h5>{{ asComData['name'] }} Clinic <span>{{ asComData[0]['created_at']|date('F d, Y,  H:i') }}</span>
+				</h5>
+							
+				{% if asComData[0]['company_offered_unique'] == 'Yes' %}
+				<p><span class="offer_ends">{{'Offer ends on'|trans}} {{ asComData[0]['offer_end_date']|date('Y m d') }}</span></p>
+				<div class="showall_wrap" id="add_offer_show_link_{{ asComData[0]['id'] }}">
+				<a href="javascript:void(0)" onClick="hideshowreplyformdiv('{{ asComData[0]['id'] }}')">{{ 'Show offer'|trans}}</a>	
+				<a class="btn btn-default bluebtn input-sm" href="#">
+				<i>--- {{'Clinic offered'|trans}} {{ asComData[0]['service_description'] }} {{'for'|trans}} {{ asComData[0]['service_price'] }} {{ 'Eur.'|trans }} ---
+				</i>
+				</a>
+				</div>
+				
+				{% endif %}
+				
+				<!--<form action="#" method="post" class="form-horizontal"> -->
+					<div id="add_offer_div_{{ asComData[0]['id'] }}" style="display:none">
+						{% set ssString = asComData[0]['id'] %}
+						{% include "ClientMedicalBundle:Communication:offerform.html.twig" %}
+					</div>
+				<!--</form>-->
+				<div id="add_offer_message_content_{{ asComData[0]['id'] }}"><p>{{ asComData[0]['reply_message_content'] }}</p></div>
+			</div>
+		</div>
+		{% else %}
+			<div class="row">
+				<div class="boxs graybox">
+					<h5>{{ asComData['name'] }} {{'Clinic'|trans}} <span>{{ asComData[0]['created_at']|date('F d, Y,  H:i') }}</span></h5>
+					<p>{{ asComData[0]['reply_message_content'] }}</p>
+				</div>
+			</div>
+		{% endif %}
+		{# {{ asComData.reply_message_content }} #}
+		
+		{# if loop.last and asComData[0]['user_type'] == 'company' #}	
+				
+		{# endif #}
+		{% endfor %}
+		
+		<div class="row">
+			<div class="boxs whitebox">
+				<h5>{{ oQuoteDetail.firstname~" "~oQuoteDetail.lastname}}<span>{{ "now"|date('F d, Y,  H:i') }}</span></h5>				
+				<form action="{{ path('client_reply_communication', {'quote_id': oQuoteDetail.id, 'company_id':asCommunicationDetail[0]['id']}) }}" method="post" class="form-horizontal">						
+					<div class="row vertical_form">
+						<label><span>{{'Message for clinic'|trans}}</span></label>
+						{{ form_widget(form.reply_message_content) }}
+					</div>					
+				
+					<div id="add_offer_reply_send_div">
+						<input class="btn btn-default bluebtn input-sm" type="submit" value="{{ 'Reply'|trans }}" name="reply">
+					</div>
+				</form>
+			</div>
+		</div>
+		
+{% endif %}
+</div>

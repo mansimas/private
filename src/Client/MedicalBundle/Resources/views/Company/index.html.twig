@@ -1,0 +1,107 @@
+{% extends 'ClientMedicalBundle::layout.html.twig' %}
+{% block title %}{{'Medical Tourism Information'|trans}}{% endblock %}
+{% block metakeyword %} {% include 'ClientMedicalBundle:Default:websitemetasettings.html.twig'%} {% endblock %}
+{% block body %}
+
+<!--<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>-->
+ <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
+    <script type="text/javascript">
+        var LHCChatOptions = {};
+        LHCChatOptions.opt = {widget_height:340,widget_width:300,popup_height:520,popup_width:500,domain:'medical.lt'};
+        (function() {
+            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+            var refferer = (document.referrer) ? encodeURIComponent(document.referrer.substr(document.referrer.indexOf('://')+1)) : '';
+            var location  = (document.location) ? encodeURIComponent(window.location.href.substring(window.location.protocol.length)) : '';
+            po.src = '//medical.lt/lhc/index.php/chat/getstatus/(click)/internal/(position)/bottom_right/(ma)/br/(check_operator_messages)/true/(top)/350/(units)/pixels/(leaveamessage)/true?r='+refferer+'&l='+location;
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+        })();
+    </script>
+<script>
+function removefilter(ssStr, ssPage, ssPerPage)
+{
+	/*{% set catId = ((app.request.get('category_ids') != '') ? app.request.get('category_ids') : '') %}*/
+	$("#"+ssStr).attr("checked", false);
+	$("#uniform-"+ssStr).find("span").removeClass();
+	/*quicksearch("{{ path('client_medical_company', {'category_ids': catId})}}", ssPage, '{{ ssUpdateDiv }}', ssPerPage);*/
+	quicksearch("{{ path('client_medical_company')}}", ssPage, '{{ ssUpdateDiv }}', ssPerPage);
+}
+
+$(document).ready(function () 
+{	
+	{% if app.request.get('category_ids') != '' %}
+		var ssCatefoyId = {{ app.request.get('category_ids') }};
+		$("#li_category_"+ssCatefoyId).addClass('active');
+	{% endif %}
+	
+	/* this if condition for when user redirect from home page select category*/
+	{% if app.request.get('category_ids') != '' %}	
+		{% set snCategoryIds = app.request.get('category_ids') %}
+		$("#uniform-chk_service_{{ snCategoryIds }}").find("span").addClass("checked");	
+		$("#chk_service_{{ snCategoryIds }}").attr("checked", true);	
+		$("#refine_filter_boxes").append('<span class="remove_link">'+$("#service_{{ snCategoryIds }}").val()+'<button onClick="removefilter(\'chk_service_{{ snCategoryIds }}\',1,10)" type="button" class="close" aria-hidden="true">&times;</button></span>');
+	{% endif %}	
+	/* this if condition for when user redirect from news detail page with show more button*/	
+	{% if snNewsCategoryIds != '' %}
+		var chkcategory = "{{ snNewsCategoryIds }}";
+		var asData = chkcategory.split(',');
+		$.each(asData, function( index, value ) {				
+			$("#uniform-chk_service_"+value).find("span").addClass("checked");		
+			$("#chk_service_"+value).attr("checked", true);			
+			});
+		quicksearch("{{ path('client_medical_company')}}", '{{ ssPage }}', '{{ ssUpdateDiv }}', '{{ssPerPage}}');
+	{% endif %}
+});	
+</script>
+
+{% include 'ClientMedicalBundle:Company:quicksearch.html.twig' %}
+<div class="row show-grid companylistpage">
+  <div class="col-md-6 companylist_container col-md-push-3">
+	<div class="form-group sortby">
+      <div class="row" id="refine_filter_boxes">
+		
+      </div>
+      <div class="row sortby_label_input">
+        <label for="inputSuccess3" class="control-label col-sm-2">{{ 'Sort by'|trans }} </label>
+        <div class="col-sm-5">			
+          {% set ssBestSelected = ((ssRatingPopular == 'best') ? 'selected' : '' ) %}
+			{% set ssWorstSelected = ((ssRatingPopular == 'worst') ? 'selected' : '' ) %}
+			{% set ssMostSelected = ((ssRatingPopular == 'most') ? 'selected' : '' ) %}
+			{% set ssLessSelected = ((ssRatingPopular == 'less') ? 'selected' : '' ) %}
+          <select id="rating_popular_id" class="form-control input-sm" onChange="quicksearch('{{ path('client_medical_company')}}', '{{ ssPage}}', '{{ ssUpdateDiv }}','{{ ssPerPage}}')">            
+			<option value="best" {{ ssBestSelected }}>{{'Best rating first'|trans}}</option>
+            <option value="worst" {{ ssWorstSelected }}>{{'Worst rating first'|trans}}</option>
+            <option value="most" {{ ssMostSelected }} >{{'Most popular'|trans}}</option>
+            <option value="less" {{ ssLessSelected }}>{{'Less popular'|trans}}</option>
+          </select>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  <div id="company_listing_loader" style="display:none"></div>
+  <div id="company_listing_div">
+	{% include 'ClientMedicalBundle:Company:companylistingnew.html.twig' %}	
+  </div>
+<div class="clearfix"></div>
+  </div>
+  <div class="col-md-3 refine_search col-md-pull-6">   
+    {{ render(controller('ClientMedicalBundle:Company:refinesearchlist', {'ssPage': ssPage, 'ssPerPage': ssPerPage})) }}
+  </div>
+  
+  <div class="col-md-3 right_part">
+	{% if locale != 'lt' %}
+		{% set ssHeight = 320 %}
+	{% else %}
+		{% set ssHeight = 270 %}
+	{% endif %}
+    {% if locale != 'lt' %}
+        <iframe id="booking_iframe" src="http://www.booking.com/general.html?aid=388156&tmpl=searchbox&calendar=1&lang={{locale}}&width=210" height="{{ ssHeight }}" frameborder="0" scrolling="no" name="sbox_iframe" style="padding-bottom: 10px;"></iframe>
+    {% endif %}
+	<div class="places_to_visit" id="testbannersucc">	
+		{{ render(controller('ClientMedicalBundle:News:banners',{'ssPage':'company_listing','snCategoryId':snCategoryIds, 'lang':locale})) }}
+	</div>
+	<!--<div class="blank_div2"></div>-->
+  </div>  
+  <div class="clearfix"></div>
+</div>
+{% endblock %}

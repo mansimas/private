@@ -1,0 +1,32 @@
+{% extends 'ClientMedicalBundle::layout.html.twig' %}
+
+{% block title %}{{'Medical Tourism Information'|trans}}{% endblock %}
+{% block metakeyword %}
+{% include 'ClientMedicalBundle:Default:websitemetasettings.html.twig'%}
+{% endblock %}
+{% block body %}
+	{% include 'ClientMedicalBundle:Company:quicksearch.html.twig' %}
+	
+    <div class="row special_offers">
+        <div class="col-md-6">
+            <h4 class="fourth_heading">{{'Testimonials'|trans}}</h4>	  
+        </div>  
+    </div>
+	{% if asTestimonialData|length > 0%}	  
+	<div class="row specialOffers_warp">
+	{% for asData in asTestimonialData %}	
+        <div class="col-md-4 col-xs-4">
+            <div class="box">
+                <div class="row_1">
+                  <div class="main_title">					
+				  </div>
+					<div class="img_thubm_wrap">
+						<iframe width="220" height="177" src="{{ asData['url'] }}" frameborder="0" allowfullscreen></iframe>						
+					</div>
+				</div>
+			</div>    
+		</div>
+		{% endfor %}
+	</div>
+	{% endif %}
+{% endblock %}

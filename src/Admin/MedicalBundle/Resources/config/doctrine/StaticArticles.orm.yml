@@ -1,0 +1,49 @@
+Admin\MedicalBundle\Entity\StaticArticles:
+    type: entity
+    table: staticarticles
+    gedmo:
+      translation:        
+        entity: Admin\MedicalBundle\Entity\Staticarticletranslation
+    repositoryClass: Admin\MedicalBundle\Entity\StaticArticlesRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        url:
+            type: string
+            length: '100'
+            nullable: true
+            gedmo:
+                - translatable
+        title:
+            type: string
+            length: null
+            gedmo:
+                - translatable
+        description:
+            type: text
+            length: null
+            gedmo:
+                - translatable
+        status:
+            type: string
+            length: null
+        article_type:
+            type: string
+            nullable: true
+        created_at:
+            type: datetime
+            nullable: true
+        updated_at:
+            type: datetime		
+            nullable: true
+    oneToMany:
+        translations:
+            targetEntity: Staticarticletranslation
+            mappedBy: object
+            cascade: ["all"]			
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAtValue ]
+        preUpdate: [ setUpdatedAtValue ]

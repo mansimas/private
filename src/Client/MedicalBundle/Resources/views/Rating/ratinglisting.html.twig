@@ -1,0 +1,19 @@
+<div id="loader" style="display:none"></div>
+<div class="row clearfix" id="rating_listing">
+	{% if pagination.getTotalItemCount  > 0%}	
+		{% for asData in pagination %}
+	<div class="rating_companys">
+		<h3>{{ asData.name~","~asData.country_name}} 
+			<span>{{ asData.rating_date|date('d-m-Y') }} </span>
+			<div class="ratting_stars clearfix">				
+				{% set data = '%.2f' | format(asData.total_avg) %}
+				{% include 'ClientMedicalBundle:Default:ratingstar.html.twig' %}
+				<span class="howmanyrates">{{ "("~data~")" }}</span>
+			</div>
+		</h3>
+		<p>{{ asData.comments }}</p>
+	</div>            
+	{% endfor %}
+	{{ knp_pagination_render(pagination) }}
+	{% endif %}
+</div>

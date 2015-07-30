@@ -1,0 +1,88 @@
+Admin\MedicalBundle\Entity\UserCompanyCommunication:
+    type: entity
+    table: user_company_communication
+    repositoryClass: Admin\MedicalBundle\Entity\UserCompanyCommunicationRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        user_type:
+            type: string
+        reply_message_content:
+            type: text
+            nullable: true
+        service_description:
+            type: text
+            nullable: true
+        brief_service_description:
+            type: text
+            nullable: true
+        responsible_person_doctor:
+            type: text
+            nullable: true
+        reservation_date:
+            type: datetime
+            nullable: true
+        reservation_time:
+            type: time
+            nullable: true
+        service_price:
+            type: integer
+            nullable: true
+        offer_end_date:
+            type: datetime
+            nullable: true
+        company_offered:
+            type: string
+            length: 3
+            nullable: true
+        checked_by_client:
+            type: string
+            length: 3
+            nullable: true
+        reply_type:
+            type: string
+            length: 4
+            nullable: true
+        edited_by_admin:
+            type: string
+            length: 3
+            nullable: true
+        company_offered_unique:
+            type: string
+            length: 3
+            nullable: true
+        twenty_four_no_reply:
+            type: string
+            length: 3
+            nullable: true
+        reservation_type:
+            type: string
+            length: 50
+            nullable: true
+        created_at:
+            type: datetime
+            nullable: true
+        updated_at:
+            type: datetime		
+            nullable: true
+    manyToOne:
+      company:
+        targetEntity: Company
+        inversedBy: usercompanycommunication
+        joinColumn:
+          name: company_id
+          referencedColumnName: id
+          onDelete: CASCADE
+      userquotedetails:
+        targetEntity: UserQuoteDetail
+        inversedBy: usercompanycommunication
+        joinColumn:
+          name: user_quote_detail_id
+          referencedColumnName: id
+          onDelete: CASCADE
+    lifecycleCallbacks:
+        prePersist: [ setCreatedAtValue ]
+        preUpdate: [ setUpdatedAtValue ]

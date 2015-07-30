@@ -1,0 +1,107 @@
+<h4 class="fourth_heading">{{'Refine search'|trans}}</h4>
+    <form class="refine_search_Services">
+      <h2>{{'Services'|trans}}</h2>
+	  {% if asCategoryData|length > 0%}
+	  {% for asData in asCategoryData %}
+          {% if asData.id < 9 %}
+              <div class="checkbox">
+                <label>
+                    <input id="chk_service_{{ asData.id }}" type="checkbox" name="category" value="{{ asData.id }}" onClick="quicksearch('{{ path('client_medical_company_search')}}', '{{ ssPage}}', '{{ ssUpdateDiv }}',{{ ssPerPage }})">{{ asData.name }}
+                </label>
+                <input type="hidden" id="service_{{ asData.id }}" name="hidden_category" value="{{ asData.name }}">
+              </div>
+          {% endif %}
+	  {% endfor %}
+	  {% else %}
+		{{'No record'|trans}}	
+	  {% endif %}
+	  <!--<input type="button" value=">>" class="btn btn-default btn-sm" onClick="quicksearch('{{ path('client_medical_company_search')}}', '{{ ssPage}}', '{{ ssUpdateDiv }}')" />-->
+      <div class="clearfix"></div>
+    </form>
+    <form class="refine_search_Services">
+      <h2>{{'City'|trans}}</h2>
+	  {% if asCompanyCityData|length > 0%}
+      {% for asData in asCompanyCityData %}
+	  <div class="checkbox">
+        <label>
+        <input type="checkbox" id="chk_city_{{ asData.id }}" name="city" value="{{ asData.id~"~~"~asData.name }}" 
+		onClick="quicksearch('{{ path('client_medical_company_search')}}','{{ ssPage }}', '{{ ssUpdateDiv }}', {{ ssPerPage }})">{{ asData.name }}</label>
+      </div>
+	  {% endfor %}
+	  {% else %}
+	  No record
+	  {% endif %}
+      <!--<button type="button" value=">>" class="btn btn-default btn-sm" onClick="quicksearch('{{ path('client_medical_company_search')}}','{{ ssPage }}', '{{ ssUpdateDiv }}')">>></button>-->
+      <div class="clearfix"></div>
+    </form>
+    <form class="refine_search_Services">
+      <h2>{{'Languages'|trans}}</h2>
+	   {% for i,lang in asLanguageData%}	   
+	   <div class="checkbox">
+			<label><input id="chk_language_{{ lang.id }}" type="checkbox" name="language" value="{{ lang.id }}" onClick="quicksearch('{{ path('client_medical_company_search')}}','{{ ssPage }}', '{{ ssUpdateDiv }}', {{ ssPerPage }})" >{{ lang.name }}</label>
+			<input type="hidden" id="language_{{ lang.id }}" name="hidden_language" value="{{ lang.name }}">
+		</div>
+	   {% endfor %}	  
+      <!--<button type="button" value=">>" class="btn btn-default btn-sm" onClick="quicksearch('{{ path('client_medical_company_search')}}','{{ ssPage }}', '{{ ssUpdateDiv }}')">>></button>-->
+      <div class="clearfix"></div>
+    </form>
+    <form class="refine_search_Services">
+      <h2>{{'Clinic ratings'|trans}}</h2>
+	  {% for k,rate in rating_range%}
+		<div class="checkbox">
+			<label><input id="chk_rating_{{ k }}" type="checkbox" name="rating" value="{{ k }}" onClick="quicksearch('{{ path('client_medical_company_search')}}','{{ ssPage }}', '{{ ssUpdateDiv }}', {{ ssPerPage }})" >{{ rate }}</label>
+			<input type="hidden" id="rating_{{ k }}" name="hidden_rating" value="{{ rate }}">
+		</div>
+	   {% endfor %}
+	  
+	   	<!--<p><input name="rating-digit" type="text" id="rating-digit" value="" style="border:0; color:#f6931f; font-weight:bold;"></p>
+		<div id="rating-range"></div>
+		<button type="button" value=">>" class="btn btn-default btn-sm" onClick="quicksearch('{{ path('client_medical_company_search')}}','{{ ssPage }}', '{{ ssUpdateDiv }}')">>></button>-->
+      <div class="clearfix"></div>
+    </form>
+    <form class="refine_search_Services">
+      <h2>{{'Payment options'|trans}}</h2>	  
+	  {% for i,payment in asPaymentOptionData%}	   
+	   <div class="checkbox">
+			<label><input id="chk_payment_{{ payment.id }}" type="checkbox" name="paymentoption" value="{{ payment.id }}" onClick="quicksearch('{{ path('client_medical_company_search')}}','{{ ssPage }}', '{{ ssUpdateDiv }}', {{ ssPerPage }})" >{{ payment.title }}</label>
+			<input type="hidden" id="payment_{{ payment.id }}" name="hidden_language" value="{{ payment.title }}">
+		</div>
+	  {% endfor %}
+      <!--<button type="button" value=">>" class="btn btn-default btn-sm" onClick="quicksearch('{{ path('client_medical_company_search')}}','{{ ssPage }}', '{{ ssUpdateDiv }}')">>></button>-->
+      <div class="clearfix"></div>
+    </form>
+	
+    <form class="refine_search_Services">
+      <h2>{{'Insurance companies'|trans}}</h2>
+	  {% if asLatestFiveInsuranceData|length > 0 %}
+	  
+	  {% for asInsuranceData,val in asLatestFiveInsuranceData%}
+			<div class="checkbox">
+				<label><input type="checkbox" id="chk_insurance_{{ asInsuranceData }}" name="chk_insurance" value="{{ asInsuranceData }}" 
+				onClick="quicksearch('{{ path('client_medical_company_search')}}','{{ ssPage }}', '{{ ssUpdateDiv }}', {{ ssPerPage }})">{{ val }}</label>
+				<input type="hidden" id="insurance_{{ asInsuranceData }}" name="hidden_insurance" value="{{ val }}">
+			</div>
+	  {% endfor %}
+	  
+	  {% endif %}
+      
+     <div class="insurance_company_form">
+        <label for="help-block">{{'Find insurance company'|trans}}</label>		
+		{{ form_widget(form.insurances, {'attr': {'onChange': "quicksearch('"~path('client_medical_company_search')~"',"~ssPage~", '"~ssUpdateDiv~"', "~ssPerPage~")" }}) }}
+        <!--<input type="text" placeholder="erg" id="exampleInputEmail1" class="form-control input-sm">
+        <span class="remove_link">
+        <button type="button" class="close" aria-hidden="true">&times;</button>
+        Germany Insurance</span>-->
+	</div>	
+	<!-- <button type="button" value=">>" class="btn btn-default btn-sm" onClick="quicksearch('{{ path('client_medical_company_search')}}','{{ ssPage }}','{{ ssUpdateDiv }}')">>></button> -->
+      <div class="clearfix"></div>
+    </form>
+	<script type="text/javascript">
+	$(".chosen-select").chosen(); 
+	$('#chosen-multiple-style').on('click', function(e){
+		var target = $(e.target);
+		var which = parseInt($.trim(target.text()));
+		if(which == 2) $('#admin_medicalbundle_news_companies').addClass('tag-input-style');
+		 else $('#admin_medicalbundle_news_companies').removeClass('tag-input-style');
+	});
+	</script>

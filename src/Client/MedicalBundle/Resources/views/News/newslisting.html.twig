@@ -1,0 +1,44 @@
+<div class="col-md-8 col-xs-8 companylist_container bannerheight">
+      <h4 class="fourth_heading">{{'LITHUANIA MEDICINE NEWS'|trans}}</h4>
+<div id="loader" style="display:none"></div>
+<div id="news_div">
+  {% if pagination.getTotalItemCount > 0%}	  
+  {% for asData in pagination %}
+  {% set asNewsName = em.getRepository("AdminMedicalBundle:Company").Slug(asData['title']) %}
+  <div class="news_row row">
+	<div class="col-md-2 col-xs-2 offer_img">
+		{% if asset_exists('uploads/news/'~asData.photo) %}
+			<a href="{{ path('client_medical_news_detail',  { 'id': asData.id, 'name': asNewsName  }) }}"><img src="{{ asset('uploads/news/'~asData.photo) }}"  width="136px" /></a>
+		{% else %}
+			<a href="{{ path('client_medical_news_detail',  { 'id': asData.id, 'name': asNewsName  }) }}"><img src="{{ asset('client/images/no_image.png') }}" alt="No Image"  width="136px"/></a>
+		{% endif %}			
+	</div>
+	<div class="col-md-10 col-xs-10">
+	           
+	  <div class="row offer_detils">
+	   <h3><a href="{{ path('client_medical_news_detail',  { 'id': asData.id, 'name': asNewsName  }) }}">{{ asData['title']|raw }}</a></h3>
+		<span class="offer_date">{{ asData['news_date']|date('d m Y') }}</span>			
+
+		{% if asData['description']|length > 115 %}
+			{% set data = asData['description']|striptags %}
+			<p>{{ data|slice(1,115)}}
+			<a href="{{ path('client_medical_news_detail', {'id': asData['id'], 'name': asNewsName }) }}" class="more_info">{{'Read more...'|trans}}</a></p>
+
+		{% else %}
+			<p>{{ asData['description']|striptags }}</p>
+		{% endif %}
+	  </div>
+</div>	  
+	</div>
+  {% endfor %}
+  {{ knp_pagination_render(pagination) }} 
+  </div>
+  {% endif %} 
+</div>	
+{% set route = path(ssRoute) %}
+<div class="col-md-3 right_part">
+	<div class="news_banner_wrapper">
+		{{ render(controller('ClientMedicalBundle:News:banners',{'ssPage':'news'})) }}
+	</div>	
+	{{ render(controller('ClientMedicalBundle:Company:specialoffers',{'ssRoute':route})) }}
+</div>

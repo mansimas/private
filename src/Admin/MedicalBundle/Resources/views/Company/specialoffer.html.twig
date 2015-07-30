@@ -1,0 +1,235 @@
+{% set snSpecialId = app.request.get('special_id') != '' ? app.request.get('special_id'): '' %}
+<div class="page-content">
+	<div class="page-header position-relative">
+		<h1>
+			Special offers
+			<small>
+				<i class="icon-double-angle-right"></i>
+				addedit
+			</small>
+		</h1>
+	</div><!-- /.page-header -->
+
+	<div class="row-fluid">
+		<div class="span12">
+			<!-- PAGE CONTENT BEGINS -->
+			<form class="form-horizontal" action="{{ path('medical_company_special_offer', {'id': snConpanyId ,'special_id': snSpecialId }) }}" method="post" enctype="multipart/form-data">		   
+			<!--<form class="form-horizontal">-->
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ "UniqueId" }}</label>
+					<div class="controls">					
+						{% if ssUniqueId == '' %}
+							{{ "-" }}
+						{% else %}
+							{{ ssUniqueId }}
+						{% endif %}											
+					</div>
+				</div>
+				{# {{ form_widget(objSpecialOffers.unique_id, {'attr': {'value': ssUniqueId }}) }} #}
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(objSpecialOffers.status) }}</label>
+					<div class="controls">	
+						{{ form_widget(objSpecialOffers.status) }}
+					</div>
+				</div>
+				
+					<label class="control-label" for="form-field-1">{{ "Offer period" }}</label>
+					<div class="controls">	
+						<div class="control-group">
+							<div class="row-fluid input-append">
+								{{ form_widget(objSpecialOffers.start_date) }}
+								<span class="add-on"><i class="icon-calendar"></i></span>
+								<div class="input-append bootstrap-timepicker">		
+								{{ form_widget(objSpecialOffers.start_time) }}
+									<span class="add-on">
+										<i class="icon-time"></i>
+									</span>
+								</div>
+							<div class="dashed">--</div>
+							{{ form_widget(objSpecialOffers.end_date) }}
+							<span class="add-on"><i class="icon-calendar"></i></span>
+							<div class="input-append bootstrap-timepicker">
+								{{ form_widget(objSpecialOffers.end_time) }}
+									<span class="add-on">
+										<i class="icon-time"></i>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<label class="control-label" for="form-field-1">{{ "Coupon valid date" }}</label>
+					<div class="controls">	
+						<div class="control-group">
+							<div class="row-fluid input-append">
+								{{ form_widget(objSpecialOffers.coupon_valid_date) }}
+								<span class="add-on"><i class="icon-calendar"></i></span>
+							</div>
+						</div>
+					</div>
+					
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(objSpecialOffers.regular_price) }}</label>
+					<div class="controls">
+						{{ form_widget(objSpecialOffers.regular_price) }}	
+						<span class="help-inline">Eur. / 345 Lt</span>
+					</div>
+				</div>
+				<div class="control-group horizontal_lines">
+					<label class="control-label" for="form-field-1">{{ form_label(objSpecialOffers.sales_price) }}</label>
+					<div class="controls">
+						{{ form_widget(objSpecialOffers.sales_price) }}	
+						<span class="help-inline">Eur. / 345 Lt</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(objSpecialOffers.responsible_person) }}</label>
+					<div class="controls">	
+						{{ form_widget(objSpecialOffers.responsible_person) }}																
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(objSpecialOffers.contract_num) }}</label>
+					<div class="controls">	
+						{{ form_widget(objSpecialOffers.contract_num) }}																
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ "Comissions" }}</label>
+					<div class="controls">	
+						{{ form_widget(objSpecialOffers.client_fee) }}
+						<span class="help-inline">Eur. from sale price</span> <b>OR</b>					
+						{{ form_widget(objSpecialOffers.client_fee_percentage) }} %
+					</div>
+				</div>				
+				<div class="control-group horizontal_lines">
+					<label class="control-label" for="form-field-1">{{ form_label(objSpecialOffers.other_info) }}</label>
+					<div class="controls">	
+						{{ form_widget(objSpecialOffers.other_info) }}																
+					</div>
+				</div>
+				<div class="control-group horizontal_lines">
+					<label class="control-label" for="form-field-1">Total sales</label>
+					<div class="controls">	
+						{{ snTotalSalesCountId }}
+					</div>
+				</div>							
+				<div class="control-group">
+					<label class="control-label" for="form-field-1">{{ form_label(objSpecialOffers.translations) }}</label>
+					<div class="controls">	
+						{{ form_widget(objSpecialOffers.translations) }}																
+					</div>
+				</div>
+				<input type="hidden" id="special_image_count" name="special_image_count" value="0">	
+				<div id="medical_special_save_button" class="form-actions addedit_company">															
+					<input style="width:83px;height:42px;" class="btn btn-info" type="submit" name="Save" value="Save" tabindex="1" title="Save" onClick="return checkspecialfee()">
+					&nbsp; &nbsp; &nbsp;
+					<div class="btn">													
+							<a href="{{ path('medical_company')}}" tabindex="1">Cancel</a>
+					</div>
+				</div>	
+			</form>		
+			<div class="imageupload_wraper add_edit_special">				
+				<form action="{{ path("medical_company_specialoffer_imageupload") }}" class="dropzone" id="my-special-awesome-dropzone">
+				  <div class="fallback">
+					<input name="file" type="file" multiple />
+				  </div>
+				<div class="clr"></div>
+				</form>
+			</div>			
+		</div><!-- /.span -->
+	</div><!-- /.row-fluid -->
+</div><!-- /.page-content -->
+
+<div class="row-fluid">
+	<div class="span12">
+		<form action="{{ path('medical_company_special_offer_delete', {'id': snConpanyId}) }}" method="post" onsubmit="return confirmation();">
+			<div class="main_btn">					
+			<input type="submit" title="Delete" value="Delete" class="btn btn-mini btn-danger delete_btn">
+			<div class="clr"></div>
+			</div>
+		<table class="table table-striped table-bordered table-hover" id="sample-table-1">
+			<thead>
+				<tr>
+					<th class="center">
+						<label>
+							<input type="checkbox" class="ace">
+							<span class="lbl"></span>
+						</label>
+					</th>
+					<th>Title</th>	
+					<th>Uniqueid</th>	
+					<th>Status</th>
+					<th>Regular price</th>
+					<th>Sales price</th>
+					<th>Period</th>				
+				</tr>
+			</thead>
+
+			<tbody>
+				{% if asSpecialOffersData | length > 0%}
+				{% for asData in asSpecialOffersData %}
+				<tr>
+					<td class="center">
+						<label>
+							<input type="checkbox" class="ace" value="{{asData.id }}" name="chk_delete[]">
+							<span class="lbl"></span>
+						</label>
+					</td>
+					<td>{{ asData.title }}</td>
+					<td>{{ asData.unique_id }}</td>
+					<td>{{ asData.status }}</td>
+					<td>{{ asData.regular_price }}</td>
+					<td>{{ asData.sales_price }}</td>
+					<td>{{ asData.start_date|date('Y m d')~"-"~asData.end_date|date('Y m d') }}</td>
+				</tr>
+			{% endfor %}
+			{% else %}
+			<tr>
+				<td colspan=7 align="center">No record found</td>
+			</tr>
+			{% endif %}
+			</tbody>
+		</table>
+		</form>
+	</div><!-- /span -->
+</div>
+<script type="text/javascript">	
+function checkspecialfee()
+{
+	if($("#admin_medicalbundle_specialoffers_client_fee").val() == '' && $("#admin_medicalbundle_specialoffers_client_fee_percentage").val() == '')
+	{
+		alert("Please enter client fee or percentage");
+		return false;
+	}
+	if($("#admin_medicalbundle_specialoffers_client_fee").val() != '' && $("#admin_medicalbundle_specialoffers_client_fee_percentage").val() != '')
+	{
+		alert("You must enter one of client fee or percentage");
+		return false;
+	}
+	return true;
+}
+$('.date-picker').datepicker({format: 'yyyy-mm-dd',});
+$('#admin_medicalbundle_specialoffers_start_time').timepicker({
+	minuteStep: 1,
+	showSeconds: true,
+	showMeridian: false
+})
+
+$('#admin_medicalbundle_specialoffers_end_time').timepicker({
+	minuteStep: 1,
+	showSeconds: true,
+	showMeridian: false
+})
+jQuery(function($) {
+		$('table th input:checkbox').on('click' , function(){
+			var that = this;
+			$(this).closest('table').find('tr > td:first-child input:checkbox')
+			.each(function(){
+				this.checked = that.checked;
+				$(this).closest('tr').toggleClass('selected');
+			});
+				
+		});		
+	})
+</script>

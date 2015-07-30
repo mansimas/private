@@ -1,0 +1,28 @@
+Admin\MedicalBundle\Entity\SpecialCouponCodes:
+    type: entity
+    table: specialoffer_coupon_codes
+    repositoryClass: Admin\MedicalBundle\Entity\SpecialCouponCodesRepository
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        unique_code:
+            type: text
+    manyToOne:
+      specialsale:
+        targetEntity: SpecialofferSales
+        inversedBy: couponcodes
+        joinColumn:
+          name: specialoffer_sale_id
+          referencedColumnName: id
+          onDelete: CASCADE
+      specialoffers:
+        targetEntity: SpecialOffers
+        inversedBy: couponcodes
+        joinColumn:
+          name: specialoffer_id
+          referencedColumnName: id
+          onDelete: CASCADE
+    lifecycleCallbacks: {  }

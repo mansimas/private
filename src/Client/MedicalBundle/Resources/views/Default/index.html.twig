@@ -1,0 +1,388 @@
+{% extends 'ClientMedicalBundle::layout.html.twig' %}
+{% block title %}{{'Medical Tourism Information'|trans}}{% endblock %}
+{% block metakeyword %} {% include 'ClientMedicalBundle:Default:websitemetasettings.html.twig'%} {% endblock %}
+{% block body %}  
+  <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
+
+
+
+    <script>
+  $(document).ready(function () {
+	// Getting Sub category from selected category	
+      $('#main_category').change(function(){
+        $('#sub_category option:gt(0)').remove();        
+        if($(this).val()){          
+           $option='';           
+            $.ajax({
+                type: "POST",
+                data: "categorie_id=" + $(this).val(),
+                url: 'fetch',
+                success: function(data){
+                    $id=0;
+                    $name='';
+                    
+                    if(data != '')
+					{
+					var d=JSON.parse(data);
+                    for($i=0;$i<d.length;$i++)
+					{
+                   
+                        $id=d[$i].id;
+                        $name=d[$i].name;
+                        
+                        $option+="<option value='"+$id+"'>"+$name+"</option>";
+                        
+                    }
+                    $('#sub_category').append($option);
+                    }
+                }
+            });
+        }
+      });
+	// End Category
+	var cboxNoOptions = {  
+				width: '95%',				
+				maxWidth: '960px',				
+			}
+
+	$('.norecord').colorbox(cboxNoOptions);
+	$(window).resize(function(){
+	  $.colorbox.resize({
+		width: window.innerWidth > parseInt(cboxNoOptions.maxWidth) ? cboxNoOptions.maxWidth : cboxNoOptions.width,		
+	  });
+	});	
+	var cboxOptions = {  
+				width: '95%',
+				height: '95%',
+				maxWidth: '960px',
+				maxHeight: '960px',
+				iframe:true
+			}
+
+	$('.ajax').colorbox(cboxOptions);
+	$(window).resize(function(){
+	  $.colorbox.resize({
+		width: window.innerWidth > parseInt(cboxOptions.maxWidth) ? cboxOptions.maxWidth : cboxOptions.width,
+		height: window.innerHeight > parseInt(cboxOptions.maxHeight) ? cboxOptions.maxHeight : cboxOptions.height
+	  });
+	});
+	
+	var cboxMapOptions = {  
+						width: '95%',
+						height: '95%',
+						maxWidth: '943px',
+						maxHeight: '443px',
+					}
+					
+	$('.showmap').colorbox(cboxMapOptions);
+	$(window).resize(function(){
+	  $.colorbox.resize({
+		width: window.innerWidth > parseInt(cboxMapOptions.maxWidth) ? cboxMapOptions.maxWidth : cboxMapOptions.width,
+		height: window.innerHeight > parseInt(cboxMapOptions.maxHeight) ? cboxMapOptions.maxHeight : cboxMapOptions.height
+	  });
+	});
+});  
+ </script>
+  <div class="row quicksearch_row">
+    <div class="two_colls quicksearch">
+      <h4 class="fourth_heading">{{ 'quick search'|trans }}</h4>
+	  <!-- <form class="navbar-form navbar-left" role="search" method="get" action="{{ path('client_medical_company')}}" enctype="multipart/form-data"> -->
+<form class="navbar-form navbar-left" role="search" method="get" action="{{ path('client_medical_company_search')}}" accept-charset="utf-8">
+        <div class="form-group">
+          <input name="ssSearchParam" type="text" class="form-control" placeholder="{{ 'Search for clinic, treatment, doctor'|trans }}">
+        </div>
+        <div class="form_row services_type">
+          <div class="two_coll">
+            <label for="name">{{'Services type'|trans}}</label>
+            <select name="category_ids_index" id="main_category">
+			<option value="">{{'choose an option'|trans}}</option>
+			{% if asCategoryData|length > 0%}
+				{% for asData in asCategoryData %}
+					<option value="{{ asData.id }}">{{ asData.name }}</option>   
+				{% endfor %}
+			{% endif %}
+            </select>
+          </div>
+          <div class="two_coll">
+            <label for="name">{{'Treatment'|trans}}</label>
+            <select name="sub_category" id="sub_category">
+              <option>{{'Select Sub Category'|trans}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form_row city_row">
+          <div class="two_coll city_coll">
+            <label for="name">{{'City'|trans}}</label>
+            <select name="city_name">
+				<option value="">{{'choose an option'|trans}}</option>
+				{% if asCompanyCityData|length > 0%}
+					{% for asData in asCompanyCityData %}						
+						<option value="{{ asData.name }}">{{ asData.name }}</option> 
+					{% endfor %}
+				{% endif %}
+            </select>
+          </div>
+          <div class="two_coll language_coll">
+            <label class="language_tilte" for="name">{{'Language'|trans}}</label>	
+				
+			{% for lang in asLanguageData%}
+				<label class="language">
+					<input name="language[]" value="{{ lang.id }}" type="checkbox"><span>{{ lang.name|trans }}</span>
+				</label>
+			{% endfor %}
+			         
+          </div>
+        </div>
+        <div class="form_row clinic_rating_row">
+          <div class="two_coll clinic_rating_coll">
+            <label for="name">{{'Clinic rating not less than'|trans}} </label>
+            <select name="clinic_rate">
+              <option value="">{{'choose an option'|trans}}</option>
+              <option value="10">10</option>
+			  <option value="9">9</option>
+			  <option value="8">8</option>
+			  <option value="7">7</option>
+			  <option value="6">6</option>
+			  <option value="5">5</option>
+			  <option value="4">4</option>
+			  <option value="3">3</option>
+			  <option value="2">2</option>
+			  <option value="1">1</option>
+            </select>
+          </div>
+          <div class="two_coll payment_method">
+            <label class="payment_method_title" for="name">{{'Payment method'|trans}}</label>			
+			{% for payment in asPaymentOptionData%}
+				<label class="language">
+					<input name="paymentoption[]" value="{{ payment.id }}" type="checkbox">
+					<span>{{ payment.title }}</span>
+				</label>				
+		    {% endfor %}
+          </div>
+        </div>
+        <button value="" type="submit" class="btn btn-default">{{'SEARCH'|trans}}</button>
+      </form>
+    </div>
+    <div class="two_colls play_video">
+      <h4 class="fourth_heading"></h4>
+	  {% if asVideodata|length > 0 %}
+	  <div class="iframe_video_wrapper">
+	  <iframe width="448" height="340" src="{{ asVideodata[0]['youtube_url']}}" frameborder="0" allowfullscreen></iframe>
+	  </div>
+	  {% else %}
+	  <a href="#"><img src="{{ asset('client/images/pay_icon.png') }}" style="display:block;margin:auto;">{{'Play video to learn more'|trans}}</a>
+	  {% endif %}      
+	  </div>
+  </div>
+  <div class="row two_thumbs_imgs">
+    <div class="two_colls"> 
+	<a href="{{ path('client_medical_insurance_fund') }}">
+		<img src="{{ asset('client/images/img_1.png') }}" alt="No Images" />
+      <h6>{{'Expences covered by insurance fund'|trans}}</h6></a>
+    </div>
+    <div class="two_colls"> 
+	<a href="{{ path('client_medical_consultantion') }}">
+	<img src="{{ asset('client/images/img_2.png') }}" alt="No Images" />
+      <h6>{{'Medical lawyer consultantion for free'|trans}}</h6></a>
+    </div>
+  </div>
+  <div class="row three_thumbs_imgs">
+    <div class="three_colls"> 
+	 <a href="{{ path('client_medical_news') }}"><img src="{{ asset('client/images/img_3.png') }}" alt="No Images" />
+      <h6>{{'Medicine in Lithuania'|trans}}</h6></a>
+    </div>
+    <div class="three_colls"> 
+	<a href="{{ path('client_medical_visatravels') }}"><img src="{{ asset('client/images/img_4.png') }}" alt="No Images" />
+      <h6>{{'Visas & travel'|trans}}</h6></a>
+    </div>
+    <div class="three_colls"> 
+	  <a href="{{ path('client_medical_places_to_visit') }}"><img src="{{ asset('client/images/img_5.png') }}" alt="No Images" />
+      <h6>{{'Places to visit in Lithuania'|trans}}</h6></a>
+    </div>
+  </div>
+  <div class="row testimonials_and_special_offers">
+    <div class="col-xs-6 special_offers">
+      <h4 class="fourth_heading">{{'SPECIAL OFFERS'|trans}}</h4>
+	  {% if asSpecialOffersData|length > 0%}
+      {% set i = 0 %}
+	  {% for asData in asSpecialOffersData if i < 3%}
+	  {% if asData[0]['title'] != '' or asData[0]['introduction'] != '' or asData[0]['description'] != '' %}
+	  {% set i = i + 1%}
+	  {% set asSpecialOfferName = em.getRepository("AdminMedicalBundle:Company").Slug(asData[0]['title']) %}
+      <div class="row">
+        <div class="col-md-4 offer_img">
+			<a href="{{ path('client_medical_special_offers_detail', {'id': asData[0]['id'],'name':asSpecialOfferName })}}">
+				{% if asData[0]['specialofferimages']|length > 0%}		  
+					{% set ssImageName = asData[0]['specialofferimages'][asData[0]['specialofferimages']|length - 1]['photo'] %}
+					{% if asset_exists('uploads/specialoffer/'~asData[0]['id']~'/'~ssImageName) %}	
+						<img src="{{ asset('uploads/specialoffer/'~asData[0]['id']~'/'~ssImageName) }}" width="156px"/>
+					{% else %}
+						<img src="{{ asset('client/images/no_image.png') }}" alt="No Image" width="156px"/>
+					{% endif %}
+				{% else %}
+						<img src="{{ asset('client/images/no_image.png') }}" alt="No Image" width="156px"/>
+				{% endif %}			
+			</a>
+		</div>
+        <div class="col-md-8">
+          <div class="col-xs-12 col-sm-6 col-lg-8">
+            <h3><em><a href="{{ path('client_medical_special_offers_detail', {'id': asData[0]['id'],'name':asSpecialOfferName })}}">
+			{{ asData[0]['title'] }}</a></em>
+			{# if asData[0]['company'][0] is defined and asData[0]['company'][0]['countries']|length > 0 #}
+				{# set ssCountry = asData[0]['company'][0]['countries']['name'] #}
+			{# endif #}
+			{# set ssCountry = em.getRepository("AdminMedicalBundle:Company").getCountryNameByZipcode(asData[0]['company']['zip']) #}
+			{% set address = asData[0]['company']['address'] %}
+			{% set snId = asData[0]['sales_price'] %}
+			<span>
+				<a class="showmap nav_location_icon showmap" href="{{ path('client_medical_showmap', {'address': address,'company_name': asData[0]['company']['name'] })}}">		
+				</a>
+				{% set ssCountry = 'Lithuania'|trans %}
+				{{ asData[0]['company']['city']~", "~ssCountry }}
+			</span>			
+			</h3>
+          </div>
+          <div class="col-xs-6 col-lg-4 special_offers_ratting">            
+			{% if asData['total_rating_count'] == 1 or asData['total_rating_count'] == 0 or asData['total_rating_count'] == '' %}
+			{% set ssReviewText = 'review'|trans %}
+			{% else %}
+			{% set ssReviewText = "reviews"|trans %}
+			{% endif %}
+			{% if asData['total_rating_count'] == 0 or asData['total_rating_count'] == '' %}
+			<a  class="norecord" href="{{ path('client_medical_rating', {'id': asData[0]['company']['id']} )}}" class="contantlink">
+			<p>{{'Rating'|trans}}<b>{#{{ '%.2f' | format(asData.total_avg) }}#}{{ "n/a"|trans }}</b></p>
+			</a>            
+            <span>
+			<a  class="norecord" href="{{ path('client_medical_rating', {'id': asData[0]['company']['id']} )}}" class="contantlink">
+			{% set ssText = "n/a"|trans %}
+			({{ ssText~" "~ssReviewText}})
+			{# ({{ asData['total_rating_count']~" "~ssReviewText}}) #}
+			</a>
+			{% else %}
+            <a  class="ajax" href="{{ path('client_medical_rating', {'id': asData[0]['company']['id']} )}}" class="contantlink">
+			<p>{{'Rating'|trans}}<b>{{ '%.2f' | format(asData.total_avg) }}</b></p>
+			</a>            
+            <span>
+			<a  class="ajax" href="{{ path('client_medical_rating', {'id': asData[0]['company']['id']} )}}" class="contantlink">({{ asData['total_rating_count']~" "~ssReviewText}})</a>
+			{% endif %}
+		  </div>
+		  <div class="clearfix"></div>
+          <div class="row offer_detils">
+			{% if asData[0]['introduction'] is defined %}
+				{% if asData[0]['introduction']|length > 115 %}
+					{% set data = asData[0]['introduction']|striptags %}
+					<p>{{ data|slice(1,115)}}</p>
+					<a href="{{ path('client_medical_special_offers')}}" class="more_info">{{'More info...'|trans}}</a> 
+				{% else %}
+					<p>{{ asData[0]['introduction']|striptags }}</p>	
+				{% endif %}
+			{% endif %}
+		  </div>
+          <div class="row euro_price_was_save_take_buttan">
+            <div class="col-md-4 euro_price">&#8364; {{ asData[0]['sales_price'] }} </div>
+            <div class="col-md-4 was_save">
+              <p>{{'Was'|trans}} <em>{{ asData[0]['regular_price'] }}</em></p>
+			   {% set data = em.getRepository("AdminMedicalBundle:Company").calculateSpecialOfferDiscount(asData[0]['regular_price'], asData[0]['sales_price']) %}
+			  {# set data = '%.2f' | format(asData['total_avg']) #} {# before I put it #}
+              <p>{{'Save'|trans}} -{{ data|round }}%</p>
+            </div>
+            <div class="col-md-4 take_buttan">
+			<a href="{{ path('client_medical_buy_special_offers',{'id':asData[0]['id']}) }}" class="btn btn-default">{{'Take it'|trans}}</a></div>
+          </div>
+		  <div id="googleMap_{{ snId }}">
+		  </div>
+        </div>
+      </div>
+	  {% endif %}	  
+	  {% endfor %}
+	  
+      {# {% if asSpecialOffersData|length > 3 %} #}
+		<div class="take_buttan">
+			<a href="{{ path('client_medical_special_offers') }}" class="btn btn-primary">{{'View all special offers'|trans}}</a>		
+		</div>
+	  {# {% endif %} #}
+	  
+	  {% endif %} 
+	  
+    </div>
+    <div class="col-xs-6 testimonials">
+      <h4 class="fourth_heading">{{'TESTIMONIALS'|trans}}</h4>
+	  
+	  {% if asRatingsData|length > 0%}	  
+	  {% for asDatas in asRatingsData %}	  
+      <div class="row testimonial">
+        <div class="col-md-4">	
+			{% if asset_exists('uploads/company/'~asDatas.company_id~'/'~asDatas.photo) %}				
+				<a  class="ajax" href="{{ path('client_medical_rating', {'id': asDatas.company_id} )}}"><img src="{{ asset('uploads/company/'~asDatas.company_id~'/'~asDatas.photo) }}" /></a>
+			  {% else %}
+				<a  class="ajax" href="{{ path('client_medical_rating', {'id': asDatas.company_id} )}}"><img src="{{ asset('client/images/no_image.png') }}" alt="No Image"/></a>
+			  {% endif %}		
+		</div>
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-xs-12 col-sm-6 col-lg-8 authors">
+              <h3><a class="ajax" href="{{ path('client_medical_rating', {'id': asDatas.company_id} )}}"><em>{{ asDatas.name~" "~asDatas.lastname }}</em></a><span>{{ asDatas.rating_date|date('d m Y') }}</span></h3>
+            </div>
+            <div class="col-xs-6 col-lg-4 ratting_stars">              
+			    {% set data = '%.2f' | format(asDatas.total_avg) %}
+				{% include 'ClientMedicalBundle:Default:ratingstar.html.twig' %}
+			</div>
+          </div>
+          <div class="row testimonial_detils">{{ asDatas.comments | striptags | slice(0,160) }}...</div>
+        </div>
+      </div>
+	  {% endfor %}
+	  {% else %}
+	 {{'NO record found'|trans}} 
+	  {% endif %}
+      <div class="row testimonial video">	  
+	  <a class="paly_butoon" href="#">
+	  {% if asRandomTestimonialData|length > 0 %}
+		<div class="iframe_video_wrapper"><iframe width="404" height="300" src="{{ asRandomTestimonialData[0]['url']}}" frameborder="0" allowfullscreen></iframe></div>
+	  {% else %}
+		<img style="display:block;margin:auto;" src="{{ asset('client/images/pay_icon_small.png') }}"><span>{{'PLAY'|trans}}</span>
+	  {% endif %}
+	  </a>
+	  </div>      
+    </div>
+  </div>
+  <div class="row medicine_news">
+    <h4 class="fourth_heading">{{'LITHUANIA MEDICINE NEWS'|trans}}</h4>	
+	{% if asNewsData|length > 0%}	  
+	{% for asData in asNewsData %}
+    <div class="col-md-6 col-sm-6">
+      <div class="col-md-4 news_img" align="left">
+		{% set asNewsName = em.getRepository("AdminMedicalBundle:Company").Slug(asData['title']) %}
+		{% if asset_exists('uploads/news/'~asData.photo) %}
+			<a href="{{ path('client_medical_news_detail',  { 'id': asData.id, 'name': asNewsName }) }}"><img src="{{ asset('uploads/news/'~asData.photo) }}" /></a>
+		{% else %}
+			<a href="{{ path('client_medical_news_detail',  { 'id': asData.id , 'name': asNewsName}) }}"><img src="{{ asset('client/images/no_image.png') }}" alt="No Image"/></a>
+		{% endif %}
+		<span>{{ asData['news_date']|date('Y m d') }}</span>
+	  </div>
+      <div class="col-md-8">
+	   {% if asData['title'] is defined %}
+        <h3><a href="{{ path('client_medical_news_detail',  { 'id': asData.id, 'name': asNewsName }) }}">{{ asData['title'] }}</a></h3>
+		{% endif %}
+		{% if asData['description'] is defined %}
+			{% if asData['description']|length > 115 %}
+				{% set data = asData['description']|striptags %}
+				<p>{{ data|slice(1,115)}}</p>
+				<a href="{{ path('client_medical_news')}}" class="more_info">{{'Read more...'|trans}}</a> 
+			{% else %}
+				<p>{{ asData['description']|striptags }}</p>	
+			{% endif %}
+		{% endif %}
+		</div>
+    </div>
+	{% endfor %}
+	{% else %}
+		{{'NO record found'|trans}}
+	{% endif %}
+    {# {% if asNewsData|length == 4 %} #}
+	<a href="{{ path('client_medical_news') }}" class="btn btn-primary">{{'View all news'|trans}}</a>
+	<!--<button class="btn btn-primary" type="button">{{'View all news'|trans}}</button>-->
+	{# {% endif %} #}
+  </div>
+
+{% endblock %}
