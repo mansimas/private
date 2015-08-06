@@ -67,14 +67,14 @@ class CompanyController extends Controller
         $asMetaData = $em->getRepository('AdminMedicalBundle:StaticArticles')->getDetailByArticleType('WEBSITE_META_SETTINGS', $ssLocale);
         if($request->isXmlHttpRequest()) {
             return $this->render('ClientMedicalBundle:Company:companylistingnew.html.twig', array(
-                'ssRatingPopular'=>$ssRatingPopular,
-                'locale' => $ssLocale,
-                'ssPage' => $ssPage,
-                'ssUpdateDiv'=>$ssUpdateDiv,
-                'pagination' => $pagination,
-                'snCategoryIds'=>$snCategoryIds,
-                'ssCityName'=>$ssCityName,
-                'ssPerPage'=>$ssPerPage)
+                    'ssRatingPopular'=>$ssRatingPopular,
+                    'locale' => $ssLocale,
+                    'ssPage' => $ssPage,
+                    'ssUpdateDiv'=>$ssUpdateDiv,
+                    'pagination' => $pagination,
+                    'snCategoryIds'=>$snCategoryIds,
+                    'ssCityName'=>$ssCityName,
+                    'ssPerPage'=>$ssPerPage)
             );
         } else {
             return $this->render('ClientMedicalBundle:Company:index2.html.twig', array(
@@ -143,8 +143,6 @@ class CompanyController extends Controller
         foreach($asCompanyData[0] as $key => $value) {
             $companyimg = $em->getRepository('AdminMedicalBundle:Company')->getCompanyImag($value['id']);
             $asCompanyData[0][$key]['companyimag'] = $companyimg;
-            $asCompanyData[0][$key]['categoryName'] = $asCompanyData[1][$key];
-            $asCompanyData[0][$key]['city'] = $asCompanyData[2][$key];
         }
         $snCount = ((count($asCompanyData[0]) < 10) ? (count($asCompanyData[0]) / 2) : ($ssPerPage / 2));
         array_splice($asCompanyData[0], $snCount, 0, $asMiddleBannerDetail);

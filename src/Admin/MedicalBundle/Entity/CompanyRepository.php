@@ -509,7 +509,6 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
 
 
 		$ssQuery = $this->createQueryBuilder('c')
-				//->select('partial c.{id,name,address},partial lang.{name, id, flag},ct,partial ctt.{id,name},('.$ssSubQueryUserCompanies->getDQL().') as count_popularity,IFNULL(('.$ssSubQueryRatingAvg->getDQL().'),0) as total_avg,('.$ssSubQueryRatingCnt->getDQL().') as total_rating_count' )
 				->select('partial c.{id,name,address},partial lang.{name, id, flag},ct,partial ctt.{id,name}' )
 					->leftJoin('c.languagess', 'lang')
 					->leftJoin('c.paymentoptions', 'payment')
@@ -527,17 +526,44 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
 
 				$em = $this->getEntityManager();
 				$connection = $em->getConnection();
-				$statement = $connection->prepare("SELECT cm.id as companyid, cm.name, cm.address,d.id, d.firstname, d.lastname, pt.id, pt.content, pt.locale, st.id, st.content, st.locale FROM company cm LEFT JOIN company_doctor cd ON cm.id = cd.company_id LEFT JOIN doctor d ON d.id = cd.doctor_id LEFT JOIN prices ps ON cm.id = ps.company_id LEFT JOIN pricestranslation pt ON ps.id = pt.object_id AND pt.locale = 'lt' LEFT JOIN service sv ON cm.id = sv.company_id LEFT JOIN servicetranslation st ON sv.id = st.object_id AND st.locale = 'lt'  WHERE (cm.name like :keyword) OR (d.firstname like :keyword AND d.firstname IS NOT NULL) OR (d.lastname like :keyword AND d.lastname IS NOT NULL) OR (pt.content like :keyword AND pt.content IS NOT NULL) OR (st.content like :keyword AND st.content IS NOT NULL) GROUP BY cm.id");
+				$statement = $connection->prepare(
+                    "SELECT cm.id as companyid, cm.city, cm.name, cm.address,d.id, d.firstname, d.lastname, pt.id, pt.content, pt.locale, st.id, st.content, st.locale, cat.name as categoryname
+                    FROM company cm
+                    LEFT JOIN company_doctor cd
+                    ON cm.id = cd.company_id
+                    LEFT JOIN company_category cc
+                    ON cm.id = cc.company_id
+                    LEFT JOIN category cat
+                    ON cc.category_id = cat.id
+                    LEFT JOIN doctor d
+                    ON d.id = cd.doctor_id
+                    LEFT JOIN prices ps
+                    ON cm.id = ps.company_id
+                    LEFT JOIN pricestranslation pt
+                    ON ps.id = pt.object_id
+                    AND pt.locale = 'lt'
+                    LEFT JOIN service sv
+                    ON cm.id = sv.company_id
+                    LEFT JOIN servicetranslation st
+                    ON sv.id = st.object_id
+                    AND st.locale = 'lt'
+                    WHERE (cat.name like :keyword)
+                    GROUP BY cm.id"
+                );
 				$statement->bindValue('keyword', '%'.$ssVal.'%');
 				$statement->execute();
 				$results = $statement->fetchAll();
 
 				$ID = array();
+                $categoryNames = [];
+                $categoryCities = [];
 				if(count($results)>0)
 				{
 					foreach($results as $k=>$v)
 					{
 						$ID[] = $v['companyid'];
+                        $categoryNames[] = $v['categoryname'];
+                        $categoryCities[] = $v['city'];
 					}
 				}
 				else
@@ -603,20 +629,14 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
 				$ssQuery->andWhere('c.id IN ('.implode(',',$asCompanyIds).')');
 			}
 		}
-		/*echo $ssQuery->getQuery()
-				 ->setHint(\Doctrine\ORM\Query::HINT_REFRESH, true)
-						->setHint(\Doctrine\ORM\Query::HINT_FORCE_PARTIAL_LOAD, true)
-						->setHint(\Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
-					    ->setHint(\Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE, $ssLocale)
-						->getSql();echo "<br/>";
-						echo "<pre>";print_r($ssQuery->getParameters());exit;*/
 
-		return $ssQuery->getQuery()
-				 ->setHint(\Doctrine\ORM\Query::HINT_REFRESH, true)
-						->setHint(\Doctrine\ORM\Query::HINT_FORCE_PARTIAL_LOAD, true)
-						->setHint(\Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
-					    ->setHint(\Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE, $ssLocale)
-					    ->getArrayResult();
+		$alfa =  [$ssQuery->getQuery()
+                ->setHint(\Doctrine\ORM\Query::HINT_REFRESH, true)
+                ->setHint(\Doctrine\ORM\Query::HINT_FORCE_PARTIAL_LOAD, true)
+                ->setHint(\Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
+                ->setHint(\Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE, $ssLocale)
+                ->getArrayResult(), $categoryNames, $categoryCities];
+        return $alfa;
 	}
 	/**
      * function getInsuranceDetail

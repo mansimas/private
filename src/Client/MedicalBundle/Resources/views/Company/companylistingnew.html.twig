@@ -1,136 +1,119 @@
 <script type="text/javascript">
-$(document).ready(function () 
-{
-	var cboxNoOptions = {  
-			width: '95%',				
-			maxWidth: '960px',
-			iframe:true
-	}
-	$('.norecord').colorbox(cboxNoOptions);
-	$(window).resize(function(){
-	  $.colorbox.resize({
-		width: window.innerWidth > parseInt(cboxNoOptions.maxWidth) ? cboxNoOptions.maxWidth : cboxNoOptions.width,		
-	  });
-	});
-	
-var cboxOptions = {  
-				width: '95%',
-				height: '95%',
-				maxWidth: '960px',
-				maxHeight: '960px',
-				iframe:true
-			}
+    $(document).ready(function () {
 
-	$('.ajax').colorbox(cboxOptions);
-
-	$(window).resize(function(){
-	  $.colorbox.resize({
-		width: window.innerWidth > parseInt(cboxOptions.maxWidth) ? cboxOptions.maxWidth : cboxOptions.width,
-		height: window.innerHeight > parseInt(cboxOptions.maxHeight) ? cboxOptions.maxHeight : cboxOptions.height
-	  });
-	});
-	
-var cboxMapOptions = {  
-				width: '95%',
-				height: '95%',
-				maxWidth: '943px',
-				maxHeight: '443px',
-			}
-			
-	$('.showmap').colorbox(cboxMapOptions);
-	$(window).resize(function(){
-	  $.colorbox.resize({
-		width: window.innerWidth > parseInt(cboxMapOptions.maxWidth) ? cboxMapOptions.maxWidth : cboxMapOptions.width,
-		height: window.innerHeight > parseInt(cboxMapOptions.maxHeight) ? cboxMapOptions.maxHeight : cboxMapOptions.height
-	  });
-	});
-	
-});
+        var cboxNoOptions = {
+            width: '95%',
+            maxWidth: '960px',
+            iframe: true
+        };
+        $('.norecord').colorbox(cboxNoOptions);
+        $(window).resize(function () {
+            $.colorbox.resize({
+                width: window.innerWidth > parseInt(cboxNoOptions.maxWidth) ? cboxNoOptions.maxWidth : cboxNoOptions.width,
+            });
+        });
+        var cboxOptions = {
+            width: '95%',
+            height: '95%',
+            maxWidth: '960px',
+            maxHeight: '960px',
+            iframe: true
+        };
+        $('.ajax').colorbox(cboxOptions);
+        $(window).resize(function () {
+            $.colorbox.resize({
+                width: window.innerWidth > parseInt(cboxOptions.maxWidth) ? cboxOptions.maxWidth : cboxOptions.width,
+                height: window.innerHeight > parseInt(cboxOptions.maxHeight) ? cboxOptions.maxHeight : cboxOptions.height
+            });
+        });
+        var cboxMapOptions = {
+            width: '95%',
+            height: '95%',
+            maxWidth: '943px',
+            maxHeight: '443px'
+        };
+        $('.showmap').colorbox(cboxMapOptions);
+        $(window).resize(function () {
+            $.colorbox.resize({
+                width: window.innerWidth > parseInt(cboxMapOptions.maxWidth) ? cboxMapOptions.maxWidth : cboxMapOptions.width,
+                height: window.innerHeight > parseInt(cboxMapOptions.maxHeight) ? cboxMapOptions.maxHeight : cboxMapOptions.height
+            });
+        });
+    });
 </script>
-<div class="companylists">	
-      <!-- <div class="row advertising_banner"><img src="advertising_banner.png" alt="Advertising banner" /></div>-->	  
-	  {% set centerBannerId = '' %}
-      {% if pagination.getTotalItemCount  > 0%}	  
-      {% for asDatas in pagination %}
-		{% if asDatas.position is defined %}
-			{% set centerBannerId =  asDatas.id %}
-			
-		{% else %}
-	 
-	  {% set asData = asDatas %}	  
-      <div class="row companylists_row">
-		  <div class="col-md-4 offer_img">			
-		 {% set asCompanyName = em.getRepository("AdminMedicalBundle:Company").Slug(asData.name) %}
-		{% if asData.companyimag %}		  
-			  {% set ssImageName = asData['companyimag'] %}
-			 
-			  {% if asset_exists('uploads/company/'~asData.id~'/'~ssImageName) %}				
-				<a href="{{ path('client_medical_company_detail', {'id':asData.id,'name':asCompanyName})}}"><img src="{{ asset('uploads/company/'~asData.id~'/'~ssImageName) }}" alt="No Image" /></a>
-			  {% else %}
-				{% set ssImageName = 'no_image.png' %}
-				<a href="{{ path('client_medical_company_detail', {'id':asData.id,'name':asCompanyName})}}"><img src="{{ asset('client/images/'~ssImageName) }}" alt="No Image" /></a>
-			  {% endif %}
-        {% else %}
-			{% set ssImageName = 'no_image.png' %}
-			<a href="{{ path('client_medical_company_detail', {'id':asData.id,'name':asCompanyName})}}"><img src="{{ asset('client/images/'~ssImageName) }}" alt="No Image" /></a>
-        {% endif %} 
-         
-		{% if asData.languagess|length > 0 %}
-			<div class="languages">
-				<div class="we_speak">{{'We speak'|trans}}</div>
-				{% for asLang in asData.languagess %}
-					<div class="lang">
-					<div class="sub_lang">
-					{% if asset_exists('uploads/flag/'~asLang.flag) %}
-						<img src="{{ asset('uploads/flag/'~asLang.flag) }}" />	
-					{% else %}
-						<img src="{{ asset('client/images/no_image_big.png') }}" alt="No Image" height="20px" width="30px" />
-					{% endif %}						
-					</div>
-					
-					</div>
-				{% endfor %}
-			</div>
-		{% endif %}		
-		
-        </div>
-        <div class="col-md-8">
-        <div class="row special_offer_wraper">
-          <div class="col-xs-12 col-sm-6 col-lg-8">
-            <h3><a href="{{ path('client_medical_company_detail', { 'id': asData.id,'name':asCompanyName }) }}"><em>{{ asData.name }}</em></a><span>
-			<a class="nav_location_icon showmap" href="{{ path('client_medical_showmap', {'address': asData.address,'company_name': asData.name })}}"></a>			
-			{{ asData.address }}{{ ", " }}{{'Lithuania'|trans}}
-			</span></h3>
-          </div>
-        </div>
-        <div class="row offer_detils">
-		  
-			{% if asData.category|length > 0%}
-				{% for key,category in asData.category %}
-					<span class="comp_cat_subcat_list">						
-					{{ category.roots.name }}
-					</span>
-				{% endfor %}
-			{% endif %}		  
-		  </div>
-		  <div class="row">
-            
-			{% set asCompanyIds = app.session.get('company_ids') %}			
-			{% if asData.id in asCompanyIds %}
-				<a id="saved_div_id_{{ asData.id }}" class="saved save_to_list" href="javascript:void(0);">{{'In the list'|trans}}</a>
-			{% else %}			
-				<a id="save_to_list_div_id_{{ asData.id }}" class="save_to_list" onClick="savecompany('{{ asData.id }}','{{ path('client_medical_save_user_company')}}');" href="javascript:void(0)">{{'Add to list'|trans}}</a>
-				<a style="display:none" id="saved_div_id_{{ asData.id }}" class="saved save_to_list in_th" href="javascript:void(0);">{{'In the list'|trans}}</a>
-			{% endif %}
-		  <div class="clearfix"></div>
-		  </div>
-        </div>
-      </div>
-	  {% endif %}
-      {% endfor %}	  
-	  {{ knp_pagination_render(pagination) }}      
-	  {% else %}
-	{{ 'No record found'|trans }}	
-	{% endif %}	
-	<input type="hidden" id="center_banner_id" name="center_banner_id" value="{{ centerBannerId }}"/>
+<style>
+    .info_button .overlayas
+    {
+        display:none;
+    }
+
+    .info_button:hover .overlayas
+    {
+        display:block;
+        float:right;
+    }​
+
+</style>
+<div class="companylists">
+    {% set centerBannerId = '' %}
+    {% if pagination.getTotalItemCount  > 0 %}
+        <form action="demo_form.asp" method="get">
+        <table class="table table-striped">
+            {% for asDatas in pagination %}
+                {% set asData = asDatas %}
+                {% set asCompanyName = em.getRepository("AdminMedicalBundle:Company").Slug(asData.name) %}
+                <tr>
+                    <td>
+                        <input type="checkbox" name="vehicle" value="Bike">
+                    </td>
+                    <td style="width: 120px;">
+                        <a href="{{ path('client_medical_company_detail', {'id':asData.id,'name':asCompanyName})}}" style="color:black;">
+                            <b>{{ asData.categoryName }}</b></a>
+                        <br>
+                        <span style="font-size: x-small; color:darkgrey">{{ asData.city }}</span>
+                    </td>
+                    <td style="width:110px;">
+                        Kaina: 15 ~ 75
+                    </td>
+                    <td>
+                        <a class="nav_location_icon showmap" href="{{ path('client_medical_showmap', {'address': asData.address,'company_name': asData.name }) }}"></a>
+                        <a href="{{ path('client_medical_company_detail', {'id':asData.id,'name':asCompanyName})}}" style="color:black;">
+                            <b>{{ asData.name }}</b></a>
+                        <div class="info_button">
+                            <div class="overlayas">
+                                {% if asData.companyimag %}
+                                    {% set ssImageName = asData['companyimag'] %}
+
+                                    {% if asset_exists('uploads/company/'~asData.id~'/'~ssImageName) %}
+                                        <a href="{{ path('client_medical_company_detail', {'id':asData.id,'name':asCompanyName})}}">
+                                            <img src="{{ asset('uploads/company/'~asData.id~'/'~ssImageName) }}" alt="No Image" height="100px" width="200px"/></a>
+                                    {% else %}
+                                        {% set ssImageName = 'no_image.png' %}
+                                        <a href="{{ path('client_medical_company_detail', {'id':asData.id,'name':asCompanyName})}}">
+                                            <img src="{{ asset('client/images/'~ssImageName) }}" alt="No Image"  height="100px" width="200px"/></a>
+                                    {% endif %}
+                                {% else %}
+                                    {% set ssImageName = 'no_image.png' %}
+                                    <a href="{{ path('client_medical_company_detail', {'id':asData.id,'name':asCompanyName})}}">
+                                        <img src="{{ asset('client/images/'~ssImageName) }}" alt="No Image"  height="100px" width="200px"/></a>
+                                {% endif %}
+                            </div>
+                            <a href="{{ path('client_medical_company_detail', {'id':asData.id,'name':asCompanyName})}}" style="background-color: red; color:white; float:left;">
+                                &nbsp;&nbsp;INFO&nbsp;&nbsp;</a>
+
+                        </div>
+                        <br>
+                        <span style="font-size: x-small; color:darkgrey">{{ asData.address }}</span>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+            <input type="submit" value="Registruotis"
+                   style="float:right; background-color: #0000cc; color:white; width: 100px; text-align: center; height: 30px;">
+        </form>
+        {{ knp_pagination_render(pagination) }}
+    {% else %}
+        {{ 'No record found'|trans }}
+    {% endif %}
+    <input type="hidden" id="center_banner_id" name="center_banner_id" value="{{ centerBannerId }}"/>
 </div>
