@@ -527,7 +527,7 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
 				$em = $this->getEntityManager();
 				$connection = $em->getConnection();
 				$statement = $connection->prepare(
-                    "SELECT cm.id as companyid, cm.city, cm.name, cm.address,d.id, d.firstname, d.lastname, pt.id, pt.content, pt.locale, st.id, st.content, st.locale, cat.name as categoryname
+                    "SELECT cm.id as companyid, cm.city, cm.name, cm.address,d.id, d.firstname, d.lastname, pt.id, pt.content, pt.locale, st.id, st.content, st.locale, cat.name as categoryname, cat.id as categoryid
                     FROM company cm
                     LEFT JOIN company_doctor cd
                     ON cm.id = cd.company_id
@@ -557,6 +557,7 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
 				$ID = array();
                 $categoryNames = [];
                 $categoryCities = [];
+                $categoryIds = [];
 				if(count($results)>0)
 				{
 					foreach($results as $k=>$v)
@@ -564,6 +565,7 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
 						$ID[] = $v['companyid'];
                         $categoryNames[] = $v['categoryname'];
                         $categoryCities[] = $v['city'];
+                        $categoryIds[] = $v['categoryid'];
 					}
 				}
 				else
@@ -635,7 +637,7 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
                 ->setHint(\Doctrine\ORM\Query::HINT_FORCE_PARTIAL_LOAD, true)
                 ->setHint(\Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
                 ->setHint(\Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE, $ssLocale)
-                ->getArrayResult(), $categoryNames, $categoryCities];
+                ->getArrayResult(), $categoryNames, $categoryCities, $categoryIds];
         return $alfa;
 	}
 	/**

@@ -2,6 +2,7 @@
 
 namespace Client\MedicalBundle\Controller;
 
+use Client\MedicalBundle\Services\Company\NameEditor;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -96,6 +97,10 @@ class CompanyController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function companysearchAction(Request $request) {
         $locale = $this->get('session')->get('_locale');
         $ssLocale = ((isset($locale) && $locale != '') ? $locale : 'lt');
@@ -141,9 +146,12 @@ class CompanyController extends Controller
         $asCompanyData = $em->getRepository('AdminMedicalBundle:Company')->getCompanyAllDetailForSearch_new($ssSerachParam,$ssCityName,
             $ssPaymentOption,$ssLanguages,$ssLocale);
         foreach($asCompanyData[0] as $key => $value) {
+            $nameEditor = new NameEditor;
             $companyimg = $em->getRepository('AdminMedicalBundle:Company')->getCompanyImag($value['id']);
             $asCompanyData[0][$key]['companyimag'] = $companyimg;
             $asCompanyData[0][$key]['categoryName'] = $asCompanyData[1][$key];
+            $asCompanyData[0][$key]['categoryNameRoute'] = $nameEditor->addDashBetweenWords($asCompanyData[1][$key]);
+            $asCompanyData[0][$key]['categoryid'] = $asCompanyData[3][$key];
             $asCompanyData[0][$key]['city'] = $asCompanyData[2][$key];
         }
         $snCount = ((count($asCompanyData[0]) < 10) ? (count($asCompanyData[0]) / 2) : ($ssPerPage / 2));
