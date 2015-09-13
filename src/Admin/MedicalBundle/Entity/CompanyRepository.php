@@ -575,7 +575,8 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
                 $categoryNames = [];
                 $categoryCities = [];
                 $categoryIds = [];
-                $prices = [];
+                $minprices = [];
+                $maxprices = [];
 				if(count($results)>0)
 				{
 					foreach($results as $k=>$v)
@@ -584,7 +585,8 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
                         $categoryNames[] = $v['categoryname'];
                         $categoryCities[] = $v['city'];
                         $categoryIds[] = $v['categoryid'];
-                        $prices[] = $v['minprice'] . ' ~ ' . $v['maxprice'];
+                        $minprices[] = $v['minprice'];
+                        $maxprices[] = $v['maxprice'];
 					}
 				}
 				else
@@ -656,7 +658,7 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
                 ->setHint(\Doctrine\ORM\Query::HINT_FORCE_PARTIAL_LOAD, true)
                 ->setHint(\Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
                 ->setHint(\Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE, $ssLocale)
-                ->getArrayResult(), $categoryNames, $categoryCities, $categoryIds, $prices];
+                ->getArrayResult(), $categoryNames, $categoryCities, $categoryIds, $minprices, $maxprices];
         return $alfa;
 	}
 	/**

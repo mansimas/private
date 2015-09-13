@@ -165,7 +165,8 @@ class CompanyController extends Controller
             $asCompanyData[0][$key]['categoryNameRoute'] = $nameEditor->addDashBetweenWords($asCompanyData[1][$key]);
             $asCompanyData[0][$key]['categoryid'] = $asCompanyData[3][$key];
             $asCompanyData[0][$key]['city'] = $asCompanyData[2][$key];
-            $asCompanyData[0][$key]['prices'] = $asCompanyData[4][$key];
+            $asCompanyData[0][$key]['minprice'] = $asCompanyData[4][$key];
+            $asCompanyData[0][$key]['maxprice'] = $asCompanyData[5][$key];
         }
 
         $asCategoryDataInRecursive = $em->getRepository('AdminMedicalBundle:Category')->getAllSubCategoryDetail($ssLocale, 1);
