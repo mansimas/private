@@ -49,27 +49,26 @@
         <form action="demo_form.asp" method="get">
         <table class="table table-striped">
             {% for asDatas in pagination %}
-                {% set asData = asDatas %}
-                {% set asCompanyName = em.getRepository("AdminMedicalBundle:Company").Slug(asData.name) %}
+                {% set asCompanyName = em.getRepository("AdminMedicalBundle:Company").Slug(asDatas.name) %}
                 <tr>
                     <td>
                         <input type="checkbox" name="vehicle" value="Bike">
                     </td>
                     <td class="width110">
-                        <a href="{{ path('client_medical_category_detail', {'id':asData.categoryid,'name':asData.categoryNameRoute})}}" class="blackColored">
-                            <b>{{ asData.categoryName }}</b></a>
+                        <a href="{{ path('client_medical_category_detail', {'id':asDatas.categoryid,'name':asDatas.categoryNameRoute})}}" class="blackColored">
+                            <b>{{ asDatas.categoryName }}</b></a>
                         <br>
-                        <span class="xsmallgrey">{{ asData.city }}</span>
+                        <span class="xsmallgrey">{{ asDatas.city }}</span>
                     </td>
                     <td class="width110">
-                        Kaina: 15 ~ 75
+                        {{ asDatas.prices }} Eur
                     </td>
                     <td>
-                        <a class="nav_location_icon showmap" href="{{ path('client_medical_showmap', {'address': asData.address,'company_name': asData.name }) }}"></a>
-                        <a href="{{ path('client_medical_company_detail', {'id':asData.id,'name':asCompanyName})}}" class="blackColored">
-                            <b>{{ asData.name }}</b></a>
+                        <a class="nav_location_icon showmap" href="{{ path('client_medical_showmap', {'address': asDatas.address,'company_name': asDatas.name }) }}"></a>
+                        <a href="{{ path('client_medical_company_detail', {'id':asDatas.id,'name':asCompanyName})}}" class="blackColored">
+                            <b>{{ asDatas.name }}</b></a>
                         <br>
-                        <span class="xsmallgrey">{{ asData.address }}</span>
+                        <span class="xsmallgrey">{{ asDatas.address }}</span>
                     </td>
                 </tr>
             {% endfor %}

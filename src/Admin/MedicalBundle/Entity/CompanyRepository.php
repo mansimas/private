@@ -527,7 +527,24 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
 				$em = $this->getEntityManager();
 				$connection = $em->getConnection();
 				$statement = $connection->prepare(
-                    "SELECT cm.id as companyid, cm.city, cm.name, cm.address,d.id, d.firstname, d.lastname, pt.id, pt.content, pt.locale, st.id, st.content, st.locale, cat.name as categoryname, cat.id as categoryid
+                    "SELECT
+                      cm.id as companyid,
+                      cm.city,
+                      cm.name,
+                      cm.address,
+                      d.id,
+                      d.firstname,
+                      d.lastname,
+                      pt.id,
+                      pt.content,
+                      pt.locale,
+                      st.id,
+                      st.content,
+                      st.locale,
+                      cat.name as categoryname,
+                      cat.id as categoryid,
+                      cc.minprice as minprice,
+                      cc.maxprice as maxprice
                     FROM company cm
                     LEFT JOIN company_doctor cd
                     ON cm.id = cd.company_id
@@ -558,6 +575,7 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
                 $categoryNames = [];
                 $categoryCities = [];
                 $categoryIds = [];
+                $prices = [];
 				if(count($results)>0)
 				{
 					foreach($results as $k=>$v)
@@ -566,6 +584,7 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
                         $categoryNames[] = $v['categoryname'];
                         $categoryCities[] = $v['city'];
                         $categoryIds[] = $v['categoryid'];
+                        $prices[] = $v['minprice'] . ' ~ ' . $v['maxprice'];
 					}
 				}
 				else
@@ -637,7 +656,7 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
                 ->setHint(\Doctrine\ORM\Query::HINT_FORCE_PARTIAL_LOAD, true)
                 ->setHint(\Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
                 ->setHint(\Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE, $ssLocale)
-                ->getArrayResult(), $categoryNames, $categoryCities, $categoryIds];
+                ->getArrayResult(), $categoryNames, $categoryCities, $categoryIds, $prices];
         return $alfa;
 	}
 	/**
