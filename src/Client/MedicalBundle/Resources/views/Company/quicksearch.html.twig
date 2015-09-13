@@ -1,3 +1,48 @@
+
+
+<script type="text/javascript">
+
+    {% if allCategories is defined %}
+        var categories = {{ allCategories|raw }} ;
+    {% else %}
+        categories = [
+            "NULL",
+            "Akcijos ir nuolaidos",
+            "Nėštumas",
+            "Kardiologai",
+            "Tyrimai",
+            "Reabilitacija ir SPA",
+            "Estetinės procedūros",
+            "Okulistai",
+            "Odontologai",
+            "Ortopedai",
+            "Dantų implantavimas",
+            "Suaugusiųjų bei vaikų ligų gydytojų konsultacijos",
+            "Kineziterapija",
+            "Neurologija",
+            "Laboratoriniai tyrimai",
+            "Ginekologija",
+            "Dantu gydymas",
+            "Dantu gydymo profilaktika"
+        ];
+    {% endif %}
+    $(document).ready(function () {
+        void function () {
+            'use strict';
+
+            horsey(document.querySelector('#ssSearchParam'), {
+                suggestions: categories,
+                limit: 10
+            });
+
+        }();
+
+    });
+
+</script>
+
+
+
 <div class="quicksearch_div">
   <h4 class="fourth_heading">{{'quick search'|trans}}</h4>
   <form class="quicksearch" role="search" action="{{ path('client_medical_company_search') }}" method="get">

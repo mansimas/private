@@ -7,7 +7,13 @@ Admin\MedicalBundle\Entity\CompanyCategory:
             type: integer
             id: true
             generator:
-                strategy: AUTO       
+                strategy: AUTO
+        minprice:
+            type: integer
+            nullable: true
+        maxprice:
+            type: integer
+            nullable: true
     manyToOne:
       company:
         targetEntity: Company
@@ -29,5 +35,5 @@ Admin\MedicalBundle\Entity\CompanyCategory:
         joinColumn:
           name: root_id
           referencedColumnName: id
-          onDelete: CASCADE 
+          onDelete: CASCADE
     lifecycleCallbacks: {  }

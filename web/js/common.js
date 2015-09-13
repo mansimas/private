@@ -20,18 +20,18 @@ function clear_cache(ssRoute){
 function confirmation(ssMsg)
 {
 	var chks=document.getElementsByName('chk_delete[]');
-    var hasChecked = false;    
+    var hasChecked = false;
     for (var i = 0; i < chks.length; i++)
     {
         if (chks[i].checked)
         {
             hasChecked = true;
             break;
-        }        
+        }
     }
-    
+
     if (hasChecked == false)
-    {	
+    {
         alert("Please select at least one.");
         return false;
     }
@@ -42,7 +42,7 @@ function confirmation(ssMsg)
 function quicksearch(route, page, ssDiv, ssPerPage)
 {
 	quicksearchresult(route, page, ssDiv, ssPerPage);
-	// it is for when checkbox checked in 
+	// it is for when checkbox checked in
 	/*if(ssflag == true)
 	{
 		setTimeout(function(){
@@ -102,23 +102,24 @@ function quicksearchresult(route, page, ssDiv, ssPerPage)
 		chkinsurance.push($(this).val());
 		$("#refine_filter_boxes").append('<span class="remove_link">'+$("#insurance_"+$(this).val()).val()+'<button onClick="removefilter(\'chk_insurance_'+$(this).val()+'\','+page+','+ssPerPage+')" type="button" class="close" aria-hidden="true">&times;</button></span>');
 	});
-	drpinsurances = $("#admin_medicalbundle_insurance_insurances").val();	
+	drpinsurances = $("#admin_medicalbundle_insurance_insurances").val();
 	if(drpinsurances != null)
 		chkinsurance = $.merge(chkinsurance, drpinsurances);
-	$("#company_listing_loader").show("fast"); 
-	
+	$("#company_listing_loader").show("fast");
+
 	if(calculationRequest != null)
         calculationRequest.abort();
 
 	calculationRequest = $.ajax({
 				type: 'post',
 				url : route,
-				data: "ssSearchParam="+$("#ssSearchParam").val()+"&per_page="+ssPerPage+"&page="+page+"&category_ids="+category+"&city_name="+city+"&language="+language+"&rateslider="+rating+"&paymentoption="+paymentoption+"&rate_popular="+$("#rating_popular_id").val()+"&insurace_ids="+chkinsurance,
+				data: "ssSearchParam="+$("#ssSearchParam").val()+"&per_page="+ssPerPage+"&page="+page+"&category_ids="+category+"&city_name="+
+                city+"&language="+language+"&rateslider="+rating+"&paymentoption="+paymentoption+"&rate_popular="+$("#rating_popular_id").val()+"&insurace_ids="+chkinsurance,
 				success: function(result)
 						{
                             $("#all_category_li>ul>li.active").removeClass("active");
 							$("#"+ssDiv).html(result);
-							$("#company_listing_loader").hide("fast");							
+							$("#company_listing_loader").hide("fast");
 							var calculationRequest = null;
 							$.ajax({
 								type: 'post',
@@ -126,10 +127,11 @@ function quicksearchresult(route, page, ssDiv, ssPerPage)
 								data: 'banner=1&category_ids='+category+'&city_name='+cityIds,
 								success: function(result)
 										{
-											$("#testbannersucc").html(result);	
-											var bannerFinalheight = ((parseInt($(".refine_search").height()) > parseInt($(".companylist_container").height())) ? parseInt($(".refine_search").height()) : parseInt($(".companylist_container").height()));
+											$("#testbannersucc").html(result);
+											var bannerFinalheight = ((parseInt($(".refine_search").height()) > parseInt($(".companylist_container").height())) ?
+                                                parseInt($(".refine_search").height()) : parseInt($(".companylist_container").height()));
 											var bannerheight = bannerFinalheight - 270 + 35;
-											var snHeight = (parseInt($("#testbannersucc").height()) + 10);							
+											var snHeight = (parseInt($("#testbannersucc").height()) + 10);
 											if(snHeight < bannerheight && (category != '' || cityIds != ''))
 											{
 												$.ajax({
@@ -138,19 +140,19 @@ function quicksearchresult(route, page, ssDiv, ssPerPage)
 													data: 'banner=1&ssFlag=1&category_ids='+$("#notbanner_ids").val(),
 													success: function(result)
 															{
-																$("#testbannersucc").append(result);												
+																$("#testbannersucc").append(result);
 															}
 													});
 											}
-																		
+
 										}
-								});	
+								});
 						}
 			});
 }
 function savecompany(snId, route)
 {
-	$("#company_listing_loader").show("fast"); 
+	$("#company_listing_loader").show("fast");
 	$.ajax({
 				type: 'get',
 				url : route,
@@ -167,13 +169,13 @@ function savecompany(snId, route)
 
 function getQuotedetail(route, ssUpdateDiv)
 {
-	$("#loader").show("fast"); 
+	$("#loader").show("fast");
 	$.ajax({
 				type: 'get',
-				url : route,				
+				url : route,
 				success: function(result)
 						{
-							$("#"+ssUpdateDiv).html(result);							
+							$("#"+ssUpdateDiv).html(result);
 							$("#loader").hide("fast");
 						}
 			});
@@ -194,7 +196,7 @@ function removeData(route, id, ssDiv)
 							snCount = parseInt($("#save_clinic_count").text()) - 1;
 							$("#save_clinic_count").html(snCount);
 							$("#"+ssDiv).html(result);
-							$("#loader").hide("fast"); 
+							$("#loader").hide("fast");
 						}
 			});
 	}
@@ -207,7 +209,7 @@ function updateSpecialoffer(ssRoute,mainspecialoffer,updatediv)
 		url : ssRoute,
 		data: 'specialoffer_type='+mainspecialoffer,
 		success: function(result)
-		{			
+		{
 			$("#"+updatediv).html(result);
 		}
 	});
@@ -219,7 +221,7 @@ function update_banner_count(ssBannerid,ssRoute){
 		url : ssRoute,
 		data: 'banner_id='+ssBannerid,
 		success: function(result)
-		{			
+		{
 		}
 	});
 }
@@ -228,11 +230,11 @@ function disableinquiryandfinalprice()
 	if($("#admin_medicalbundle_company_disable_quotes").is(':checked'))
 	{
 		$("#admin_medicalbundle_company_premium_company").attr("disabled",true);
-		$("#admin_medicalbundle_company_final_price_info").attr("disabled",true);		
+		$("#admin_medicalbundle_company_final_price_info").attr("disabled",true);
 	}
 	else
 	{
 		$("#admin_medicalbundle_company_premium_company").attr("disabled",false);
-		$("#admin_medicalbundle_company_final_price_info").attr("disabled",false);	
+		$("#admin_medicalbundle_company_final_price_info").attr("disabled",false);
 	}
 }

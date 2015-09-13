@@ -15,17 +15,17 @@
 	{%endif%}
 {% endblock %}
 {% block body %}
- <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false"></script>
 <script type="text/javascript">
 $(document).ready(function () {
 
-			var cboxMapOptions = {  
+			var cboxMapOptions = {
 						width: '95%',
 						height: '95%',
 						maxWidth: '943px',
 						maxHeight: '443px',
 					}
-					
+
 			$('.showmap').colorbox(cboxMapOptions);
 			$(window).resize(function(){
 			  $.colorbox.resize({
@@ -33,18 +33,18 @@ $(document).ready(function () {
 				height: window.innerHeight > parseInt(cboxMapOptions.maxHeight) ? cboxMapOptions.maxHeight : cboxMapOptions.height
 			  });
 			});
-			
+
 			});
-			
+
 </script>
 {% include 'ClientMedicalBundle:Company:quicksearch.html.twig' %}
 
 <div class="row news_detail">
     <div class="col-md-8 companylist_container newsdetilspage">
 	  <a href="{{ path('client_medical_category') }}" class="btn btn-default whitebtn back_link">&lt;&lt; {{'Back to categories'|trans}}</a>
-	  {% if asCategoryData|length > 0%}	  
-	  {% for asData in asCategoryData %}	  
-		<h3>{{ asData['name'] }}</h3>				
+	  {% if asCategoryData|length > 0%}
+	  {% for asData in asCategoryData %}
+		<h3>{{ asData['name'] }}</h3>
 	  {#<div class="row">#}
 		{#<div class="col-md-4 offer_img category_thumb">			#}
 			{#{% if asset_exists('uploads/category/'~asData.photo) %}#}
@@ -72,16 +72,16 @@ $(document).ready(function () {
 	{#{{ render(controller('ClientMedicalBundle:Company:specialoffers',{'ssRoute':route })) }}#}
 	</div>
 	<div class="clr"></div>
-	<div class="related_clinics col-xs-8">	
+	<div class="related_clinics col-xs-8">
 		{% if asCompanyByCategoryData|length > 0 %}
 		<h6>{{'Related clinics'|trans}}</h6>
-		{% for asData in asCompanyByCategoryData %}	
-			{% set ssCompanyName = em.getRepository("AdminMedicalBundle:Company").Slug(asData.name) %}			
+		{% for asData in asCompanyByCategoryData %}
+			{% set ssCompanyName = em.getRepository("AdminMedicalBundle:Company").Slug(asData.name) %}
 					<div class="row companylists_row col-xs-6 ">
 						<div class="col-xs-4 offer_img">
-							{% if asData.companyimages|length > 0%}		  
+							{% if asData.companyimages|length > 0%}
 								  {% set ssImageName = asData['companyimages'][asData.companyimages|length - 1]['photo'] %}
-								  {% if asset_exists('uploads/company/'~asData.id~'/'~ssImageName) %}												
+								  {% if asset_exists('uploads/company/'~asData.id~'/'~ssImageName) %}
 										<a href="{{ path('client_medical_company_detail', {'id':asData.id, 'name':ssCompanyName})}}"><img src="{{ asset('uploads/company/'~asData.id~'/'~ssImageName) }}" alt="No Image" /></a>
 								  {% else %}
 										{% set ssImageName = 'no_image.png' %}
@@ -92,7 +92,7 @@ $(document).ready(function () {
 								<a href="{{ path('client_medical_company_detail', {'id':asData.id, 'name':ssCompanyName})}}"><img src="{{ asset('client/images/'~ssImageName) }}" alt="No Image" /></a>
 							{% endif %}
 							</div>
-						<div class="col-xs-8">							
+						<div class="col-xs-8">
 							<h3><a href="{{ path('client_medical_company_detail', {'id':asData.id,'name':ssCompanyName})}}">{{ asData.name }}</a></h3>
 							<div class="address">
 							<a class="nav_location_icon showmap" href="{{ path('client_medical_showmap', {'address': asData.address,'company_name': asData.name })}}"></a>
@@ -101,14 +101,14 @@ $(document).ready(function () {
 						</div>
 						<div class="clr"></div>
 						<div class="disc">
-							{# 
+							{#
 							{% if asData.categories|length > 0 %}
 								{% for category in asData.categories%}
 									<span class="comp_cat_subcat_list">{{ category['name'] }}</span>
 								{% endfor %}
-							{% endif %}						
+							{% endif %}
 							#}
-							
+
 							{#
 								new category changes
 							#}
@@ -116,18 +116,18 @@ $(document).ready(function () {
 								{% for category in asData.category%}
 									<span class="comp_cat_subcat_list">{{ category['roots']['name'] }}</span>
 								{% endfor %}
-							{% endif %}	
-							
+							{% endif %}
+
 						</div>
-					</div>					
+					</div>
 				{% endfor %}
-				<div class="clr"></div>	
+				<div class="clr"></div>
 				{% if asCategoryData|length > 0 %}
 				{% set snCategoryId = asCategoryData[0]['root_id'] %}
 				{% endif %}
-				<form method="POST" action="{{ path('client_medical_company', {'category_ids': snCategoryId}) }}">					
-					<input class="btn btn-default bluebtn" type="submit" value="{{ 'Show more clinics'|trans }}">			
-				</form>				
+				<form method="POST" action="{{ path('client_medical_company', {'category_ids': snCategoryId}) }}">
+					<input class="btn btn-default bluebtn" type="submit" value="{{ 'Show more clinics'|trans }}">
+				</form>
 		{% endif %}
 	</div>
 </div>

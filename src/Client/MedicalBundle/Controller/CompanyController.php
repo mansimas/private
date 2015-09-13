@@ -19,7 +19,7 @@ class CompanyController extends Controller
 {
     public function indexAction(Request $request) {
         $locale = $this->get('session')->get('_locale');
-        $ssLocale = ((isset($locale) && $locale != '') ? $locale : 'en');
+        $ssLocale = ((isset($locale) && $locale != '') ? $locale : 'lt');
         $ssSerachParam = (($request->get('ssSearchParam') != '') ? $request->get('ssSearchParam') : '');
         $snNewsCategoryIds = (($request->get('news_category_ids') != '') ? $request->get('news_category_ids') : '');
         if(isset($request->get['category_ids_index']) && $request->get['category_ids_index'] != '') {
@@ -57,6 +57,15 @@ class CompanyController extends Controller
             $asBannerDetail = $em->getRepository('AdminMedicalBundle:AdvertiseBanner')->getAddBannerDetail('home_right', $snCategoryIds, $ssFlag, $ssCityName, '', $locale);
             return $this->render('ClientMedicalBundle:News:banners.html.twig', array('asBannerDetail'=>$asBannerDetail, 'ssPage' => 'company_listing'));
         }
+
+        $asCategoryDataInRecursive = $em->getRepository('AdminMedicalBundle:Category')->getAllSubCategoryDetail($ssLocale, 1);
+        $arrayOfCategories = [];
+        foreach($asCategoryDataInRecursive as $key=>$val) {
+            $arrayOfCategories[] = $val;
+        }
+        $allCategories = json_encode(array_values($arrayOfCategories));
+
+
         $asMiddleBannerDetail = $em->getRepository('AdminMedicalBundle:AdvertiseBanner')->getAddBannerDetail('company_center', $snCategoryIds, '' , $ssCityName, 'mid', $locale);
         $asCompanyData = $em->getRepository('AdminMedicalBundle:Company')->getCompanyAllDetail($ssSerachParam, $snCategoryIds, $ssCityName, $ssLanguages, $ssPaymentOption, $ssInsuranceIds, $ssLocale, $ssRatingPopular,$ssRatingSlider, $ssClinicRating);
         $snCount = ((count($asCompanyData) < 10) ? (count($asCompanyData) / 2) : ($ssPerPage / 2));
@@ -74,6 +83,7 @@ class CompanyController extends Controller
                 'ssUpdateDiv'=>$ssUpdateDiv,
                 'pagination' => $pagination,
                 'snCategoryIds'=>$snCategoryIds,
+                'allCategories' => $allCategories,
                 'ssCityName'=>$ssCityName,
                 'ssPerPage'=>$ssPerPage)
             );
@@ -92,6 +102,7 @@ class CompanyController extends Controller
                 'snCategoryIds'=>$snCategoryIds,
                 'snNewsCategoryIds'=>$snNewsCategoryIds,
                 'ssPerPage'=>$ssPerPage,
+                'allCategories' => $allCategories,
                 'asMetaData'=>$asMetaData
             ));
         }
@@ -154,6 +165,15 @@ class CompanyController extends Controller
             $asCompanyData[0][$key]['categoryid'] = $asCompanyData[3][$key];
             $asCompanyData[0][$key]['city'] = $asCompanyData[2][$key];
         }
+
+        $asCategoryDataInRecursive = $em->getRepository('AdminMedicalBundle:Category')->getAllSubCategoryDetail($ssLocale, 1);
+        $arrayOfCategories = [];
+        foreach($asCategoryDataInRecursive as $key=>$val) {
+            $arrayOfCategories[] = $val;
+        }
+        $allCategories = json_encode(array_values($arrayOfCategories));
+
+
         $snCount = ((count($asCompanyData[0]) < 10) ? (count($asCompanyData[0]) / 2) : ($ssPerPage / 2));
         array_splice($asCompanyData[0], $snCount, 0, $asMiddleBannerDetail);
         $paginator  = $this->get('knp_paginator');
@@ -170,6 +190,7 @@ class CompanyController extends Controller
                 'pagination' => $pagination,
                 'snCategoryIds'=>$snCategoryIds,
                 'ssCityName'=>$ssCityName,
+                'allCategories' => $allCategories,
                 'ssPerPage'=>$ssPerPage));
         } else {
             return $this->render('ClientMedicalBundle:Company:index.html.twig', array(
@@ -186,6 +207,7 @@ class CompanyController extends Controller
                 'snCategoryIds'=>$snCategoryIds,
                 'snNewsCategoryIds'=>$snNewsCategoryIds,
                 'ssPerPage'=>$ssPerPage,
+                'allCategories' => $allCategories,
                 'asMetaData'=>$asMetaData
             ));
         }
@@ -193,7 +215,7 @@ class CompanyController extends Controller
 
     public function refinesearchlistAction($ssPage, $ssPerPage) {
         $locale = $this->get('session')->get('_locale');
-        $ssLocale = ((isset($locale) && $locale != '') ? $locale : 'en');
+        $ssLocale = ((isset($locale) && $locale != '') ? $locale : 'lt');
         $em = $this->getDoctrine()->getManager();
         $asLanguageData = $em->getRepository('AdminMedicalBundle:Languages')->getLanguageDetail();
         $asPaymentOptionData = $em->getRepository('AdminMedicalBundle:PaymentOption')->getPaymentDetail();
@@ -218,7 +240,7 @@ class CompanyController extends Controller
 
     public function companydetailAction(Request $request,$id) {
         $locale = $this->get('session')->get('_locale');
-        $ssLocale = ((isset($locale) && $locale != '') ? $locale : 'en');
+        $ssLocale = ((isset($locale) && $locale != '') ? $locale : 'lt');
         $em = $this->getDoctrine()->getManager();
         $asCompanyDetail = $em->getRepository('AdminMedicalBundle:Company')->getCompanyDetailById($id, $ssLocale);
         $ssPage = (($request->get('page') != '') ? $request->get('page') : 1);
@@ -271,7 +293,7 @@ class CompanyController extends Controller
 
     public function insurancedetailAction(Request $request) {
         $locale = $this->get('session')->get('_locale');
-        $ssLocale = ((isset($locale) && $locale != '') ? $locale : 'en');
+        $ssLocale = ((isset($locale) && $locale != '') ? $locale : 'lt');
         $snCountryId = $request->get('country_id');
         $snCompanyId = $request->get('company_id');
         $em = $this->getDoctrine()->getManager();
@@ -304,7 +326,7 @@ class CompanyController extends Controller
 
     public function usercompanyAction(Request $request) {
         $locale = $this->get('session')->get('_locale');
-        $ssLocale = ((isset($locale) && $locale != '') ? $locale : 'en');
+        $ssLocale = ((isset($locale) && $locale != '') ? $locale : 'lt');
         $ssPage = (($request->get('page') != '') ? $request->get('page') : 1);
         $ssPerPage = (($request->get('per_page') != '') ? $request->get('per_page') : 10);
         $em = $this->getDoctrine()->getManager();
@@ -323,7 +345,7 @@ class CompanyController extends Controller
 
     public function removeusercompanyAction(Request $request){
         $locale = $this->get('session')->get('_locale');
-        $ssLocale = ((isset($locale) && $locale != '') ? $locale : 'en');
+        $ssLocale = ((isset($locale) && $locale != '') ? $locale : 'lt');
         $em = $this->getDoctrine()->getManager();
         $snIdUserCompany = $request->get('id');
         $asData = $this->get('session')->get('company_ids');
@@ -351,7 +373,7 @@ class CompanyController extends Controller
         $formImage = $this->createForm(new QuoteDocumentsType());
         $snQuoteId = (($request->get('quote_id') != '') ? $request->get('quote_id') : '');
         $locale = $this->get('session')->get('_locale');
-        $ssLocale = ((isset($locale) && $locale != '') ? $locale : 'en');
+        $ssLocale = ((isset($locale) && $locale != '') ? $locale : 'lt');
         $asMetaData = $em->getRepository('AdminMedicalBundle:StaticArticles')->getDetailByArticleType('WEBSITE_META_SETTINGS', $ssLocale);
         if($snQuoteId != '') {
             $entity = $em->getRepository('AdminMedicalBundle:UserQuoteDetail')->find(base64_decode($snQuoteId));
@@ -655,7 +677,7 @@ class CompanyController extends Controller
         if($locale == '') {
             $locale = $this->get('session')->set('_locale', 'en');
         }
-        $ssLocale = ((isset($locale) && $locale != '') ? $locale : 'en');
+        $ssLocale = ((isset($locale) && $locale != '') ? $locale : 'lt');
         $em = $this->getDoctrine()->getManager();
         $em->getRepository('AdminMedicalBundle:SpecialOffers')->updatespecialofferwithexpire();
         $asSpecialOffersData = $em->getRepository('AdminMedicalBundle:SpecialOffers')->getSpecialOfferRandomDetail($ssLocale,'',true);

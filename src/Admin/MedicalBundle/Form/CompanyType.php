@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class CompanyType extends AbstractType
 {
-	
+
 	private $container;
 
 	/**
@@ -25,7 +25,7 @@ class CompanyType extends AbstractType
 	public function __construct($container)
 	{
 		$this->container = $container;
-		
+
 	}
 
     /**
@@ -37,31 +37,17 @@ class CompanyType extends AbstractType
 		$locale = $this->container->get('session')->get('_locale');
 		$ssLocale = ( (isset($locale) && $locale != '') ? $locale : 'en' );
 		$em = $this->container->get('doctrine.orm.entity_manager');
-		
+
 		$asLanguageData = $em->getRepository('AdminMedicalBundle:Languages')->findAll();
 		$asPaymentOptionData = $em->getRepository('AdminMedicalBundle:PaymentOption')->findAll();
 		$asData = $em->getRepository('AdminMedicalBundle:Insurance')->getInsuranceTranslationDetail($ssLocale, true);
-		
-		$asCategoryDataInRecursive = $em->getRepository('AdminMedicalBundle:Category')->getAllSubCategoryDetail($ssLocale, 1);
-		
-		$asCategoryData = array();
-		if($options['data']->getId() != '')
-		{
-			$asCategoryData = $em->getRepository('AdminMedicalBundle:Company')->getDataByCompanyId($ssLocale, $options['data']->getId());		
-		}
-		
+
         $builder
-			->add('categories','choice', array('mapped'=>false, 'choices'   => 
-												$asCategoryDataInRecursive,
-												'expanded' => false,
-												'multiple' => true,
-												'data' => array_keys($asCategoryData),
-												'attr' => array('class' => "chosen-select",'data-placeholder'=>"Add category")))
 			->add('doctors', 'entity', array(
                     'class' => 'Admin\MedicalBundle\Entity\Doctor',
                     'query_builder' => function(EntityRepository $er)
                     {
-                      return $er->createQueryBuilder('c')                              
+                      return $er->createQueryBuilder('c')
                               ->orderBy('c.id', 'DESC');
                     },
                     'property' => 'firstname',
@@ -70,9 +56,9 @@ class CompanyType extends AbstractType
 					'required' => false,
 					'attr' => array('class' => "chosen-select",'data-placeholder'=>"Add doctors")
                 ))
-			
+
             ->add('name')
-            ->add('company_code')            
+            ->add('company_code')
             ->add('vat_code')
             ->add('licence_number')
             ->add('address', 'text', array('attr'=>array('onBlur'=>'getAddressMapInitialize()')))
@@ -84,13 +70,13 @@ class CompanyType extends AbstractType
                     'class' => 'Admin\MedicalBundle\Entity\Country',
                     'query_builder' => function(EntityRepository $er)
                     {
-                      return $er->createQueryBuilder('f')                             
+                      return $er->createQueryBuilder('f')
                               ->orderBy('f.id', 'ASC');
                     },
 					'empty_value' => 'Choose a country',
-                    'property' => 'name',					
+                    'property' => 'name',
                 ))
-				
+
             ->add('disable_quotes')
             ->add('primary_phone','text')
             ->add('cell_phone','text')
@@ -144,23 +130,23 @@ class CompanyType extends AbstractType
 
                 )))
 			->add('languagess', 'entity', array(
-                    'class' => 'Admin\MedicalBundle\Entity\Languages',                    
+                    'class' => 'Admin\MedicalBundle\Entity\Languages',
 					'choices' => $asLanguageData,
                     'property' =>  'name',
                     'expanded' => true,
                     'multiple' => true
                 ))
-			
+
 			->add('paymentoptions', 'entity', array(
-                    'class' => 'Admin\MedicalBundle\Entity\PaymentOption',                    
+                    'class' => 'Admin\MedicalBundle\Entity\PaymentOption',
 					'choices' => $asPaymentOptionData,
                     'property' =>  'title',
                     'expanded' => true,
                     'multiple' => true
-                ))			
+                ))
 			->add('insurances', 'entity', array(
 					'required'=>false,
-                    'class' => 'Admin\MedicalBundle\Entity\Insurance',                    
+                    'class' => 'Admin\MedicalBundle\Entity\Insurance',
 					'choices' => $asData,
                     'property' =>  'name',
                     'expanded' => false,
@@ -172,7 +158,7 @@ class CompanyType extends AbstractType
 			->add('final_price_info')
 			->add('small_company');
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */

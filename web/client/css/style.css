@@ -145,7 +145,7 @@ div.form_row .payment_method label {font-size: 14px;margin: 0 auto -3px 8px;}
 div.form_row .payment_method div.checker {margin: 0 4px 0 0;}
 .language span {color: #696969;font-size: 12px !important;margin-top:-2px;}
 #uniform-undefined {display: inline-block;}
-.row.medicine_news .btn.btn-primary:hover, .testimonials_and_special_offers .btn.btn-primary:hover {text-decoration:underline;font-weight:normal;} 
+.row.medicine_news .btn.btn-primary:hover, .testimonials_and_special_offers .btn.btn-primary:hover {text-decoration:underline;font-weight:normal;}
 .testimonials_and_special_offers .btn.btn-primary:hover {text-decoration:underline;font-weight:normal;}
 /* 11-04-2014 */
 .quicksearch_div {background-color:#efefef;border:0px solid #d4d4d3;border-radius:0px;position:relative;margin:30px auto 20px;padding:10px;}
@@ -336,11 +336,11 @@ div.form_row .payment_method div.checker {margin: 0 4px 0 0;}
 	.left_right_noew.desktop {display:none;}
 	.left_right_noew.mobile {display:block; height:auto !important;}
 	.left_right_noew.mobile label {display: none !important;}
-	
+
 }
 @media (max-width:480px){
 	.popup.leavecomment form, .popup.leavecomment form label, .popup.leavecomment form input, .leavecomment textarea,
-	.popup .label_with_select div.selector, .popup.leavecomment .label_with_select div.selector span, .popup .edit_rating .radio_div, 
+	.popup .label_with_select div.selector, .popup.leavecomment .label_with_select div.selector span, .popup .edit_rating .radio_div,
 	.popup .label_with_select div.selector span, .popup .show_per_page .selector select, .popup .show_per_page
 	{display: block;float: none;width: 100%;}
 	.right_note:before {content: "-";margin: 5px;}
@@ -360,7 +360,7 @@ div.form_row .payment_method div.checker {margin: 0 4px 0 0;}
 	.thumbsslider .thumbs_wrap a.next {top: 0;}
 	.thumbsslider .thumbs_wrap .thumbs {width: 20%;}
 	.rating_wrar {background-image: none !important;}
-	.rating_wrar .row .title {float: none;text-align: left;width: auto;font-weight:bold;}	
+	.rating_wrar .row .title {float: none;text-align: left;width: auto;font-weight:bold;}
 	.thumbsslider_contant .comapny_contant .ratting_stars {float: none;margin: auto;width: auto;}
 	.rating_wrar .row div.select_language a {margin: auto 5px;width: 82px;}
 	.rating_wrar .rightpart {display: block;float: none;padding: 10px 0;width: auto;text-align:center;}
@@ -585,7 +585,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#74aa3a', end
 .popup .edit_rating .row.left_right_noew {height:0px;max-width:625px;}
 #div_rating_frm.popup.leavecomment .row.take_buttan {margin: 20px 18px;}
 .popup .edit_rating .row.left_right_noew .radio_div {vertical-align: bottom;}
-.popup.leavecomment 
+.popup.leavecomment
 .popup h2 {color: #0073B4;font-family: 'roboto';text-transform: uppercase;}
 .popup .rating_companys {border-left: 5px solid #0073B4;border-top: 0 solid #CCCCCC;margin: 20px auto auto;padding:0px 10px;}
 .popup #rating_listing {border-top: 1px solid #CCCCCC;}
@@ -781,7 +781,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#74aa3a', end
 #refine_filter_boxes.row { margin-top: auto;}
 .row.testimonials_and_special_offers .col-md-8 .row {margin-bottom: 5px;margin-top: auto;}
 .static_pages .companylist_container p {text-align: justify;}
-.static_pages .companylist_container {padding: 0;}	
+.static_pages .companylist_container {padding: 0;}
 .static_pages .companylist_container h3 {margin-top: auto;}
 .row.static_pages {margin-top: 10px;}
 .comapny_contant .rating_wrar .show_all {font-size: 12px;}
@@ -803,7 +803,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#74aa3a', end
     overflow-y: auto;
     padding: 10px;
 }
-.sp-modal .modal-dialog {	
+.sp-modal .modal-dialog {
   overflow: hidden;
 	padding: 15px;
 }
@@ -826,7 +826,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#74aa3a', end
   height: auto;
 }
 .sp-modal1 #cboxClose {
-	z-index:5000;	
+	z-index:5000;
 }
 .rating_wrar .take_buttan .btn-default {
 	margin-right: 0!important;
@@ -908,3 +908,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#74aa3a', end
 #badges .badge_H:hover div.badge_text_H{
     display: block;
 }
+.info_button .overlay {  display:none;  }
+.info_button:hover .overlay {  display:block;  float:right;  }​
+.width110 { width: 110px;}
+.xsmallgrey { font-size: x-small; color:darkgrey }
+.blackColored { color:black; }
+.infoButton { background-color: red; color:white; float:left; }
+.companyListingSubmit { float:right; background-color: #0000cc; color:white; width: 100px; text-align: center; height: 30px; }

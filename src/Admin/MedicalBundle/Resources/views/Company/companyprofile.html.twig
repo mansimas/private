@@ -15,92 +15,96 @@
 		</h1>
 	</div><!-- /.page-header -->
 	<div class="row-fluid">
-		<div class="span12">			
+		<div class="span12">
 			<!-- PAGE CONTENT BEGINS -->
-		   {{ form_start(form, {'action': path('medical_company_addedit', {'id': snConpanyId }), 'attr': {'class': 'form-horizontal'} }) }}		   
+		   {{ form_start(form, {'action': path('medical_company_addedit', {'id': snConpanyId }),
+               'attr': {'class': 'form-horizontal', 'enctype': 'multipart/form-data'} }) }}
 			<!--<form class="form-horizontal">-->
 				<div class="pull-left span6 ">
 				Company details
-				<div class="control-group">
-					<label class="control-label" for="form-field-1">{{ form_label(form.categories) }}</label>
-					<div class="controls">	
-						{{ form_widget(form.categories) }}																
-					</div>
-				</div>
+
+                <div class="prices" data-prototype="
+                     Category: {{ form_widget(companyPrices.categories.vars.prototype) | e }}<span>
+                     Min: {{ form_widget(companyPrices.minprice.vars.prototype) | e }}</span>
+                     Max: {{ form_widget(companyPrices.maxprice.vars.prototype) | e }}</span></br>
+                     ">
+                </div>
+
+
 				<div class="control-group">
 					<label class="control-label" for="form-field-1">{{ form_label(form.doctors) }}</label>
-					<div class="controls">	
-						{{ form_widget(form.doctors) }}																
+					<div class="controls">
+						{{ form_widget(form.doctors) }}
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="form-field-1">{{ form_label(form.name) }}</label>
-					<div class="controls">	
-						{{ form_widget(form.name) }}																
+					<div class="controls">
+						{{ form_widget(form.name) }}
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="form-field-1">{{ form_label(form.company_code) }}</label>
-					<div class="controls">	
-						{{ form_widget(form.company_code) }}																
+					<div class="controls">
+						{{ form_widget(form.company_code) }}
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="form-field-1">{{ form_label(form.vat_code) }}</label>
-					<div class="controls">	
-						{{ form_widget(form.vat_code) }}																
+					<div class="controls">
+						{{ form_widget(form.vat_code) }}
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="form-field-1">{{ form_label(form.licence_number) }}</label>
-					<div class="controls">	
-						{{ form_widget(form.licence_number) }}																
+					<div class="controls">
+						{{ form_widget(form.licence_number) }}
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="form-field-1">{{ "Minimal fee (EUR)" }}</label>
-					<div class="controls">	
-						{{ form_widget(form.fixed_fee) }}																
+					<div class="controls">
+						{{ form_widget(form.fixed_fee) }}
 					</div>
 				</div>
-				<!--<div class="control-group">					
-					<div class="controls">	
+				<!--<div class="control-group">
+					<div class="controls">
 						<b>OR</b>
 					</div>
 				</div>-->
 				<div class="control-group">
 					<label class="control-label" for="form-field-1">{{ "Comissions (%)" }}</label>
-					<div class="controls">	
-						{{ form_widget(form.fixed_fee_percentage) }}																
+					<div class="controls">
+						{{ form_widget(form.fixed_fee_percentage) }}
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="form-field-1">{{ form_label(form.address) }}</label>
-					<div class="controls">	
-						{{ form_widget(form.address) }}																
+					<div class="controls">
+						{{ form_widget(form.address) }}
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="form-field-1">{{ form_label(form.city) }}</label>
-					<div class="controls">	
-						{{ form_widget(form.city) }}																
+					<div class="controls">
+						{{ form_widget(form.city) }}
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="form-field-1">{{ form_label(form.zip) }}</label>
-					<div class="controls">	
-						{{ form_widget(form.zip) }}																
+					<div class="controls">
+						{{ form_widget(form.zip) }}
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="form-field-1">{{ form_label(form.countries) }}</label>
-					<div class="controls">	
-						{{ form_widget(form.countries) }}																
+					<div class="controls">
+						{{ form_widget(form.countries) }}
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="form-field-1">{{ "Phone call on inquiry" }}</label>
-					<div class="controls">	{{form_widget(form.small_company)}}						
+					<div class="controls">	{{form_widget(form.small_company)}}
 					</div>
 				</div>
 				<div class="row">
@@ -117,32 +121,32 @@
 				Contact details
 				<div class="control-group">
 					<label class="control-label" for="form-field-1">{{ form_label(form.primary_phone) }}</label>
-					<div class="controls">	
-						{{ form_widget(form.primary_phone) }}																
+					<div class="controls">
+						{{ form_widget(form.primary_phone) }}
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="form-field-1">{{ form_label(form.cell_phone) }}</label>
-					<div class="controls">	
-						{{ form_widget(form.cell_phone) }}																
+					<div class="controls">
+						{{ form_widget(form.cell_phone) }}
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="form-field-1">{{ form_label(form.fax) }}</label>
-					<div class="controls">	
-						{{ form_widget(form.fax) }}																
+					<div class="controls">
+						{{ form_widget(form.fax) }}
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="form-field-1">{{ form_label(form.email) }}</label>
-					<div class="controls">	
+					<div class="controls">
 						{{ form_widget(form.email) }}
 						{% if form_errors(form.email) %}
 						<div class="chng_err_msg">
 							{{ form_errors(form.email) }}
 						</div>
 						{% endif %}
-					</div>					
+					</div>
 					<p class="for_quotes">for quotes</p>
 				</div>
                 <div class="control-group">
@@ -159,10 +163,10 @@
                 </div>
 				<div class="control-group">
 					<label class="control-label" for="form-field-1">{{ form_label(form.password) }}</label>
-					<div class="controls">	
-						{{ form_widget(form.password) }}																
+					<div class="controls">
+						{{ form_widget(form.password) }}
 					</div>
-				</div>				
+				</div>
 				<div class="control-group">
 					<label class="control-label" for="form-field-1">{{ form_label(form.badges) }}</label>
 					<div class="controls">
@@ -171,7 +175,7 @@
 							{{ form_widget(child) }}
 							{{ form_label(child) }}
 						</div>
-						{% endfor %}																					
+						{% endfor %}
 					</div>
 				</div>
                 <div class="companymetadetail">
@@ -179,13 +183,13 @@
                 </div>
 				<div class="control-group">
 					<label class="control-label" for="form-field-1">{{ form_label(form.languagess) }}</label>
-					<div class="controls">	
+					<div class="controls">
 						{% for child in form.languagess %}
 						<div class="radio_language">
 							{{ form_widget(child) }}
 							{{ form_label(child) }}
 						</div>
-						{% endfor %}																						
+						{% endfor %}
 					</div>
 				</div>
 				<div class="control-group">
@@ -196,29 +200,29 @@
 							{{ form_widget(child) }}
 							{{ form_label(child) }}
 						</div>
-						{% endfor %}																					
+						{% endfor %}
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="form-field-1">Notes about company <p class="notesaboutcompany">(for admin only)</p></label>
-					<div class="controls">	
-						{{ form_widget(form.company_note) }}																
+					<div class="controls">
+						{{ form_widget(form.company_note) }}
 					</div>
 				</div>
 				<div class="control-group">
 					<label class="control-label" for="form-field-1">{{ form_label(form.insurances) }}</label>
-					<div class="controls">	
-						{{ form_widget(form.insurances) }}																
-					</div>					
+					<div class="controls">
+						{{ form_widget(form.insurances) }}
+					</div>
 				</div>
 
 				</div>
 				<div class="clr"></div>
-				<input type="hidden" id="image_count" name="image_count" value="0">				
-				<div id="medical_save_button" class="form-actions company_profilesave">															
+				<input type="hidden" id="image_count" name="image_count" value="0">
+				<div id="medical_save_button" class="form-actions company_profilesave">
 					<input style="width:83px;height:42px;" class="btn btn-info" type="submit" name="Save" value="Save" tabindex="1" title="Save">
 					&nbsp; &nbsp; &nbsp;
-					<div class="btn">													
+					<div class="btn">
 							<a href="{{ path('medical_company')}}" tabindex="1">Cancel</a>
 					</div>
 				</div>
@@ -227,12 +231,12 @@
 			<div id="bootbox-regular" class="youtube">Add youtube</div>
 				<div id="youtube_hidden_url"></div>
 				<div id="db_delete_youtube_url"></div>
-				
 
-				
-				<div id="display_youtube_hidden">				
+
+
+				<div id="display_youtube_hidden">
 				{% if asVideoData|length > 0%}
-					{% for snKey,asData in asVideoData%}				
+					{% for snKey,asData in asVideoData%}
 					<div id="youtube_video_{{ asData.id}}" class="you_tube_video">
 						<a  class="delete_youtube" href="javascript:void(0)" onClick = "deletevideo('youtube_video_{{ asData.id}}','{{ asData.id }}','')">
 						<img src="{{ asset('images/admin/delete.jpg') }}" />
@@ -247,10 +251,10 @@
 				<div class="clr"></div>
 				</div>
 				<!-- Youtube logic end -->
-				
-			{{ form_end(form) }}						
-			
-			<div class="imageupload_wraper">				
+
+			{{ form_end(form) }}
+
+			<div class="imageupload_wraper">
 				<form action="{{ path("medical_company_imageupload") }}" class="dropzone" id="my-awesome-dropzone">
 				  <div class="fallback">
 					<input name="file" type="file" multiple />
@@ -262,18 +266,91 @@
 		</div><!-- /.span -->
 	</div><!-- /.row-fluid -->
 </div><!-- /.page-content -->
+
+{% set srcfordelete =  asset('images/admin/delete.jpg') %}
+
 <script type="text/javascript">
+    var $collectionHolder;
+    var newforms = [];
+    // setup an "add a tag" link
+    var $addTagLink = $('<a href="#" class="add_pictures">add Category </span></a>');
+    var $removeTagLink = $('<a href="#"> | <img src="{{ srcfordelete }}" height="10px" width="10px"/> </a>');
+
+    var $newLinkLi = $('<span></span>').append($addTagLink).append($removeTagLink);
+
+    jQuery(document).ready(function() {
+        // Get the ul that holds the collection of tags
+        $collectionHolder = $('div.prices');
+
+        // add the "add a tag" anchor and li to the tags ul
+        $collectionHolder.append($newLinkLi);
+
+        // count the current form inputs we have (e.g. 2), use that as the new
+        // index when inserting a new item (e.g. 2)
+        $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+        // add a new tag form (see next code block)
+        addTagForm($collectionHolder, $newLinkLi);
+
+        $addTagLink.on('click', function(e) {
+            // prevent the link from creating a "#" on the URL
+            e.preventDefault();
+            // add a new tag form (see next code block)
+            addTagForm($collectionHolder, $newLinkLi);
+        });
+
+        $removeTagLink.on('click', function(e) {
+            // prevent the link from creating a "#" on the URL
+            e.preventDefault();
+            // add a new tag form (see next code block)
+            removeTagForm($collectionHolder);
+        });
+
+        function addTagForm($collectionHolder, $newLinkLi)
+        {
+            // Get the data-prototype explained earlier
+            var prototype = $collectionHolder.data('prototype');
+            // get the new index
+            var index = $collectionHolder.data('index');
+
+            // Replace '__name__' in the prototype's HTML to
+            // instead be a number based on how many items we have
+            var newForm = prototype.replace(/__name__/g, index);
+
+            // increase the index with one for the next item
+            $collectionHolder.data('index', index + 1);
+
+            // Display the form in the page in an li, before the "Add a tag" link li
+            var $newFormLi = $('<span></span>').append(newForm);
+
+            newforms.push($newFormLi);
+
+            $newLinkLi.before($newFormLi);
+        }
+
+        function removeTagForm($collectionHolder)
+        {
+            var lastelem = newforms.pop();
+            var prototype = $collectionHolder.data('prototype');
+            var index = $collectionHolder.data('index');
+            $collectionHolder.data('index', index - 1);
+            $(lastelem[0]).remove();
+        }
+
+    });
+
+
 $(document).ready(function () {
 disableinquiryandfinalprice();
 });
-jQuery(function($) 
+jQuery(function($)
 				{
-					$("#bootbox-regular").on(ace.click_event, function() 
+					$("#bootbox-regular").on(ace.click_event, function()
 						{
 							test(bootbox,'');
 						});
 				});
-	$(".chosen-select").chosen();
+	$(".chosen-select").chosen()
 	$('#chosen-multiple-style').on('click', function(e){
 		var target = $(e.target);
 		var which = parseInt($.trim(target.text()));
@@ -284,8 +361,8 @@ $('.date-picker').datepicker({'format':'mm/dd/yyyy'});
 
 function deletevideo(divId, dbId, hiddenId)
 {
-	$("#"+divId).hide();	
-	
+	$("#"+divId).hide();
+
 	if(dbId != '')
 	{
 		var element = '<input type="hidden" name="deleteurl[]" value='+dbId+'>';
@@ -298,33 +375,33 @@ function deletevideo(divId, dbId, hiddenId)
 }
 function test(bootbox, ssMsg)
 {
-	bootbox.prompt("Youtube URL<h6>(http://www.youtube.com/embed/F0dugc4TrlE)</h6>"+ssMsg, function(result) {					
+	bootbox.prompt("Youtube URL<h6>(http://www.youtube.com/embed/F0dugc4TrlE)</h6>"+ssMsg, function(result) {
 		if (result === null)
-		{		
+		{
 		}
 		else
 		{
 			//var matches = result.match(/^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((.|-){11})(?:\S+)?$/);
 			var matches = url.match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\|\/user\/\S+|\/ytscreeningroom\?v=|\/sandalsResorts#\w\/\w\/.*\/))([^\/&]{10,12})/);
 			if(matches)
-			{				
+			{
 				var snTotalCount = parseInt($('#hidden_count_id').val());
 				var temp = snTotalCount + 1;
-				
+
 				var element = '<input type="hidden" id="hidden_url_'+temp+'" name="url[]" value='+result+'>';
 				$('#youtube_hidden_url').append(element);
-				
+
 				var video = '<div class="you_tube_video" id="youtube_video_'+temp+'"><a class="delete_youtube" href="javascript:void(0)" onClick = deletevideo("youtube_video_'+temp+'","","hidden_url_'+temp+'")><img src="{{ asset("images/admin/delete.jpg") }}" /></a><iframe width="100" height="100" src="'+result+'" frameborder="0" allowfullscreen></iframe></div>'
 				$('#display_youtube_hidden').append(video);
-				
+
 				$('#hidden_count_id').val(temp);
 			}
 			else
 			{
-				if (result == '') 
+				if (result == '')
 				{
-					test(bootbox,'<br><h5 style="color:red">please enter URL</h5>');					
-				} 
+					test(bootbox,'<br><h5 style="color:red">please enter URL</h5>');
+				}
 				else
 				{
 					test(bootbox,'<br><h5 style="color:red">Please enter valid URL</h5>');

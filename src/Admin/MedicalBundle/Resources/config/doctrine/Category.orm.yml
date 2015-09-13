@@ -2,7 +2,7 @@ Admin\MedicalBundle\Entity\Category:
     type: entity
     table: category
     gedmo:
-      translation:        
+      translation:
         entity: Admin\MedicalBundle\Entity\Categorytranslation
     repositoryClass: Admin\MedicalBundle\Entity\CategoryRepository
     fields:
@@ -28,26 +28,18 @@ Admin\MedicalBundle\Entity\Category:
             length: 255
             fixed: false
             nullable: true
-            gedmo:
-                - translatable
         url:
             type: string
             length: '100'
             nullable: true
-            gedmo:
-                - translatable
         metadescription:
             type: text
             length: null
             nullable: true
-            gedmo:
-                - translatable
         description:
             type: text
             length: null
             nullable: true
-            gedmo:
-                - translatable
         lvl:
             type: integer
             length: 10
@@ -55,15 +47,15 @@ Admin\MedicalBundle\Entity\Category:
         status:
             type: string
             length: 8
-            options:        
-              default: 'InActive'        
+            options:
+              default: 'InActive'
         created_at:
             type: date
             nullable: true
         updated_at:
-            type: date		
+            type: date
             nullable: true
-    manyToMany:      
+    manyToMany:
       news:
         targetEntity: News
         mappedBy: categories

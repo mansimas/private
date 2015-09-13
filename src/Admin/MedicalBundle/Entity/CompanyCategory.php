@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class CompanyCategory
 {
-    
+
     /**
      * @var integer
      */
@@ -19,6 +19,16 @@ class CompanyCategory
      * @var integer
      */
     private $root_id;
+
+    /**
+     * @var integer
+     */
+    private $minprice;
+
+    /**
+     * @var integer
+     */
+    private $maxprice;
 
     /**
      * @var \Admin\MedicalBundle\Entity\Company
@@ -34,7 +44,7 @@ class CompanyCategory
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -50,14 +60,14 @@ class CompanyCategory
     public function setRootId($rootId)
     {
         $this->root_id = $rootId;
-    
+
         return $this;
     }
 
     /**
      * Get root_id
      *
-     * @return integer 
+     * @return integer
      */
     public function getRootId()
     {
@@ -73,14 +83,14 @@ class CompanyCategory
     public function setCompany(\Admin\MedicalBundle\Entity\Company $company = null)
     {
         $this->company = $company;
-    
+
         return $this;
     }
 
     /**
      * Get company
      *
-     * @return \Admin\MedicalBundle\Entity\Company 
+     * @return \Admin\MedicalBundle\Entity\Company
      */
     public function getCompany()
     {
@@ -96,14 +106,14 @@ class CompanyCategory
     public function setCategories(\Admin\MedicalBundle\Entity\Category $categories = null)
     {
         $this->categories = $categories;
-    
+
         return $this;
     }
 
     /**
      * Get categories
      *
-     * @return \Admin\MedicalBundle\Entity\Category 
+     * @return \Admin\MedicalBundle\Entity\Category
      */
     public function getCategories()
     {
@@ -124,14 +134,14 @@ class CompanyCategory
     public function setCategoryId($categoryId)
     {
         $this->category_id = $categoryId;
-    
+
         return $this;
     }
 
     /**
      * Get category_id
      *
-     * @return integer 
+     * @return integer
      */
     public function getCategoryId()
     {
@@ -152,17 +162,49 @@ class CompanyCategory
     public function setRoots(\Admin\MedicalBundle\Entity\Category $roots = null)
     {
         $this->roots = $roots;
-    
+
         return $this;
     }
 
     /**
      * Get roots
      *
-     * @return \Admin\MedicalBundle\Entity\Category 
+     * @return \Admin\MedicalBundle\Entity\Category
      */
     public function getRoots()
     {
         return $this->roots;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMinprice()
+    {
+        return $this->minprice;
+    }
+
+    /**
+     * @param int $minprice
+     */
+    public function setMinprice($minprice)
+    {
+        $this->minprice = $minprice;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxprice()
+    {
+        return $this->maxprice;
+    }
+
+    /**
+     * @param int $maxprice
+     */
+    public function setMaxprice($maxprice)
+    {
+        $this->maxprice = $maxprice;
     }
 }

@@ -4,6 +4,7 @@ namespace Client\MedicalBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Admin\MedicalBundle\Entity\Category;
 
@@ -11,12 +12,27 @@ class CategoryController extends Controller
 {
     public function indexAction()
     {
-        $locale = $this->get('session')->get('_locale');        
-        $ssLocale = ((isset($locale) && $locale != '') ? $locale : 'en');        
+        $locale = $this->get('session')->get('_locale');
+        $ssLocale = ((isset($locale) && $locale != '') ? $locale : 'en');
         $em = $this->getDoctrine()->getManager();
         $asCategoryData = $em->getRepository('AdminMedicalBundle:Category')->getAllCategoryInBlock($ssLocale);
         $asMetaData = $em->getRepository('AdminMedicalBundle:StaticArticles')->getDetailByArticleType('WEBSITE_META_SETTINGS', $ssLocale);
         return $this->render('ClientMedicalBundle:Category:index.html.twig',array('asCategoryData' => $asCategoryData,'asMetaData' => $asMetaData));
+    }
+
+    public function categorySearchAction(Request $request) {
+        $locale = $this->get('session')->get('_locale');
+        $ssLocale = ((isset($locale) && $locale != '') ? $locale : 'lt');
+        $em = $this->getDoctrine()->getManager();
+        $CategoriesObj = $em->getRepository('AdminMedicalBundle:Category')->getAllCategoryNames($ssLocale);
+        $arrayOfCategories = [];
+        foreach($CategoriesObj as $key=>$val) {
+            foreach($val as $k=>$v) {
+                $arrayOfCategories[] = $v;
+            }
+        }
+        $allCategories = json_encode(array_values($arrayOfCategories));
+        return new Response($allCategories);
     }
 
     public function categorydetailAction(Request $request)
