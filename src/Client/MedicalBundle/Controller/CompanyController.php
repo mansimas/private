@@ -49,7 +49,7 @@ class CompanyController extends Controller
         $ssRatingPopular = (($request->get('rate_popular') != '') ? $request->get('rate_popular') : 'best');
         $ssRatingSlider = (($request->get('rateslider') != '') ? $request->get('rateslider') : '');
         $ssPage = (($request->get('page') != '') ? $request->get('page') : 1);
-        $ssPerPage = (($request->get('per_page') != '') ? $request->get('per_page') : 10);
+        $ssPerPage = (($request->get('per_page') != '') ? $request->get('per_page') : 20);
         $ssClinicRating = (($request->get('clinic_rate') != '') ? $request->get('clinic_rate') : '');
         $em = $this->getDoctrine()->getManager();
         if($request->isXmlHttpRequest() && $request->get('banner') != '') {
@@ -143,7 +143,7 @@ class CompanyController extends Controller
         }
         $ssRatingPopular = (($request->get('rate_popular') != '') ? $request->get('rate_popular') : 'best');
         $ssPage = (($request->get('page') != '') ? $request->get('page') : 1);
-        $ssPerPage = (($request->get('per_page') != '') ? $request->get('per_page') : 10);
+        $ssPerPage = (($request->get('per_page') != '') ? $request->get('per_page') : 20);
         $ssClinicRating = (($request->get('clinic_rate') != '') ? $request->get('clinic_rate') : '');
         $em = $this->getDoctrine()->getManager();
         $em->getConnection()->getConfiguration()->setSQLLogger(null);
