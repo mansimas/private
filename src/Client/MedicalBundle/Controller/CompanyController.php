@@ -61,7 +61,8 @@ class CompanyController extends Controller
         $asCategoryDataInRecursive = $em->getRepository('AdminMedicalBundle:Category')->getAllSubCategoryDetail($ssLocale, 1);
         $arrayOfCategories = [];
         foreach($asCategoryDataInRecursive as $key=>$val) {
-            $arrayOfCategories[] = $val;
+            $replaced = str_replace(["-", "--"], "", $val);
+            $arrayOfCategories[] = $replaced;
         }
         $allCategories = json_encode(array_values($arrayOfCategories));
 
@@ -169,7 +170,8 @@ class CompanyController extends Controller
         $asCategoryDataInRecursive = $em->getRepository('AdminMedicalBundle:Category')->getAllSubCategoryDetail($ssLocale, 1);
         $arrayOfCategories = [];
         foreach($asCategoryDataInRecursive as $key=>$val) {
-            $arrayOfCategories[] = $val;
+            $replaced = str_replace(["-", "--"], "", $val);
+            $arrayOfCategories[] = $replaced;
         }
         $allCategories = json_encode(array_values($arrayOfCategories));
 

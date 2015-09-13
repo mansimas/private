@@ -20,21 +20,6 @@ class CategoryController extends Controller
         return $this->render('ClientMedicalBundle:Category:index.html.twig',array('asCategoryData' => $asCategoryData,'asMetaData' => $asMetaData));
     }
 
-    public function categorySearchAction(Request $request) {
-        $locale = $this->get('session')->get('_locale');
-        $ssLocale = ((isset($locale) && $locale != '') ? $locale : 'lt');
-        $em = $this->getDoctrine()->getManager();
-        $CategoriesObj = $em->getRepository('AdminMedicalBundle:Category')->getAllCategoryNames($ssLocale);
-        $arrayOfCategories = [];
-        foreach($CategoriesObj as $key=>$val) {
-            foreach($val as $k=>$v) {
-                $arrayOfCategories[] = $v;
-            }
-        }
-        $allCategories = json_encode(array_values($arrayOfCategories));
-        return new Response($allCategories);
-    }
-
     public function categorydetailAction(Request $request)
     {
         $snCategoryId = $request->get('id');
