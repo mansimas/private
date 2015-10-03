@@ -24,15 +24,17 @@ class DoctorRepository extends EntityRepository
      */
 
     public function findAllDoctors() {
-        $q = $this
-            ->createQueryBuilder('u')
-            ->select('u.firstname, u.lastname')
-            ->getQuery()
-            ->getArrayResult();
-
-        return $q;
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+        $statement = $connection->prepare("
+                SELECT d.firstname, d.lastname
+                FROM doctor d
+                LEFT JOIN company_doctor cd ON d.id = cd.doctor_id
+                INNER JOIN company cc ON cc.id = cd.company_id
+               ");
+        $statement->execute();
+        return $statement->fetchAll();
     }
-
 
     public function getAllDoctorsDetail($ssLocale='en')
     {

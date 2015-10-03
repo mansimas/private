@@ -74,8 +74,8 @@ class CompanyController extends Controller
                 $arrayOfCategories[] = $replaced;
             }
         }
+        $arrayOfCategories = array_unique($arrayOfCategories);
         $allCategories = json_encode(array_values($arrayOfCategories));
-
 
         $asMiddleBannerDetail = $em->getRepository('AdminMedicalBundle:AdvertiseBanner')->getAddBannerDetail('company_center', $snCategoryIds, '' , $ssCityName, 'mid', $locale);
         $asCompanyData = $em->getRepository('AdminMedicalBundle:Company')->getCompanyAllDetail($ssSerachParam, $snCategoryIds, $ssCityName, $ssLanguages, $ssPaymentOption, $ssInsuranceIds, $ssLocale, $ssRatingPopular,$ssRatingSlider, $ssClinicRating);
@@ -198,8 +198,9 @@ class CompanyController extends Controller
                 $arrayOfCategories[] = $replaced;
             }
         }
-        $allCategories = json_encode(array_values($arrayOfCategories));
 
+        $arrayOfCategories = array_unique($arrayOfCategories);
+        $allCategories = json_encode(array_values($arrayOfCategories));
 
         $snCount = ((count($foundCategories[0]) < 10) ? (count($foundCategories[0]) / 2) : ($ssPerPage / 2));
         array_splice($foundCategories[0], $snCount, 0, $asMiddleBannerDetail);
