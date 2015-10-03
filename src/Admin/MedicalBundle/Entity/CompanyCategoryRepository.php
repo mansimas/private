@@ -15,18 +15,28 @@ class CompanyCategoryRepository extends EntityRepository
 	/**
      * function deleteData
      *
-     * @param  array $asIds company category ids.    
+     * @param  array $asIds company category ids.
      *
      * @todo   Function delete company category
      * @access public
      * @author Arpita Jadeja <arpita.j.php@gmail.com>
      * @return boolean
      */
-	public function deleteData($asIds) 
+	public function deleteData($asIds)
     {
         $asData = $this->getEntityManager()
             ->createQuery('Delete FROM AdminMedicalBundle:CompanyCategory cc where cc.id IN ('.$asIds.')')
              ->execute();
 		return true;
+    }
+
+    public function getDataByCompany($companyId)
+    {
+
+        return $this->createQueryBuilder('c')
+            ->select('c.category')
+            ->Where('c.id = '.$companyId)
+            ->getQuery()
+            ->getArrayResult();
     }
 }

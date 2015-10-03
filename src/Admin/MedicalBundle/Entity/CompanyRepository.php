@@ -20,6 +20,18 @@ use \ForceUTF8\Encoding;
  */
 class CompanyRepository extends EntityRepository implements UserProviderInterface
 {
+    public function getCompanyById($id)
+    {
+        $q = $this
+            ->createQueryBuilder('u')
+            ->where('u.username = :company')
+            ->setParameter("company", $id)
+            ->getQuery()
+            ->getArrayResult();
+
+        return $q;
+    }
+
 	/**
      * function deleteData
      *
@@ -305,6 +317,25 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
 						//->useResultCache(true)
 					    ->getArrayResult();
 	}
+
+    public function getCategoryByCompany($id) {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+        $statement = $connection->prepare(
+            "SELECT cat.name, cc.id, cc.minprice, cc.maxprice
+                    FROM company cm
+                    LEFT JOIN company_category cc
+                    ON cm.id = cc.company_id
+                    LEFT JOIN category cat
+                    ON cc.category_id = cat.id
+                    WHERE (cm.id = :keyword)"
+        );
+
+        $statement->bindValue('keyword', $id);
+        $statement->execute();
+        $results = $statement->fetchAll();
+        return $results;
+    }
 	/**
      * function getCompanyAllDetailForSearch
      *

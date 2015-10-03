@@ -41,6 +41,37 @@ use Admin\MedicalBundle\Entity\CompanyCategory;
 class CompanyController extends Controller
 {
 
+    public function editCompanyCategoryAction(Request $request) {
+
+        $companyCategoryId = $request->get('categoryId');
+        $category = $request->get('category');
+        $minprice = $request->get('minprice');
+        $maxprice = $request->get('maxprice');
+
+        $em = $this->getDoctrine()->getManager();
+        $acategory = $em->getRepository('AdminMedicalBundle:Category')->find($category);
+        $companycategory = $em->getRepository('AdminMedicalBundle:CompanyCategory')->find($companyCategoryId);
+        $companycategory->setCategories($acategory);
+        $companycategory->setMinprice($minprice);
+        $companycategory->setMaxprice($maxprice);
+        $em->persist($companycategory);
+        $em->flush();
+
+        return new Response('success');
+    }
+
+    public function deleteCompanyCategoryAction(Request $request) {
+
+        $companyCategoryId = $request->get('categoryId');
+        $em = $this->getDoctrine()->getManager();
+        $companycategory = $em->getRepository('AdminMedicalBundle:CompanyCategory')->find($companyCategoryId);
+        $em->remove($companycategory);
+        $em->flush();
+
+        return new Response('success');
+    }
+
+
     /**
      * function indexAction
      *
@@ -173,12 +204,16 @@ class CompanyController extends Controller
         $asServiceData = array();
         $asExperienceData = array();
         $asPricesData = array();
+        $companyData = array();
+        $categoryList = array();
 
         $entityPrice = new CompanyCategory();
         $categoryPrice = $this->createForm(new CategoryPriceType($this->container), $entityPrice);
 
         if (isset($snIdCompany) && $snIdCompany != '') {
             $entity = $em->getRepository('AdminMedicalBundle:Company')->find($snIdCompany);
+            $companyData = $em->getRepository('AdminMedicalBundle:Company')->getCategoryByCompany($snIdCompany);
+            $categoryList = $em->getRepository('AdminMedicalBundle:Category')->getAllSubCategoryDetail('lt', 1);
 
             if (!$entity) {
                 $session = $request->getSession();
@@ -317,7 +352,9 @@ class CompanyController extends Controller
             'ssPhoto' => $ssPhoto,
             'objPrice' => $objPrice->createView(),
             'snTotalSalesCountId' => $snTotalSalesCountId,
-            'companyPrices' => $categoryPrice->createView()
+            'companyPrices' => $categoryPrice->createView(),
+            'priceListas' => $companyData,
+            'categoryList' => $categoryList
         ));
     }
 

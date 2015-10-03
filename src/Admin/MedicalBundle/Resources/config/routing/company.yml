@@ -6,14 +6,23 @@ medical_company_show:
     pattern:  /{id}/show
     defaults: { _controller: "AdminMedicalBundle:Company:show" }
 
+medical_edit_company_category:
+    pattern:  /medical_edit_company_category
+    defaults: { _controller: "AdminMedicalBundle:Company:editCompanyCategory" }
+
+medical_delete_company_category:
+    pattern:  /medical_delete_company_category
+    defaults: { _controller: "AdminMedicalBundle:Company:deleteCompanyCategory" }
+
+
 medical_company_addedit:
     pattern:  /addedit/{id}/{ssBooleanFlag}
     defaults: { _controller: "AdminMedicalBundle:Company:addedit", id: null, ssBooleanFlag: null}
 
 medical_company_delete:
     pattern:  /delete
-    defaults: { _controller: "AdminMedicalBundle:Company:delete" }    
-    
+    defaults: { _controller: "AdminMedicalBundle:Company:delete" }
+
 medical_company_special_offer:
     pattern:  /specialoffer
     defaults: { _controller: "AdminMedicalBundle:Company:specialoffer" }
@@ -21,7 +30,7 @@ medical_company_special_offer:
 medical_company_special_offer_delete:
    pattern:  /test/delete
    defaults: { _controller: "AdminMedicalBundle:Company:deletespecialoffer" }
-   
+
 medical_company_rating:
     pattern:  /rating
     defaults: { _controller: "AdminMedicalBundle:Company:rating" }
@@ -45,7 +54,7 @@ medical_company_experience:
 medical_company_prices:
     pattern:  /prices
     defaults: { _controller: "AdminMedicalBundle:Company:prices" }
-   
+
 medical_company_doctor:
     pattern:  /doctor
     defaults: { _controller: "AdminMedicalBundle:Company:doctor" }
@@ -53,7 +62,7 @@ medical_company_doctor:
 medical_company_request:
     pattern:  /companyrequest
     defaults: { _controller: "AdminMedicalBundle:Company:companyrequest" }
-    
+
 medical_company_imageupload:
     pattern:  /imageupload
     defaults: { _controller: "AdminMedicalBundle:Company:imageupload" }

@@ -22,6 +22,19 @@
 			<!--<form class="form-horizontal">-->
 				<div class="pull-left span6 ">
 				Company details
+                    {% for pricer in priceListas %}
+                        <div class="control-group" id="div_{{ pricer.id }}">
+                            <span>Category:  <select name="lister" style="max-width: 120px;" id="select_{{ pricer.id }}">
+                                {% for key, categorija in categoryList %}
+                                    <option value={{ key }} {% if categorija|trim('-')|trim('--') == pricer.name %}selected{% endif %}>{{ categorija|trim('-')|trim('--') }}</option>
+                                {%  endfor %}
+                            </select> </span>
+                            <span>Min: <input type="text" value="{{ pricer.minprice }}" style="max-width: 30px;" id="minprice_{{ pricer.id }}" /></span>
+                            <span>Max: <input type="text" value="{{ pricer.maxprice }}" style="max-width: 30px;" id="maxprice_{{ pricer.id }}" /></span>
+                            <span><a href="#" onclick="savecompanydata('{{ pricer.id }}')">save | </a></span>
+                            <span><a href="#" onclick="deletecompanydata('{{ pricer.id }}')">delete</a></span>
+                        </div>
+                    {% endfor %}
 
                 <div class="prices" data-prototype="
                      Category: {{ form_widget(companyPrices.categories.vars.prototype) | e }}<span>
@@ -270,6 +283,43 @@
 {% set srcfordelete =  asset('images/admin/delete.jpg') %}
 
 <script type="text/javascript">
+
+    function savecompanydata(id) {
+        var categoryName = $("#select_"+id).val();
+        var minprice = $("#minprice_"+id).val();
+        var maxprice = $("#maxprice_"+id).val();
+
+        var dataToSend = {
+            'categoryId': id,
+            'category': categoryName,
+            'minprice': minprice,
+            'maxprice': maxprice
+        };
+        $.ajax({
+            type: 'post',
+            url : '{{ path("medical_edit_company_category") }}',
+            data: dataToSend
+        })
+
+    }
+
+    function deletecompanydata(id) {
+
+        var dataToSend = {
+            'categoryId': id
+        };
+        $.ajax({
+            type: 'delete',
+            url : '{{ path("medical_delete_company_category") }}',
+            data: dataToSend,
+            success: function()
+            {
+                $("#div_"+id).remove();
+            }
+        })
+
+    }
+
     var $collectionHolder;
     var newforms = [];
     // setup an "add a tag" link
