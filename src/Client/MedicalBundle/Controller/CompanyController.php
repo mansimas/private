@@ -58,11 +58,21 @@ class CompanyController extends Controller
             return $this->render('ClientMedicalBundle:News:banners.html.twig', array('asBannerDetail'=>$asBannerDetail, 'ssPage' => 'company_listing'));
         }
 
+        $allDoctors = $this->getDoctrine()->getRepository("AdminMedicalBundle:Doctor")->findAllDoctors();
+        $allClinics = $this->getDoctrine()->getRepository("AdminMedicalBundle:Company")->findAllClinics();
         $asCategoryDataInRecursive = $em->getRepository('AdminMedicalBundle:Category')->getAllSubCategoryDetail($ssLocale, 1);
+        $allDoctors = array_merge($allDoctors, $allClinics);
+        $allDoctors = array_merge($allDoctors, $asCategoryDataInRecursive);
         $arrayOfCategories = [];
-        foreach($asCategoryDataInRecursive as $key=>$val) {
-            $replaced = str_replace(["-", "--"], "", $val);
-            $arrayOfCategories[] = $replaced;
+        foreach($allDoctors as $key=>$val) {
+            if(is_array($val)) {
+                foreach($val as $k => $v) {
+                    $arrayOfCategories[] = $v;
+                }
+            } else {
+                $replaced = str_replace(["-", "--"], "", $val);
+                $arrayOfCategories[] = $replaced;
+            }
         }
         $allCategories = json_encode(array_values($arrayOfCategories));
 
@@ -155,33 +165,46 @@ class CompanyController extends Controller
         }
         $asMiddleBannerDetail = $em->getRepository('AdminMedicalBundle:AdvertiseBanner')->getAddBannerDetail('company_center',
             $snCategoryIds, '' , $ssCityName, 'mid', $locale);
-        $asCompanyData = $em->getRepository('AdminMedicalBundle:Company')->getCompanyAllDetailForSearch_new($ssSerachParam,$ssCityName,
+        $foundCategories = $em->getRepository('AdminMedicalBundle:Company')->getCompanyAllDetailForSearch_new($ssSerachParam,$ssCityName,
             $ssPaymentOption,$ssLanguages,$ssLocale);
-        foreach($asCompanyData[0] as $key => $value) {
+        foreach($foundCategories[0] as $key => $value) {
             $nameEditor = new NameEditor;
             $companyimg = $em->getRepository('AdminMedicalBundle:Company')->getCompanyImag($value['id']);
-            $asCompanyData[0][$key]['companyimag'] = $companyimg;
-            $asCompanyData[0][$key]['categoryName'] = $asCompanyData[1][$key];
-            $asCompanyData[0][$key]['categoryNameRoute'] = $nameEditor->addDashBetweenWords($asCompanyData[1][$key]);
-            $asCompanyData[0][$key]['categoryid'] = $asCompanyData[3][$key];
-            $asCompanyData[0][$key]['city'] = $asCompanyData[2][$key];
-            $asCompanyData[0][$key]['minprice'] = $asCompanyData[4][$key];
-            $asCompanyData[0][$key]['maxprice'] = $asCompanyData[5][$key];
+            $foundCategories[0][$key]['companyimag'] = $companyimg;
+            $foundCategories[0][$key]['categoryName'] = $foundCategories[1][$key];
+            $foundCategories[0][$key]['categoryNameRoute'] = $nameEditor->addDashBetweenWords($foundCategories[1][$key]);
+            $foundCategories[0][$key]['categoryid'] = $foundCategories[3][$key];
+            $foundCategories[0][$key]['city'] = $foundCategories[2][$key];
+            $foundCategories[0][$key]['minprice'] = $foundCategories[4][$key];
+            $foundCategories[0][$key]['maxprice'] = $foundCategories[5][$key];
+            $foundCategories[0][$key]['type'] = $foundCategories[6][$key];
+            $foundCategories[0][$key]['doctor'] = $foundCategories[7][$key];
+            $foundCategories[0][$key]['doctorId'] = $foundCategories[8][$key];
         }
 
+        $allDoctors = $this->getDoctrine()->getRepository("AdminMedicalBundle:Doctor")->findAllDoctors();
+        $allClinics = $this->getDoctrine()->getRepository("AdminMedicalBundle:Company")->findAllClinics();
         $asCategoryDataInRecursive = $em->getRepository('AdminMedicalBundle:Category')->getAllSubCategoryDetail($ssLocale, 1);
+        $allDoctors = array_merge($allDoctors, $allClinics);
+        $allDoctors = array_merge($allDoctors, $asCategoryDataInRecursive);
         $arrayOfCategories = [];
-        foreach($asCategoryDataInRecursive as $key=>$val) {
-            $replaced = str_replace(["-", "--"], "", $val);
-            $arrayOfCategories[] = $replaced;
+        foreach($allDoctors as $key=>$val) {
+            if(is_array($val)) {
+                foreach($val as $k => $v) {
+                    $arrayOfCategories[] = $v;
+                }
+            } else {
+                $replaced = str_replace(["-", "--"], "", $val);
+                $arrayOfCategories[] = $replaced;
+            }
         }
         $allCategories = json_encode(array_values($arrayOfCategories));
 
 
-        $snCount = ((count($asCompanyData[0]) < 10) ? (count($asCompanyData[0]) / 2) : ($ssPerPage / 2));
-        array_splice($asCompanyData[0], $snCount, 0, $asMiddleBannerDetail);
+        $snCount = ((count($foundCategories[0]) < 10) ? (count($foundCategories[0]) / 2) : ($ssPerPage / 2));
+        array_splice($foundCategories[0], $snCount, 0, $asMiddleBannerDetail);
         $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate($asCompanyData[0],$ssPage,$ssPerPage);
+        $pagination = $paginator->paginate($foundCategories[0],$ssPage,$ssPerPage);
         $ssUpdateDiv = 'company_listing_div';
         $pagination->setCustomParameters(array('ssUpdateDiv' => $ssUpdateDiv,'ssPerPage' => $ssPerPage));
         $asMetaData = $em->getRepository('AdminMedicalBundle:StaticArticles')->getDetailByArticleType('WEBSITE_META_SETTINGS', $ssLocale);

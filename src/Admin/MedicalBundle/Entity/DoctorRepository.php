@@ -11,31 +11,43 @@ use Doctrine\ORM\EntityRepository;
  * repository methods below.
  */
 class DoctorRepository extends EntityRepository
-{	
+{
 	/**
      * function getAllNewsDetail
-     *        
-     * @param string  $ssLocale current culture	 
+     *
+     * @param string  $ssLocale current culture
      *
      * @todo   Function get news detail.
      * @access public
      * @author Arpita Jadeja <arpita.j.php@gmail.com>
      * @return array
      */
+
+    public function findAllDoctors() {
+        $q = $this
+            ->createQueryBuilder('u')
+            ->select('u.firstname, u.lastname')
+            ->getQuery()
+            ->getArrayResult();
+
+        return $q;
+    }
+
+
     public function getAllDoctorsDetail($ssLocale='en')
     {
 		return $ssQuery = $this->createQueryBuilder('d')
-						->select('partial d.{id,firstname,lastname,photo}')						
-						->getQuery()					 
+						->select('partial d.{id,firstname,lastname,photo}')
+						->getQuery()
 					    ->setHint(\Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
 					    ->setHint(\Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE, $ssLocale)
 					    ->getArrayResult();
-	}	
-	
+	}
+
 	/**
      * function getAllCategoryInBlock
      *
-     * @param string  $ssLocale current culture.	 
+     * @param string  $ssLocale current culture.
      *
      * @todo   Function to get all category in block.
      * @access public
@@ -46,19 +58,19 @@ class DoctorRepository extends EntityRepository
 	{
 		$ssQuery = $this->createQueryBuilder('d')
 						->select('d')
-						->orderBy('d.firstname','ASC');						                        						
+						->orderBy('d.firstname','ASC');
 		return $ssQuery->getQuery()
 						->setHint(\Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
 					    ->setHint(\Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE, $ssLocale)
 						->getArrayResult();
-	}	
-	
+	}
+
 	/**
      * function getAllCategoryDetail
      *
-     * @param string  $ssLocale     current culture.	 
+     * @param string  $ssLocale     current culture.
 	 * @param integer $snDoctorId   categoryid.
-	 
+
      *
      * @todo   Function to get all category detail.
      * @access public
@@ -70,8 +82,8 @@ class DoctorRepository extends EntityRepository
 		$ssQuery = $this->createQueryBuilder('d')
 						->select('d')
 						->where('d.id = :snId')
-						->setParameter('snId', $snDoctorId);							
-										
+						->setParameter('snId', $snDoctorId);
+
 		return $ssQuery->orderBy('d.id','DESC')
 						->getQuery()
 						->setHint(\Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
@@ -81,7 +93,7 @@ class DoctorRepository extends EntityRepository
 	/**
      * function getDoctorsDetail
      *
-     * @param array $asIds newsids     
+     * @param array $asIds newsids
      *
      * @todo   Function get newd detail to given ids.
      * @access public
@@ -92,20 +104,20 @@ class DoctorRepository extends EntityRepository
     {
         return $asData = $this->getEntityManager()
             ->createQuery('SELECT d FROM AdminMedicalBundle:Doctor d where d.id IN ('.$asIds.') ')
-            ->getArrayResult();        
+            ->getArrayResult();
     }
-	
+
 	/**
      * function deleteData
      *
-     * @param array $asIds newsids     
+     * @param array $asIds newsids
      *
      * @todo   Function to delete news.
      * @access public
      * @author Arpita Rana <arpita.j.php@gmail.com>
      * @return boolean
      */
-	public function deleteData($asIds) 
+	public function deleteData($asIds)
     {
         $asData = $this->getEntityManager()
             ->createQuery('Delete FROM AdminMedicalBundle:Doctor i where i.id IN ('.$asIds.')')

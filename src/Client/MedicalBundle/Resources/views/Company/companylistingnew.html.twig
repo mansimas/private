@@ -50,27 +50,75 @@
         <table class="table table-striped">
             {% for asDatas in pagination %}
                 {% set asCompanyName = em.getRepository("AdminMedicalBundle:Company").Slug(asDatas.name) %}
-                <tr>
-                    <td>
-                        <input type="checkbox" name="vehicle" value="Bike">
-                    </td>
-                    <td class="width110">
-                        <a href="{{ path('client_medical_category_detail', {'id':asDatas.categoryid,'name':asDatas.categoryNameRoute})}}" class="blackColored">
-                            <b>{{ asDatas.categoryName }}</b></a>
-                        <br>
-                        <span class="xsmallgrey">{{ asDatas.city }}</span>
-                    </td>
-                    <td class="width110">
-                        {{ asDatas.minprice }} ~ {{ asDatas.maxprice }} Eur
-                    </td>
-                    <td>
-                        <a class="nav_location_icon showmap" href="{{ path('client_medical_showmap', {'address': asDatas.address,'company_name': asDatas.name }) }}"></a>
-                        <a href="{{ path('client_medical_company_detail', {'id':asDatas.id,'name':asCompanyName})}}" class="blackColored">
-                            <b>{{ asDatas.name }}</b></a>
-                        <br>
-                        <span class="xsmallgrey">{{ asDatas.address }}</span>
-                    </td>
-                </tr>
+                {% if asDatas.type == 'category' %}
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="vehicle" value="Bike">
+                        </td>
+                        <td class="width110">
+                            <a href="{{ path('client_medical_category_detail', {'id':asDatas.categoryid,'name':asDatas.categoryNameRoute})}}" class="blackColored">
+                                <b>{{ asDatas.categoryName }}</b></a>
+                            <br>
+                            <span class="xsmallgrey">{{ asDatas.city }}</span>
+                        </td>
+                        <td class="width110">
+                            {{ asDatas.minprice }} ~ {{ asDatas.maxprice }} Eur
+                        </td>
+                        <td>
+                            <a class="nav_location_icon showmap" href="{{ path('client_medical_showmap', {'address': asDatas.address,'company_name': asDatas.name }) }}"></a>
+                            <a href="{{ path('client_medical_company_detail', {'id':asDatas.id,'name':asCompanyName})}}" class="blackColored">
+                                <b>{{ asDatas.name }}</b></a>
+                            <br>
+                            <span class="xsmallgrey">{{ asDatas.address }}</span>
+                        </td>
+                    </tr>
+                {% endif %}
+                {% if asDatas.type == 'company' %}
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="vehicle" value="Bike1">
+                        </td>
+                        <td class="width110">
+                            <a href="{{ path('client_medical_company_detail', {'id':asDatas.id,'name':asCompanyName})}}" class="blackColored">
+                                <b>{{ asDatas.name }}</b></a>
+                            <br>
+                            <span class="xsmallgrey">{{ asDatas.city }}</span>
+                        </td>
+                        <td class="width110">
+                            Company
+                        </td>
+                        <td>
+                            <a class="nav_location_icon showmap" href="{{ path('client_medical_showmap', {'address': asDatas.address,'company_name': asDatas.name }) }}"></a>
+                            <a href="{{ path('client_medical_company_detail', {'id':asDatas.id,'name':asCompanyName})}}" class="blackColored">
+                                <b>{{ asDatas.name }}</b></a>
+                            <br>
+                            <span class="xsmallgrey">{{ asDatas.address }}</span>
+                        </td>
+                    </tr>
+                {% endif %}
+                {% if asDatas.type == 'doctor' %}
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="vehicle" value="Bike1">
+                        </td>
+                        <td class="width110">
+                            <a href="{{ path('client_medical_doctor_detail', {'id':asDatas.doctorId,'name':asDatas.doctor[1]})}}" class="blackColored">
+                                <b>{{ asDatas.doctor[0] }} {{ asDatas.doctor[1] }}</b></a>
+                            <br>
+                            <span class="xsmallgrey">{{ asDatas.city }}</span>
+                        </td>
+                        <td class="width110">
+                            Doctor
+                        </td>
+                        <td>
+                            <a class="nav_location_icon showmap" href="{{ path('client_medical_showmap', {'address': asDatas.address,'company_name': asDatas.name }) }}"></a>
+                            <a href="{{ path('client_medical_company_detail', {'id':asDatas.id,'name':asCompanyName})}}" class="blackColored">
+                                <b>{{ asDatas.name }}</b></a>
+                            <br>
+                            <span class="xsmallgrey">{{ asDatas.address }}</span>
+                        </td>
+                    </tr>
+                {% endif %}
             {% endfor %}
         </table>
             <input type="submit" value="Registruotis"

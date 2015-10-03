@@ -32,6 +32,16 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
         return $q;
     }
 
+    public function findAllClinics() {
+        $q = $this
+            ->createQueryBuilder('u')
+            ->select('u.name')
+            ->getQuery()
+            ->getArrayResult();
+
+        return $q;
+    }
+
 	/**
      * function deleteData
      *
@@ -360,7 +370,8 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
             ->createQuery('SELECT COUNT(ucq.company) FROM AdminMedicalBundle:UserCompanyQuotes ucq where ucq.company = c.id');
 
 		$ssSubQueryRatingAvg = $this->getEntityManager()
-            ->createQuery('SELECT ((AVG(r.services) + AVG(r.staff) + AVG(r.environment)) / 3) FROM AdminMedicalBundle:Ratings r where r.company = c.id and r.verify_flag = 1');
+            ->createQuery('SELECT ((AVG(r.services) + AVG(r.staff) + AVG(r.environment)) / 3) FROM AdminMedicalBundle:Ratings r where r.company = c.id
+ and r.verify_flag = 1');
 
 		$ssSubQueryRatingCnt = $this->getEntityManager()
             ->createQuery('SELECT COUNT(rsss.company) FROM AdminMedicalBundle:Ratings rsss where rsss.company = c.id and rsss.verify_flag = 1');
@@ -395,7 +406,32 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
 			{
 				$em = $this->getEntityManager();
 				$connection = $em->getConnection();
-				$statement = $connection->prepare("SELECT cm.id as companyid, cm.name, cm.address,d.id, d.firstname, d.lastname, pt.id, pt.content, pt.locale, st.id, st.content, st.locale FROM company cm LEFT JOIN company_doctor cd ON cm.id = cd.company_id LEFT JOIN doctor d ON d.id = cd.doctor_id LEFT JOIN prices ps ON cm.id = ps.company_id LEFT JOIN pricestranslation pt ON ps.id = pt.object_id AND pt.locale = 'lt' LEFT JOIN service sv ON cm.id = sv.company_id LEFT JOIN servicetranslation st ON sv.id = st.object_id AND st.locale = 'lt'  WHERE (cm.name like :keyword) OR (d.firstname like :keyword AND d.firstname IS NOT NULL) OR (d.lastname like :keyword AND d.lastname IS NOT NULL) OR (pt.content like :keyword AND pt.content IS NOT NULL) OR (st.content like :keyword AND st.content IS NOT NULL) GROUP BY cm.id");
+				$statement = $connection->prepare("
+                SELECT cm.id as companyid,
+                cm.name,
+                cm.address,
+                d.id,
+                d.firstname,
+                d.lastname,
+                pt.id,
+                pt.content,
+                pt.locale,
+                st.id,
+                st.content,
+                st.locale
+                FROM company cm
+                LEFT JOIN company_doctor cd ON cm.id = cd.company_id
+                LEFT JOIN doctor d ON d.id = cd.doctor_id
+                LEFT JOIN prices ps ON cm.id = ps.company_id
+                LEFT JOIN pricestranslation pt ON ps.id = pt.object_id AND pt.locale = 'lt'
+                LEFT JOIN service sv ON cm.id = sv.company_id
+                LEFT JOIN servicetranslation st ON sv.id = st.object_id AND st.locale = 'lt'
+                WHERE (cm.name like :keyword)
+                OR (d.firstname like :keyword AND d.firstname IS NOT NULL)
+                OR (d.lastname like :keyword AND d.lastname IS NOT NULL)
+                OR (pt.content like :keyword AND pt.content IS NOT NULL)
+                OR (st.content like :keyword AND st.content IS NOT NULL)
+                GROUP BY cm.id");
 				$statement->bindValue('keyword', '%'.$ssVal.'%');
 				$statement->execute();
 				$results = $statement->fetchAll();
@@ -413,27 +449,6 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
 					$ID[] = 0;
 				}
 				$ssQuery->andWhere('c.id IN ('.implode(',',$ID).')');
-
-				/*$ssVal = mb_strtoupper($ssVal, 'UTF-8');
-				//echo mb_detect_encoding($ssVal);exit;
-				//setlocale(LC_CTYPE, 'cs_CZ');
-				//$ssVal = iconv('UTF-8', 'ASCII//TRANSLIT', $ssVal);
-
-				//echo '%'.trim($ssVal).'%';
-				//$ssVal = iconv(mb_detect_encoding($ssVal, mb_detect_order(), true), "UTF-8", $ssVal);
-				//$ssVal = Encoding::encode('UTF-8',$ssVal);
-				//echo "<br/>";echo $ssVal;exit;
-
-				$ssQuery->orWhere('c.name LIKE :ssNameParam'.$snKey);
-				$ssQuery->orWhere('c.address LIKE :ssNameParam'.$snKey);
-				$ssQuery->orWhere('ctt.description LIKE :ssNameParam'.$snKey);
-				$ssQuery->orWhere('d.lastname LIKE :ssNameParam'.$snKey);
-				$ssQuery->orWhere('d.firstname LIKE :ssNameParam'.$snKey);
-				$ssQuery->orWhere('p.description LIKE :ssNameParam'.$snKey);
-				$ssQuery->orWhere('s.description LIKE :ssNameParam'.$snKey);
-				//$ssQuery->orWhere('pt.content LIKE :ssNameParam'.$snKey);
-				//$ssQuery->orWhere('st.content LIKE :ssNameParam'.$snKey);
-				$ssQuery->setParameter('ssNameParam'.$snKey, '%'.trim($ssVal).'%');*/
 			}
 		}
 
@@ -497,31 +512,13 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
 		return $ssQuery->getQuery()
 				 ->setHint(\Doctrine\ORM\Query::HINT_REFRESH, true)
 						->setHint(\Doctrine\ORM\Query::HINT_FORCE_PARTIAL_LOAD, true)
-						//->setHint(\Gedmo\Translatable\TranslatableListener::HINT_INNER_JOIN,true)
-
-//->setHint(\Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
-					    //->setHint(\Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE, 'lt')
-					    //->setHint(\Gedmo\Translatable\TranslatableListener::HINT_FALLBACK, 1)
-						//->getSql();
-
 					    ->getArrayResult();
-
-		  /*echo $ssQuery->getQuery()
-				 ->setHint(\Doctrine\ORM\Query::HINT_REFRESH, true)
-						->setHint(\Doctrine\ORM\Query::HINT_FORCE_PARTIAL_LOAD, true)
-						//->setHint(\Gedmo\Translatable\TranslatableListener::HINT_INNER_JOIN,true)
-
-//->setHint(\Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
-					    //->setHint(\Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE, 'lt')
-					    //->setHint(\Gedmo\Translatable\TranslatableListener::HINT_FALLBACK, 1)
-						->getSql();echo "<br/>";
-						echo "<pre>";print_r($ssQuery->getParameters());exit; */
 	}
 
 	/**
      * function getCompanyAllDetailForSearch_new
      *
-     * @param integer $ssSearchParam     field name
+     * @param string $ssSearchParam     field name
 	 * @param string  $ssCityName        city name
      * @param string  $ssLanguages       langauge
 	 * @param string  $ssPaymentOption   payment option
@@ -536,8 +533,6 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
     {
 		$config = $this->getEntityManager()->getConfiguration();
 		$config->addCustomNumericFunction('IFNULL', 'DoctrineExtensions\Query\Mysql\IfNull');
-
-
 
 		$ssQuery = $this->createQueryBuilder('c')
 				->select('partial c.{id,name,address},partial lang.{name, id, flag},ct,partial ctt.{id,name}' )
@@ -554,7 +549,6 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
 			$asSearchData = preg_split("/[\s,]+/", $ssSearchParam);
 			foreach($asSearchData as $snKey=>$ssVal)
 			{
-
 				$em = $this->getEntityManager();
 				$connection = $em->getConnection();
 				$statement = $connection->prepare(
@@ -563,40 +557,16 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
                       cm.city,
                       cm.name,
                       cm.address,
-                      d.id,
-                      d.firstname,
-                      d.lastname,
-                      pt.id,
-                      pt.content,
-                      pt.locale,
-                      st.id,
-                      st.content,
-                      st.locale,
                       cat.name as categoryname,
                       cat.id as categoryid,
                       cc.minprice as minprice,
                       cc.maxprice as maxprice
                     FROM company cm
-                    LEFT JOIN company_doctor cd
-                    ON cm.id = cd.company_id
                     LEFT JOIN company_category cc
                     ON cm.id = cc.company_id
                     LEFT JOIN category cat
                     ON cc.category_id = cat.id
-                    LEFT JOIN doctor d
-                    ON d.id = cd.doctor_id
-                    LEFT JOIN prices ps
-                    ON cm.id = ps.company_id
-                    LEFT JOIN pricestranslation pt
-                    ON ps.id = pt.object_id
-                    AND pt.locale = 'lt'
-                    LEFT JOIN service sv
-                    ON cm.id = sv.company_id
-                    LEFT JOIN servicetranslation st
-                    ON sv.id = st.object_id
-                    AND st.locale = 'lt'
-                    WHERE (cat.name like :keyword)
-                    GROUP BY cm.id"
+                    WHERE (cat.name like :keyword)"
                 );
 				$statement->bindValue('keyword', '%'.$ssVal.'%');
 				$statement->execute();
@@ -608,23 +578,97 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
                 $categoryIds = [];
                 $minprices = [];
                 $maxprices = [];
+                $type = [];
+                $doctor = [];
+                $doctorId = [];
 				if(count($results)>0)
 				{
 					foreach($results as $k=>$v)
 					{
 						$ID[] = $v['companyid'];
-                        $categoryNames[] = $v['categoryname'];
-                        $categoryCities[] = $v['city'];
-                        $categoryIds[] = $v['categoryid'];
-                        $minprices[] = $v['minprice'];
-                        $maxprices[] = $v['maxprice'];
+                        $categoryNames[$v['companyid']] = $v['categoryname'];
+                        $categoryCities[$v['companyid']] = $v['city'];
+                        $categoryIds[$v['companyid']] = $v['categoryid'];
+                        $minprices[$v['companyid']] = $v['minprice'];
+                        $maxprices[$v['companyid']] = $v['maxprice'];
+                        $type[$v['companyid']] = 'category';
+                        $doctor[$v['companyid']] = '';
+                        $doctorId[$v['companyid']] = '';
 					}
 				}
-				else
-				{
-					$ID[] = 0;
-				}
-				$ssQuery->andWhere('c.id IN ('.implode(',',$ID).')');
+
+                $statement = $connection->prepare(
+                    "SELECT
+                      cm.id as companyid,
+                      cm.city,
+                      cm.name,
+                      cm.address
+                    FROM company cm
+                    WHERE (cm.name like :keyword)"
+                );
+                $statement->bindValue('keyword', '%'.$ssVal.'%');
+                $statement->execute();
+                $results = $statement->fetchAll();
+
+                if(count($results)>0)
+                {
+                    foreach($results as $k=>$v)
+                    {
+                        $ID[] = $v['companyid'];
+                        $categoryNames[$v['companyid']] = '';
+                        $categoryCities[$v['companyid']] = '';
+                        $categoryIds[$v['companyid']] = '';
+                        $minprices[$v['companyid']] = '';
+                        $maxprices[$v['companyid']] = '';
+                        $type[$v['companyid']] = 'company';
+                        $doctor[$v['companyid']] = '';
+                        $doctorId[$v['companyid']] = '';
+                    }
+                }
+
+
+                $statement = $connection->prepare(
+                    "SELECT
+                      cm.id as companyid,
+                      cm.city,
+                      cm.name,
+                      cm.address,
+                      d.id as doctorid,
+                      d.firstname,
+                      d.lastname
+                    FROM company cm
+                    LEFT JOIN company_doctor cd
+                    ON cm.id = cd.company_id
+                    LEFT JOIN doctor d
+                    ON d.id = cd.doctor_id
+                    WHERE (d.firstname like :keyword)
+                    OR (d.lastname like :keyword)"
+                );
+                $statement->bindValue('keyword', '%'.$ssVal.'%');
+                $statement->execute();
+                $results = $statement->fetchAll();
+
+                if(count($results)>0)
+                {
+                    foreach($results as $k=>$v)
+                    {
+                        $ID[] = $v['companyid'];
+                        $categoryNames[$v['companyid']] = '';
+                        $categoryCities[$v['companyid']] = '';
+                        $categoryIds[$v['companyid']] = '';
+                        $minprices[$v['companyid']] = '';
+                        $maxprices[$v['companyid']] = '';
+                        $type[$v['companyid']] = 'doctor';
+                        $doctor[$v['companyid']] = [$v['lastname'], $v['firstname']];
+                        $doctorId[$v['companyid']] = $v['doctorid'];
+                    }
+                }
+
+                if(empty($ID)) {
+                    $ID[] = 0;
+                }
+                $ssQuery->andWhere('c.id IN ('.implode(',',$ID).')');
+
 			}
 		}
 		if($ssPaymentOption != '')
@@ -684,12 +728,26 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
 			}
 		}
 
-		$alfa =  [$ssQuery->getQuery()
-                ->setHint(\Doctrine\ORM\Query::HINT_REFRESH, true)
-                ->setHint(\Doctrine\ORM\Query::HINT_FORCE_PARTIAL_LOAD, true)
-                ->setHint(\Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
-                ->setHint(\Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE, $ssLocale)
-                ->getArrayResult(), $categoryNames, $categoryCities, $categoryIds, $minprices, $maxprices];
+        ksort($categoryNames);
+        ksort($categoryCities);
+        ksort($categoryIds);
+        ksort($minprices);
+        ksort($maxprices);
+        ksort($type);
+        ksort($doctor);
+        ksort($doctorId);
+
+		$alfa =  [
+            $ssQuery->getQuery()->getArrayResult(),
+            array_values($categoryNames),
+            array_values($categoryCities),
+            array_values($categoryIds),
+            array_values($minprices),
+            array_values($maxprices),
+            array_values($type),
+            array_values($doctor),
+            array_values($doctorId)
+        ];
         return $alfa;
 	}
 	/**
