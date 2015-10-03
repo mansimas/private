@@ -309,7 +309,7 @@
             'categoryId': id
         };
         $.ajax({
-            type: 'delete',
+            type: 'post',
             url : '{{ path("medical_delete_company_category") }}',
             data: dataToSend,
             success: function()
