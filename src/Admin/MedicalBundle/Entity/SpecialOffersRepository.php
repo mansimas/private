@@ -15,7 +15,7 @@ class SpecialOffersRepository extends EntityRepository
 	/**
      * function getSpecialOfferDetail
      *
-     * @param  integer $snId  specialofferid 
+     * @param  integer $snId  specialofferid
      *
      * @todo   Function get specialoffer detail by given id.
      * @access public
@@ -23,12 +23,12 @@ class SpecialOffersRepository extends EntityRepository
      * @return array
      */
     public function getSpecialOfferDetail($snId)
-    {   
+    {
         return $this->getEntityManager()
             ->createQuery('SELECT c FROM AdminMedicalBundle:SpecialOffers c where c.company = '.$snId.' ORDER BY c.id ASC')
-            ->getArrayResult();         
+            ->getArrayResult();
     }
-	
+
 	/**
      * function deleteData
      *
@@ -39,13 +39,13 @@ class SpecialOffersRepository extends EntityRepository
      * @author Arpita Jadeja <arpita.j.php@gmail.com>
      * @return boolean
      */
-	public function deleteData($asIds) 
+	public function deleteData($asIds)
     {
         return $asData = $this->getEntityManager()
             ->createQuery('Delete FROM AdminMedicalBundle:SpecialOffers i where i.id IN ('.$asIds.')')
             ->execute();
     }
-	
+
 	/**
      * function getSpecialOfferRandomDetail
      *
@@ -60,65 +60,65 @@ class SpecialOffersRepository extends EntityRepository
      * @return array
      */
 	public function getSpecialOfferRandomDetail($ssLocale, $snId='', $ssFlag=false, $ssLatest='')
-    {	
+    {
 		$ssSubQueryRatingAvg = $this->getEntityManager()
             ->createQuery('SELECT ((AVG(r.services) + AVG(r.staff) + AVG(r.environment)) / 3) FROM AdminMedicalBundle:Ratings r where r.company = c.id and r.verify_flag = 1');
-		
+
 		$ssSubQueryRatingCnt = $this->getEntityManager()
             ->createQuery('SELECT COUNT(rsss.company) FROM AdminMedicalBundle:Ratings rsss where rsss.company = c.id and rsss.verify_flag = 1');
-		
+
 		$snDate = date('Y-m-d H:i:s');
 		$asSpecialOfferIds = array();
 		if($ssFlag)
-		{			
-			$config = $this->getEntityManager()->getConfiguration();		
+		{
+			$config = $this->getEntityManager()->getConfiguration();
 			$config->addCustomNumericFunction('RAND', 'DoctrineExtensions\Query\Mysql\Rand');
 			$config->addCustomStringFunction('FIELD', 'DoctrineExtensions\Query\Mysql\Field');
-			
+
 			if($ssLatest != '')
 			{
-				$asData = $this->createQueryBuilder('cmp')							
+				$asData = $this->createQueryBuilder('cmp')
 								 ->select('cmp');
 								 $asData->where($asData->expr()->concat('cmp.end_date',$asData->expr()->concat($asData->expr()->literal(' '),'cmp.end_time')).'> :sndate')
 								->andWhere($asData->expr()->concat('cmp.start_date',$asData->expr()->concat($asData->expr()->literal(' '),'cmp.start_time')).'< :sndate')
 								 ->setParameter('sndate', $snDate)
 								 ->andWhere('cmp.status = :ssStatus')
 								 ->setParameter('ssStatus', 'active')
-								 ->orderBy('cmp.updated_at','DESC');								 
+								 ->orderBy('cmp.updated_at','DESC');
 			}
 			else
 			{
-				$asData = $this->createQueryBuilder('cmp')							
+				$asData = $this->createQueryBuilder('cmp')
 								 ->addSelect('RAND() as HIDDEN rand');
 								 $asData->where($asData->expr()->concat('cmp.end_date',$asData->expr()->concat($asData->expr()->literal(' '),'cmp.end_time')).'> :sndate')
 								->andWhere($asData->expr()->concat('cmp.start_date',$asData->expr()->concat($asData->expr()->literal(' '),'cmp.start_time')).'< :sndate')
 								 ->setParameter('sndate', $snDate)
 								 ->andWhere('cmp.status = :ssStatus')
 								 ->setParameter('ssStatus', 'active')
-								 ->orderBy('rand');								 
+								 ->orderBy('rand');
 			}
-			$asResult = $asData->getQuery()						
+			$asResult = $asData->getQuery()
 								->getArrayResult();
-			
+
 			foreach($asResult as $snKey=>$asVal)
 			{
 				$asSpecialOfferIds[] = $asVal['id'];
-			}			
+			}
 		}
 		$ssStringField = '';
 		if(count($asSpecialOfferIds) > 0)
 			$ssStringField = ', field(so.id,'.implode(",",$asSpecialOfferIds).') as HIDDEN field';
 		$ssQuery = $this->createQueryBuilder('so')
-						->select('cs'.$ssStringField.',si,partial so.{id,title,introduction,description,regular_price,sales_price,photo,end_date,end_time,status},partial c.{id,name,city,address,zip},ci, partial rs.{id,name,lastname,comments,verify_flag,rating_date},('.$ssSubQueryRatingAvg->getDQL().') as total_avg,('.$ssSubQueryRatingCnt->getDQL().') as total_rating_count')						
+						->select('cs'.$ssStringField.',si,partial so.{id,title,introduction,description,regular_price,sales_price,photo,end_date,end_time,status},partial c.{id,name,city,address,zip},ci, partial rs.{id,name,lastname,comments,verify_flag,rating_date},('.$ssSubQueryRatingAvg->getDQL().') as total_avg,('.$ssSubQueryRatingCnt->getDQL().') as total_rating_count')
 						->leftJoin('so.company', 'c')
 						->leftJoin('so.specialofferimages', 'si')
 						->leftJoin('c.countries', 'cs')
 						->leftJoin('c.companyimages', 'ci')
 						->leftJoin('c.ratings', 'rs WITH rs.verify_flag = :flag')
 						->setParameter('flag', 1);
-						
+
 		if(count($asSpecialOfferIds) > 0)
-			$ssQuery->where('so.id IN ('.implode(',',$asSpecialOfferIds).')');						
+			$ssQuery->where('so.id IN ('.implode(',',$asSpecialOfferIds).')');
 		else
 		{
 			$ssQuery->where($ssQuery->expr()->concat('so.end_date',$ssQuery->expr()->concat($ssQuery->expr()->literal(' '),'so.end_time')).'> :sndate')
@@ -127,30 +127,30 @@ class SpecialOffersRepository extends EntityRepository
 					->andWhere('so.status = :ssStatus')
 					->setParameter('ssStatus', 'active');
 		}
-		
-		if($ssFlag)
-		{
-			if($ssLatest != '')
-			{
-				 $ssQuery->orderBy('so.updated_at','DESC');
-			}
-			else
-			{
-				$ssQuery->orderBy('field');
-			}
-		}
+//
+//		if($ssFlag)
+//		{
+//			if($ssLatest != '')
+//			{
+//				 $ssQuery->orderBy('so.updated_at','DESC');
+//			}
+//			else
+//			{
+//				$ssQuery->orderBy('field');
+//			}
+//		}
 		if($snId != '')
 		{
 			$ssQuery->andWhere('so.id = '.$snId)
 					->orderBy('rs.rating_date','DESC');
 		}
-		
-		return $asData = $ssQuery->getQuery()					
+
+		return $asData = $ssQuery->getQuery()
 				->setHint(\Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
 				->setHint(\Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE, $ssLocale)
 				->getArrayResult();
 	}
-	
+
 	/**
      * function getAllSpecialOfferDetail
      *
@@ -163,42 +163,42 @@ class SpecialOffersRepository extends EntityRepository
      * @return array
      */
 	public function getAllSpecialOfferDetail($snId='', $ssLocale='en')
-    {	
+    {
 		$ssSubQueryCountSale = $this->getEntityManager()
 								->createQuery("SELECT (COUNT(sst.specialoffers)) FROM AdminMedicalBundle:SpecialofferSales sst where sst.specialoffers = so.id and sst.paypal_payment_status = 1");
 		$ssSubQueryCountCouponSale = $this->getEntityManager()
 								->createQuery("SELECT (SUM(ss.number_of_coupon)) FROM AdminMedicalBundle:SpecialofferSales ss where ss.specialoffers = so.id and ss.paypal_payment_status = 1");
-		
+
 		if($snId != '')
 		{
 			$ssQuery = $this->createQueryBuilder('so')
 							->select('so,c.name,c.id as company_id, cc, sos,('.$ssSubQueryCountCouponSale->getDQL().') as total_sale_count,('.$ssSubQueryCountSale->getDQL().') as total_count')
 							->leftJoin('so.company', 'c')
 							->leftJoin('so.specialoffersales', 'sos WITH sos.paypal_payment_status = :ssStatus')
-							->leftJoin('sos.couponcodes', 'cc')							
-							->where('so.id = '.$snId)							
-							->setParameter('ssStatus', 1);							
+							->leftJoin('sos.couponcodes', 'cc')
+							->where('so.id = '.$snId)
+							->setParameter('ssStatus', 1);
 		}
 		else
-		{				
+		{
 			$ssQuery = $this->createQueryBuilder('so')
 							->select('so,c.name,c.id as company_id, cc, sos,('.$ssSubQueryCountCouponSale->getDQL().') as total_sale_count,('.$ssSubQueryCountSale->getDQL().') as total_count')
 							->leftJoin('so.company', 'c')
 							->leftJoin('so.specialoffersales', 'sos WITH sos.paypal_payment_status = :ssStatus')
 							->leftJoin('sos.couponcodes', 'cc')
 							->orderBy('so.checked_by_admin','ASC')
-							->setParameter('ssStatus', 1);							
+							->setParameter('ssStatus', 1);
 		}
-		return  $asData = $ssQuery->getQuery()						
+		return  $asData = $ssQuery->getQuery()
 								->setHint(\Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
 								->setHint(\Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE, $ssLocale)
 								->getArrayResult();
 	}
-	
+
 	/**
      * function getCountSpecialOfferSales
      *
-     * @param integer $snId   specialofferid     
+     * @param integer $snId   specialofferid
      *
      * @todo   Function to get count of special offer sale
      * @access public
@@ -206,12 +206,12 @@ class SpecialOffersRepository extends EntityRepository
      * @return array
      */
 	public function getCountSpecialOfferSales($snId='')
-    {	
+    {
 		return $ssSubQueryCountSale = $this->getEntityManager()
             ->createQuery("SELECT (COUNT(ss.specialoffers)) FROM AdminMedicalBundle:SpecialofferSales ss WHERE ss.paypal_payment_status = 1 and ss.specialoffers = ".$snId)
 			->getArrayResult();
 	}
-	
+
 	/**
      * function updateDataByField
      *
@@ -223,34 +223,34 @@ class SpecialOffersRepository extends EntityRepository
      * @author Arpita Jadeja <arpita.j.php@gmail.com>
      * @return array
      */
-	public function updateDataByField($snIdSpecialOffers, $ssFieldName='checked_by_admin') 
+	public function updateDataByField($snIdSpecialOffers, $ssFieldName='checked_by_admin')
     {
         return $asData = $this->getEntityManager()
             ->createQuery("update AdminMedicalBundle:SpecialOffers ucq set ucq.".$ssFieldName." = 'Yes' where ucq.id = ".$snIdSpecialOffers)
             ->execute();
     }
-	
+
 	/**
      * function countByCheckedAdmin
-     *     
+     *
      *
      * @todo   Function get count of checked by admin.
      * @access public
      * @author Arpita Jadeja <arpita.j.php@gmail.com>
      * @return array
      */
-	public function countByCheckedAdmin() 
+	public function countByCheckedAdmin()
     {
 		return $ssQuery = $this->createQueryBuilder('so')
 							->select('COUNT(so.id) as new_sale_count')
-							->leftJoin('so.specialoffersales', 'sos')							
+							->leftJoin('so.specialoffersales', 'sos')
 							->where('so.checked_by_admin = :ssFlag')
 							->andWhere('sos.paypal_payment_status = 1')
 							->setParameter('ssFlag', 'No')
 							->getQuery()
-							->getArrayResult();		
+							->getArrayResult();
 	}
-	
+
 	/**
      * function getAllSpecialOfferDetailById
      *
@@ -263,30 +263,30 @@ class SpecialOffersRepository extends EntityRepository
      * @return array
      */
 	public function getAllSpecialOfferDetailById($snId='', $ssLocale='en')
-    {	
+    {
 		if($snId != '')
 		{
 			return $ssQuery = $this->createQueryBuilder('so')
 						->select('so,si,sot,c')
 						->leftJoin('so.translations', 'sot WITH sot.locale = :locales')
 						->leftJoin('so.company', 'c')
-						->leftJoin('so.specialofferimages', 'si')						
+						->leftJoin('so.specialofferimages', 'si')
 						->setParameter('locales', $ssLocale)
 						->where('so.id = '.$snId)
-						->getQuery()			
+						->getQuery()
 						->setHint(\Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
 						->setHint(\Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE, $ssLocale)
-						->getArrayResult();						
+						->getArrayResult();
 		}
 		else
 		{
 			return array();
 		}
 	}
-	
+
 	/**
      * function getAllSmallSpecialOfferTodayDateWise
-     *     
+     *
      *
      * @todo   Function get special offer today datewise.
      * @access public
@@ -297,7 +297,7 @@ class SpecialOffersRepository extends EntityRepository
 	{
 		$snDate = date('Y-m-d H:i:s');
 		$ssQuery = $this->createQueryBuilder('so')
-						->select('so');						
+						->select('so');
 		$tmp = $ssQuery->where($ssQuery->expr()->concat('so.end_date',$ssQuery->expr()->concat($ssQuery->expr()->literal(' '),'so.end_time')).'< :sndate')
 						->setParameter('sndate', $snDate)
 						->andWhere('so.status = :ssStatus')
@@ -305,27 +305,27 @@ class SpecialOffersRepository extends EntityRepository
 						->getQuery();
 		return $tmp->getArrayResult();
 	}
-	
+
 	/**
      * function updateStatusByIds
      *
-     * @param integer $snIdSpecialOffers  specialofferid 
+     * @param integer $snIdSpecialOffers  specialofferid
      *
      * @todo   Function update status by given id.
      * @access public
      * @author Arpita Jadeja <arpita.j.php@gmail.com>
      * @return boolean
      */
-	public function updateStatusByIds($snIdSpecialOffers) 
+	public function updateStatusByIds($snIdSpecialOffers)
     {
-        return $asData = $this->getEntityManager()		
+        return $asData = $this->getEntityManager()
             ->createQuery("update AdminMedicalBundle:SpecialOffers ucq set ucq.status = 'expire' where ucq.id IN (".$snIdSpecialOffers.") and ucq.status != 'expire'")
             ->execute();
     }
-	
+
 	/**
      * function updatespecialofferwithexpire
-     *     
+     *
      *
      * @todo   Function update specialoffer.
      * @access public
@@ -347,6 +347,6 @@ class SpecialOffersRepository extends EntityRepository
 		{
 			$snSpecilaOfferIds = implode(",", $asSpecialOfferIds);
 			$this->updateStatusByIds($snSpecilaOfferIds);
-		}	
+		}
 	}
 }
