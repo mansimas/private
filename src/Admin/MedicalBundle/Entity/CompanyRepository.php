@@ -766,10 +766,58 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
             switch($ssRating)
             {
                 case 'best':
-                    usort($freshResults, function($a, $b) {return $b['maxprice'] - $a['maxprice'];});
+                    $theresults = [];
+                    foreach($freshResults as $key=>$value) {
+                        if($value['type'] == 'category') {
+                            if($value['maxprice'] != '') {
+                                $theresults[$value['id']] = intval($value['maxprice']);
+                            } else {
+                                $theresults[$value['id']] = -99999999999997;
+                            }
+                        } else if($value['type'] == 'company') {
+                            $theresults[$value['id']] = -99999999999998;
+                        } else if($value['type'] == 'doctor') {
+                            $theresults[$value['id']] = -99999999999999;
+                        }
+                    }
+                    arsort($theresults);
+                    $toReturn = [];
+                    foreach($theresults as $key => $value) {
+                        foreach($freshResults as $k=>$v) {
+                            if($v['id'] == $key) {
+                                $toReturn[] = $v;
+                                break;
+                            }
+                        }
+                    }
+                    $freshResults = $toReturn;
                     break;
                 case 'worst':
-                    usort($freshResults, function($a, $b) {return $a['minprice'] - $b['minprice'];});
+                    $theresults = [];
+                    foreach($freshResults as $key=>$value) {
+                        if($value['type'] == 'category') {
+                            if($value['minprice'] != '') {
+                                $theresults[$value['id']] = intval($value['minprice']);
+                            } else {
+                                $theresults[$value['id']] = 99999999999997;
+                            }
+                        } else if($value['type'] == 'company') {
+                            $theresults[$value['id']] = 99999999999998;
+                        } else if($value['type'] == 'doctor') {
+                            $theresults[$value['id']] = 99999999999999;
+                        }
+                    }
+                    asort($theresults);
+                    $toReturn = [];
+                    foreach($theresults as $key => $value) {
+                        foreach($freshResults as $k=>$v) {
+                            if($v['id'] == $key) {
+                                $toReturn[] = $v;
+                                break;
+                            }
+                        }
+                    }
+                    $freshResults = $toReturn;
                     break;
                 case 'most':
                     $theresults = [];
