@@ -774,10 +774,6 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
                             } else {
                                 $theresults[$value['id']] = -99999999999997;
                             }
-                        } else if($value['type'] == 'company') {
-                            $theresults[$value['id']] = -99999999999998;
-                        } else if($value['type'] == 'doctor') {
-                            $theresults[$value['id']] = -99999999999999;
                         }
                     }
                     arsort($theresults);
@@ -801,10 +797,6 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
                             } else {
                                 $theresults[$value['id']] = 99999999999997;
                             }
-                        } else if($value['type'] == 'company') {
-                            $theresults[$value['id']] = 99999999999998;
-                        } else if($value['type'] == 'doctor') {
-                            $theresults[$value['id']] = 99999999999999;
                         }
                     }
                     asort($theresults);
