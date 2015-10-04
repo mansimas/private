@@ -184,23 +184,18 @@ class CompanyController extends Controller
 
         $allDoctors = $this->getDoctrine()->getRepository("AdminMedicalBundle:Doctor")->findAllDoctors();
         $allClinics = $this->getDoctrine()->getRepository("AdminMedicalBundle:Company")->findAllClinics();
-        $asCategoryDataInRecursive = $em->getRepository('AdminMedicalBundle:Category')->getAllSubCategoryDetail($ssLocale, 1);
+        $allCategories = $em->getRepository('AdminMedicalBundle:Category')->findAllCategories();
         $allDoctors = array_merge($allDoctors, $allClinics);
-        $allDoctors = array_merge($allDoctors, $asCategoryDataInRecursive);
-        $arrayOfCategories = [];
+        $allDoctors = array_merge($allDoctors, $allCategories);
+        $arrayForSearch = [];
         foreach($allDoctors as $key=>$val) {
-            if(is_array($val)) {
-                foreach($val as $k => $v) {
-                    $arrayOfCategories[] = $v;
-                }
-            } else {
-                $replaced = str_replace(["-", "--"], "", $val);
-                $arrayOfCategories[] = $replaced;
+            foreach($val as $k => $v) {
+                $arrayForSearch[] = $v;
             }
         }
 
-        $arrayOfCategories = array_unique($arrayOfCategories);
-        $allCategories = json_encode(array_values($arrayOfCategories));
+        $arrayForSearch = array_unique($arrayForSearch);
+        $allCategories = json_encode(array_values($arrayForSearch));
 
         $snCount = ((count($foundCategories[0]) < 10) ? (count($foundCategories[0]) / 2) : ($ssPerPage / 2));
         array_splice($foundCategories[0], $snCount, 0, $asMiddleBannerDetail);

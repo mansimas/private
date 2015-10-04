@@ -12,10 +12,24 @@ use Doctrine\ORM\EntityRepository;
  */
 class CategoryRepository extends EntityRepository
 {
+
+    public function findAllCategories() {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+        $statement = $connection->prepare("
+                SELECT cat.name
+                FROM category cat
+                LEFT JOIN company_category cd ON cat.id = cd.category_id
+                INNER JOIN company cc ON cc.id = cd.company_id
+               ");
+        $statement->execute();
+        return $statement->fetchAll();
+    }
+
 	/**
      * function getActiveCatgoryDetails
      *
-     * @param string $status status  
+     * @param string $status status
      *
      * @todo   Function get active category detail.
      * @access public
@@ -28,11 +42,11 @@ class CategoryRepository extends EntityRepository
 		->createQuery("SELECT COUNT(c.id) as active_count FROM AdminMedicalBundle:Category c where c.status = '".$status."'")
 		->getArrayResult();
 	}
-	
+
 	/**
      * function updateCategoryStatus
      *
-     * @param integer $snCategoryId categoryid.  
+     * @param integer $snCategoryId categoryid.
 	 * @param string  $ssStatus     status.
      *
      * @todo   Function to update category status.
@@ -43,7 +57,7 @@ class CategoryRepository extends EntityRepository
     public function updateCategoryStatus($snCategoryId, $ssStatus)
     {
         if(is_numeric($snCategoryId) && $snCategoryId != '')
-		{	
+		{
 			return $asData = $this->getEntityManager()
 								  ->createQuery("update AdminMedicalBundle:Category u set u.status = '".$ssStatus."' where u.id = ".$snCategoryId)
 				                  ->execute();
@@ -53,25 +67,25 @@ class CategoryRepository extends EntityRepository
 			return false;
 		}
     }
-	
+
 	/**
      * function deleteData
      *
-     * @param array $asIds categoryid.	 
+     * @param array $asIds categoryid.
      *
      * @todo   Function to update category status.
      * @access public
      * @author Arpita Jadeja <arpita.j.php@gmail.com>
      * @return boolean
      */
-	public function deleteData($asIds) 
+	public function deleteData($asIds)
     {
         $asData = $this->getEntityManager()
 					   ->createQuery('Delete FROM AdminMedicalBundle:Category i where i.id IN ('.$asIds.')')
 					   ->execute();
 		return true;
     }
-	
+
 	/**
      * function getAllCategoryDetail
      *
@@ -98,24 +112,24 @@ class CategoryRepository extends EntityRepository
 						{
 							$ssQuery->where('c.id = :snId')
 									->setParameter('snId', $snCategoryId);
-						}	
+						}
 						if($ssStatus != '')
 						{
 							$ssQuery->andWhere('c.status = :ssStatus')
 									->setParameter('ssStatus', $ssStatus);
-						}						
+						}
 		return $ssQuery->orderBy('c.id','DESC')
 						->getQuery()
 						->setHint(\Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
 					    ->setHint(\Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE, $ssLocale)
 						->getArrayResult();
 	}
-	
+
 	/**
      * function getAllTranslationCategoryDetailObject
      *
      * @param string  $ssLocale     current culture.
-	 * @param integer $snParentId   parentid.	 
+	 * @param integer $snParentId   parentid.
      *
      * @todo   Function to get all translation detail.
      * @access public
@@ -125,7 +139,7 @@ class CategoryRepository extends EntityRepository
 	public function getAllTranslationCategoryDetailObject($ssLocale, $snParentId='')
 	{
 		$ssQuery = $this->createQueryBuilder('c')
-						->select('c');						
+						->select('c');
 						if($snParentId != '')
 						{
 							$ssQuery->where('c.parent_id = :snId')
@@ -136,13 +150,13 @@ class CategoryRepository extends EntityRepository
 						->setHint(\Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
 					    ->setHint(\Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE, $ssLocale)
 						->getResult();
-	}	
-	
+	}
+
 	/**
      * function getAllCategoryInTree
      *
      * @param string  $ssLocale     current culture.
-	 * @param integer $snParentId   parentid.	 
+	 * @param integer $snParentId   parentid.
      *
      * @todo   Function to get all category.
      * @access public
@@ -152,24 +166,24 @@ class CategoryRepository extends EntityRepository
 	public function getAllCategoryInTree($ssLocale, $snParentId='')
 	{
 		$ssQuery = $this->createQueryBuilder('c')
-						->select('c')						
+						->select('c')
 						->where('c.parent_id = :snId')
 						->setParameter('snId', $snParentId);
-						
-		
+
+
 		return $ssQuery->orderBy('c.id','DESC')
 						->getQuery()
 						->setHint(\Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
 					    ->setHint(\Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE, $ssLocale)
 						->getArrayResult();
-						
+
 	}
-	
+
 	/**
      * function getMainCategory
      *
      * @param string  $ssLocale     current culture.
-	 * @param integer $level        level.	 
+	 * @param integer $level        level.
      *
      * @todo   Function to get main category.
      * @access public
@@ -177,25 +191,25 @@ class CategoryRepository extends EntityRepository
      * @return array.
      */
 	public function getMainCategory($ssLocale, $level=1)
-	{	
+	{
 		$ssQuery = $this->createQueryBuilder('c')
 						->select('c')
 						->where('c.lvl = :catLvl')
 						->setParameter('catLvl', $level);
-						
+
 		return $ssQuery->orderBy('c.id','DESC')
 						->getQuery()
 						->setHint(\Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
 					    ->setHint(\Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE, $ssLocale)
 						->getResult();
-						
+
 	}
-	
+
 	/**
      * function getAllSubCategory
      *
      * @param string  $ssLocale     current culture.
-	 * @param integer $parent_id    parent id.	 
+	 * @param integer $parent_id    parent id.
      *
      * @todo   Function to get all subcategory.
      * @access public
@@ -203,25 +217,25 @@ class CategoryRepository extends EntityRepository
      * @return array.
      */
 	public function getAllSubCategory($ssLocale, $parent_id)
-	{	
+	{
 		$ssQuery = $this->createQueryBuilder('c')
-						->select('c')						
+						->select('c')
 						->where('c.parent_id = :parent_id')
 						->setParameter('parent_id', $parent_id);
-						
+
 		return $ssQuery->orderBy('c.id','ASC')
 						->getQuery()
 						->setHint(\Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
 					    ->setHint(\Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE, $ssLocale)
 						->getArrayResult();
-						
+
 	}
-	
+
 	/**
      * function getAllSubOfSubCategory
      *
      * @param string  $ssLocale     current culture.
-	 * @param integer $parent_id    parent id.	 
+	 * @param integer $parent_id    parent id.
      *
      * @todo   Function to get all sub of subcategory.
      * @access public
@@ -229,25 +243,25 @@ class CategoryRepository extends EntityRepository
      * @return array.
      */
 	public function getAllSubOfSubCategory($ssLocale, $parent_id)
-	{	
+	{
 		$ssQuery = $this->createQueryBuilder('c')
-						->select('c')						
+						->select('c')
 						->where('c.parent_id = :parent_id')
 						->setParameter('parent_id', $parent_id);
-		
+
 		return $ssQuery->orderBy('c.id','ASC')
 						->getQuery()
 						->setHint(\Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
 					    ->setHint(\Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE, $ssLocale)
 						->getArrayResult();
-						
+
 	}
-	
+
 	/**
      * function getAllSubCategoryWithLevel
      *
      * @param string  $ssLocale     current culture.
-	 * @param integer $parent_id    parent id.	 
+	 * @param integer $parent_id    parent id.
 	 * @param integer $level        level id.
      *
      * @todo   Function to get all subcategory with level wise.
@@ -256,26 +270,26 @@ class CategoryRepository extends EntityRepository
      * @return array.
      */
 	public function getAllSubCategoryWithLevel($ssLocale, $parent_id,$level)
-	{	
+	{
 		$ssQuery = $this->createQueryBuilder('c')
-						->select('c')						
+						->select('c')
 						->where('c.parent_id = :parent_id')
 						->setParameter('parent_id', $parent_id)
 						->andWhere('c.lvl = :level')
 						->setParameter('level', $level);
-		
+
 		return $ssQuery->orderBy('c.id','ASC')
 						->getQuery()
 						->setHint(\Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
 					    ->setHint(\Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE, $ssLocale)
 						->getArrayResult();
-						
+
 	}
-	
+
 	/**
      * function getAllCategoryInBlock
      *
-     * @param string  $ssLocale current culture.	 
+     * @param string  $ssLocale current culture.
      *
      * @todo   Function to get all category in block.
      * @access public
@@ -286,17 +300,17 @@ class CategoryRepository extends EntityRepository
 	{
 		$ssQuery = $this->createQueryBuilder('c')
 						->select('c')
-						->orderBy('c.name','ASC');						                        						
+						->orderBy('c.name','ASC');
 		return $ssQuery->getQuery()
 						->setHint(\Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
 					    ->setHint(\Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE, $ssLocale)
 						->getArrayResult();
-	}	
-  
+	}
+
 	/**
      * function getAllSubCategoryDetail
      *
-     * @param string  $ssLocale current culture.	 
+     * @param string  $ssLocale current culture.
 	 * @param string  $ssFlag   current flag.
      *
      * @todo   Function to get all sub category.
@@ -307,16 +321,16 @@ class CategoryRepository extends EntityRepository
 	public function getAllSubCategoryDetail($ssLocale, $ssFlag='')
 	{
 		$asData = $this->createQueryBuilder('c')
-						->select('c')											
+						->select('c')
 						->orderBy('c.parent_id')
 						->orderBy('c.id','DESC')
 						->getQuery()
 						->setHint(\Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker')
 					    ->setHint(\Gedmo\Translatable\TranslatableListener::HINT_TRANSLATABLE_LOCALE, $ssLocale)
 						->getArrayResult();
-		
+
 		$menu = array('items' => array(), 'parents' => array());
-		
+
 		foreach($asData as $snKey=>$asValue)
 		{
 			// Creates entry into items array with current menu item id ie. $menu['items'][1]
@@ -326,24 +340,24 @@ class CategoryRepository extends EntityRepository
 			// Creates entry into parents array. Parents array contains a list of all items with children
 			$menu['parents'][$asValue['parent_id']][] = $asValue['id'];
 		}
-		
+
 		$asData = array();
 
 		foreach($menu['parents'] as $key=>$asVal)
 		{
 			if($key == 0)
-			{	
+			{
 				$i = 0;
 				$asData = $this->recursion($asVal, $menu, $i, $ssFlag);
 			}
 		}
 		return $asData;
 	}
-	
+
 	/**
      * function recursion
      *
-     * @param string  $asVal   current culture.	 
+     * @param string  $asVal   current culture.
 	 * @param string  $asMenu  current culture.
 	 * @param string  $i       current flag.
 	 * @param string  $ssFlag  current culture.
@@ -352,13 +366,13 @@ class CategoryRepository extends EntityRepository
      * @access public
      * @author Arpita Jadeja <arpita.j.php@gmail.com>
      * @return array.
-     */	
+     */
 	public function recursion($asVal, $asMenu, $i, $ssFlag)
-	{ 	
+	{
 		global $asData;
 		global $ssStr;
 		foreach($asVal as $snKey=>$snValue)
-		{		
+		{
 			$ssStr = '';
 			for($j=1;$j<$asMenu['items'][$snValue]['level'];$j++)
 			{
@@ -376,26 +390,26 @@ class CategoryRepository extends EntityRepository
 			if(array_key_exists($snValue,$asMenu['parents']))
 			{
 				$i++;
-				$this->recursion($asMenu['parents'][$snValue], $asMenu, $i, $ssFlag);		
+				$this->recursion($asMenu['parents'][$snValue], $asMenu, $i, $ssFlag);
 			}
 		}
 		return $asData;
 	}
-	
+
 	/**
      * function getCatgoryDetails
      *
-     * @param array $asIds categoryids.	 	
+     * @param array $asIds categoryids.
      *
      * @todo   Function to get all sub category.
      * @access public
      * @author Arpita Jadeja <arpita.j.php@gmail.com>
      * @return array.
-     */	
+     */
 	public function getCatgoryDetails($asIds)
     {
         return $asData = $this->getEntityManager()
             ->createQuery('SELECT c FROM AdminMedicalBundle:Category c where c.id IN ('.$asIds.')')
-            ->getArrayResult();        
+            ->getArrayResult();
     }
 }
