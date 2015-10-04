@@ -78,7 +78,11 @@ class CompanyController extends Controller
         $allCategories = json_encode(array_values($arrayOfCategories));
 
         $asMiddleBannerDetail = $em->getRepository('AdminMedicalBundle:AdvertiseBanner')->getAddBannerDetail('company_center', $snCategoryIds, '' , $ssCityName, 'mid', $locale);
-        $asCompanyData = $em->getRepository('AdminMedicalBundle:Company')->getCompanyAllDetail($ssSerachParam, $snCategoryIds, $ssCityName, $ssLanguages, $ssPaymentOption, $ssInsuranceIds, $ssLocale, $ssRatingPopular,$ssRatingSlider, $ssClinicRating);
+        if($ssSerachParam != '') {
+            $asCompanyData = $em->getRepository('AdminMedicalBundle:Company')->getCompanyAllDetailForSearch_new($ssSerachParam,$ssCityName, $ssPaymentOption,$ssLanguages,$ssLocale, $ssRatingPopular);
+        } else {
+            $asCompanyData = $em->getRepository('AdminMedicalBundle:Company')->getCompanyAllDetail($ssSerachParam, $snCategoryIds, $ssCityName, $ssLanguages, $ssPaymentOption, $ssInsuranceIds, $ssLocale, $ssRatingPopular,$ssRatingSlider, $ssClinicRating);
+        }
         $snCount = ((count($asCompanyData) < 10) ? (count($asCompanyData) / 2) : ($ssPerPage / 2));
         array_splice($asCompanyData, $snCount, 0, $asMiddleBannerDetail);
         $paginator  = $this->get('knp_paginator');
@@ -167,20 +171,6 @@ class CompanyController extends Controller
             $snCategoryIds, '' , $ssCityName, 'mid', $locale);
         $foundCategories = $em->getRepository('AdminMedicalBundle:Company')->getCompanyAllDetailForSearch_new($ssSerachParam,$ssCityName,
             $ssPaymentOption,$ssLanguages,$ssLocale);
-        foreach($foundCategories[0] as $key => $value) {
-            $nameEditor = new NameEditor;
-            $companyimg = $em->getRepository('AdminMedicalBundle:Company')->getCompanyImag($value['id']);
-            $foundCategories[0][$key]['companyimag'] = $companyimg;
-            $foundCategories[0][$key]['categoryName'] = $foundCategories[1][$key];
-            $foundCategories[0][$key]['categoryNameRoute'] = $nameEditor->addDashBetweenWords($foundCategories[1][$key]);
-            $foundCategories[0][$key]['categoryid'] = $foundCategories[3][$key];
-            $foundCategories[0][$key]['city'] = $foundCategories[2][$key];
-            $foundCategories[0][$key]['minprice'] = $foundCategories[4][$key];
-            $foundCategories[0][$key]['maxprice'] = $foundCategories[5][$key];
-            $foundCategories[0][$key]['type'] = $foundCategories[6][$key];
-            $foundCategories[0][$key]['doctor'] = $foundCategories[7][$key];
-            $foundCategories[0][$key]['doctorId'] = $foundCategories[8][$key];
-        }
 
         $allDoctors = $this->getDoctrine()->getRepository("AdminMedicalBundle:Doctor")->findAllDoctors();
         $allClinics = $this->getDoctrine()->getRepository("AdminMedicalBundle:Company")->findAllClinics();
@@ -197,10 +187,10 @@ class CompanyController extends Controller
         $arrayForSearch = array_unique($arrayForSearch);
         $allCategories = json_encode(array_values($arrayForSearch));
 
-        $snCount = ((count($foundCategories[0]) < 10) ? (count($foundCategories[0]) / 2) : ($ssPerPage / 2));
-        array_splice($foundCategories[0], $snCount, 0, $asMiddleBannerDetail);
+        $snCount = ((count($foundCategories) < 10) ? (count($foundCategories) / 2) : ($ssPerPage / 2));
+        array_splice($foundCategories, $snCount, 0, $asMiddleBannerDetail);
         $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate($foundCategories[0],$ssPage,$ssPerPage);
+        $pagination = $paginator->paginate($foundCategories,$ssPage,$ssPerPage);
         $ssUpdateDiv = 'company_listing_div';
         $pagination->setCustomParameters(array('ssUpdateDiv' => $ssUpdateDiv,'ssPerPage' => $ssPerPage));
         $asMetaData = $em->getRepository('AdminMedicalBundle:StaticArticles')->getDetailByArticleType('WEBSITE_META_SETTINGS', $ssLocale);

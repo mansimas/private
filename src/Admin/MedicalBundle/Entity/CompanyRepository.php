@@ -2,6 +2,7 @@
 
 namespace Admin\MedicalBundle\Entity;
 
+use Client\MedicalBundle\Services\Company\NameEditor;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
@@ -162,7 +163,6 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
      */
 	public function getCompanyAllDetail($ssSearchParam='', $snCategoryIds='', $ssCityName='', $ssLanguages='', $ssPaymentOption='', $ssInsuranceIds='', $ssLocale, $ssRating='',$ssRatingSlider='', $ssClinicRating='')
     {
-
 		$config = $this->getEntityManager()->getConfiguration();
 		$config->addCustomNumericFunction('IFNULL', 'DoctrineExtensions\Query\Mysql\IfNull');
 
@@ -529,7 +529,7 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
      * @author Arpita Jadeja <arpita.j.php@gmail.com>
      * @return array
      */
-	public function getCompanyAllDetailForSearch_new($ssSearchParam='',$ssCityName='',$ssPaymentOption='',$ssLanguages='',$ssLocale)
+	public function getCompanyAllDetailForSearch_new($ssSearchParam='',$ssCityName='',$ssPaymentOption='',$ssLanguages='',$ssLocale, $ssRating='most')
     {
 		$config = $this->getEntityManager()->getConfiguration();
 		$config->addCustomNumericFunction('IFNULL', 'DoctrineExtensions\Query\Mysql\IfNull');
@@ -737,19 +737,126 @@ class CompanyRepository extends EntityRepository implements UserProviderInterfac
         ksort($doctor);
         ksort($doctorId);
 
-		$alfa =  [
-            $ssQuery->getQuery()->getArrayResult(),
-            array_values($categoryNames),
-            array_values($categoryCities),
-            array_values($categoryIds),
-            array_values($minprices),
-            array_values($maxprices),
-            array_values($type),
-            array_values($doctor),
-            array_values($doctorId)
-        ];
-        return $alfa;
+        $returnedResult = $ssQuery->getQuery()->getArrayResult();
+
+        $freshResults = [];
+        $nameEditor = new NameEditor;
+
+        foreach($returnedResult as $key => $value) {
+            $companyimg = $this->getCompanyImag($value['id']);
+            $freshResults[] = [
+                'id' => $value['id'],
+                'name' => $value['name'],
+                'address' => $value['address'],
+                'companyimages' => $companyimg,
+                'categoryName' => $categoryNames[$value['id']],
+                'categoryNameRoute' => $nameEditor->addDashBetweenWords($categoryNames[$value['id']]),
+                'city' => $categoryCities[$value['id']],
+                'categoryid' => $categoryIds[$value['id']],
+                'minprice' => $minprices[$value['id']],
+                'maxprice' => $maxprices[$value['id']],
+                'type' => $type[$value['id']],
+                'doctor' => $doctor[$value['id']],
+                'doctorId' => $doctorId[$value['id']]
+            ];
+        }
+
+        if($ssRating != '')
+        {
+            switch($ssRating)
+            {
+                case 'best':
+                    usort($freshResults, function($a, $b) {return $b['maxprice'] - $a['maxprice'];});
+                    break;
+                case 'worst':
+                    usort($freshResults, function($a, $b) {return $a['minprice'] - $b['minprice'];});
+                    break;
+                case 'most':
+                    $theresults = [];
+                    foreach($freshResults as $key=>$value) {
+                        if($value['type'] == 'category') {
+                            $theresults[$value['id']] = $value['categoryName'];
+                        } else if($value['type'] == 'company') {
+                            $theresults[$value['id']] = $value['name'];
+                        } else if($value['type'] == 'doctor') {
+                            $theresults[$value['id']] = $value['doctor'][0];
+                        }
+                    }
+                    foreach($theresults as $key => $res) {
+                        $val = str_replace('č', 'c', $res);
+                        $val = str_replace('Č', 'C', $val);
+                        $val = str_replace('ą', 'a', $val);
+                        $val = str_replace('Ą', 'A', $val);
+                        $val = str_replace(['ę', 'ė'], 'e', $val);
+                        $val = str_replace(['Ę', 'Ė'], 'E', $val);
+                        $val = str_replace('į', 'i', $val);
+                        $val = str_replace('Į', 'I', $val);
+                        $val = str_replace('š', 's', $val);
+                        $val = str_replace('Š', 'S', $val);
+                        $val = str_replace(['ų', 'ū'], 'u', $val);
+                        $val = str_replace(['Ų', 'Ū'], 'U', $val);
+                        $val = str_replace('ž', 'z', $val);
+                        $val = str_replace('Ž', 'Z', $val);
+                        $theresults[$key] = $val;
+                    }
+                    asort($theresults, SORT_STRING | SORT_FLAG_CASE | SORT_NATURAL);
+                    $toReturn = [];
+                    foreach($theresults as $key => $value) {
+                        foreach($freshResults as $k=>$v) {
+                            if($v['id'] == $key) {
+                                $toReturn[] = $v;
+                                break;
+                            }
+                        }
+                    }
+                    $freshResults = $toReturn;
+                    break;
+                case 'less':
+                    $theresults = [];
+                    foreach($freshResults as $key=>$value) {
+                        if($value['type'] == 'category') {
+                            $theresults[$value['id']] = $value['categoryName'];
+                        } else if($value['type'] == 'company') {
+                            $theresults[$value['id']] = $value['name'];
+                        } else if($value['type'] == 'doctor') {
+                            $theresults[$value['id']] = $value['doctor'][0];
+                        }
+                    }
+                    foreach($theresults as $key => $res) {
+                        $val = str_replace('č', 'c', $res);
+                        $val = str_replace('Č', 'C', $val);
+                        $val = str_replace('ą', 'a', $val);
+                        $val = str_replace('Ą', 'A', $val);
+                        $val = str_replace(['ę', 'ė'], 'e', $val);
+                        $val = str_replace(['Ę', 'Ė'], 'E', $val);
+                        $val = str_replace('į', 'i', $val);
+                        $val = str_replace('Į', 'I', $val);
+                        $val = str_replace('š', 's', $val);
+                        $val = str_replace('Š', 'S', $val);
+                        $val = str_replace(['ų', 'ū'], 'u', $val);
+                        $val = str_replace(['Ų', 'Ū'], 'U', $val);
+                        $val = str_replace('ž', 'z', $val);
+                        $val = str_replace('Ž', 'Z', $val);
+                        $theresults[$key] = $val;
+                    }
+                    arsort($theresults, SORT_STRING | SORT_FLAG_CASE | SORT_NATURAL);
+                    $toReturn = [];
+                    foreach($theresults as $key => $value) {
+                        foreach($freshResults as $k=>$v) {
+                            if($v['id'] == $key) {
+                                $toReturn[] = $v;
+                                break;
+                            }
+                        }
+                    }
+                    $freshResults = $toReturn;
+                    break;
+            }
+        }
+
+        return $freshResults;
 	}
+
 	/**
      * function getInsuranceDetail
      *
